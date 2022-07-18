@@ -24,65 +24,103 @@ function elementsvar($qtd, $possui, $nome, $nomecoluna){
 	}
 }
 
-function BuildProp($pos1, $pos2, $p1, $p2, $whereclause, $init){
+function BuildProp($pos1, $pos2, $p1, $p2, $whereclause, $init ,$type){
 		if($pos1 and !$pos2){ //só o 2 definido
-			$whereclause = $whereclause . " $init" . "round(PMOL," . strlen(substr(strrchr($p2, "."), 1)) . ") = $p2";
+			$whereclause = $whereclause . " $init" . "round($type," . strlen(substr(strrchr($p2, "."), 1)) . ") = $p2";
 			$init = "AND ";
 		}
 		elseif($pos2 and !$pos1){ //só o 1 definido
-			$whereclause = $whereclause . " $init" . "round(PMOL," . strlen(substr(strrchr($p1, "."), 1)) . ") = $p1";
+			$whereclause = $whereclause . " $init" . "round($type," . strlen(substr(strrchr($p1, "."), 1)) . ") = $p1";
 			$init = "AND ";
 		}
 		elseif(!$pos2 and !$pos1){ //os dois definidos
 			if($p1 > $p2){
-				$whereclause = $whereclause . " $init" . "round(PMOL," . strlen(substr(strrchr($p2, "."), 1)) . ") >= $p2 AND round(PMOL," . strlen(substr(strrchr($p1, "."), 1)) . ") <= $p1";
+				$whereclause = $whereclause . " $init" . "round($type," . strlen(substr(strrchr($p2, "."), 1)) . ") >= $p2 AND round($type," . strlen(substr(strrchr($p1, "."), 1)) . ") <= $p1";
 				$init = "AND ";
 			}
 			elseif($p1 < $p2){
-				$whereclause = $whereclause . " $init" . "round(PMOL," . strlen(substr(strrchr($p2, "."), 1)) . ") <= $p2 AND round(PMOL," . strlen(substr(strrchr($p1, "."), 1)) . ") >= $p1";
+				$whereclause = $whereclause . " $init" . "round($type," . strlen(substr(strrchr($p2, "."), 1)) . ") <= $p2 AND round($type," . strlen(substr(strrchr($p1, "."), 1)) . ") >= $p1";
 				$init = "AND ";
 			}
 			else{
-				$whereclause = $whereclause . " $init" . "round(PMOL," . strlen(substr(strrchr($p2, "."), 1)) . ") = $p2";
+				$whereclause = $whereclause . " $init" . "round($type," . strlen(substr(strrchr($p2, "."), 1)) . ") = $p2";
 				$init = "AND ";
 			}
 		}
 		return array($whereclause,$init);
 }
 
-function BuildEsqCarb($primesq, $ie, $gf, $qtdesq, $whereclause, $init){
-	if(!(_empty($gf))){
-		if($primesq){
-			if($ie == 'exclui'){
-				$whereclause = $whereclause . " $init" . "(NLIN NOT LIKE '%$gf%'";
-			}
-			else{
-				$whereclause = $whereclause . " $init" . "(NLIN LIKE '%$gf%'";
-			}
-			$primesq = false;
-			$qtdesq = $qtdesq - 1;
-			if($qtdesq == 0){
-				$whereclause = $whereclause . ")";
-			}
+
+function BuildEsqCarb($esq, $whereclause){
+	$incluisimul = array();
+	$excluir = array();
+	$incluir = array();
+	$primincsom = true;
+	$primex = true;
+    $priminc = true;
+	
+	foreach($esq as $name => $inex){
+		if($inex == "incsom"){
+		    
+			$incluisimul += array($name => $inex);
+		}
+		elseif($inex == 'exclui'){
+		    
+			$excluir += array($name => $inex);
 		}
 		else{
-			if($ie == 'inclui'){
-				$whereclause = $whereclause . " OR " . "NLIN LIKE '%$gf%'";
-			}
-			elseif($ie == "incsom"){
-				$whereclause = $whereclause . " AND " . "NLIN LIKE '%$gf%' ";
-			}
-			else{
-				$whereclause = $whereclause . " AND " . "NLIN NOT LIKE '%$gf%'";
-			}
-			$qtdesq = $qtdesq - 1;
-			if($qtdesq == 0){
-				$whereclause = $whereclause . ")";
-			}
+		    
+			$incluir += array($name => $inex);
 		}
 	}
-	$init = "AND ";
-	return array($whereclause, $init, $primesq, $qtdesq);
+	$qtdadeincsom = count($incluisimul);
+	$qtdadeexcluir = count($excluir);
+	$qtdadeinc = count($incluir);
+	foreach($incluisimul as $name => $inex){
+		if($primincsom){
+			$whereclause = $whereclause . " AND " . "(NLIN LIKE '%$name%'";
+			$qtdadeincsom = $qtdadeincsom - 1;
+			$primincsom = false;
+		}
+		else{
+			$whereclause = $whereclause . " AND " . "NLIN LIKE '%$name%'";
+			$qtdadeincsom = $qtdadeincsom - 1;
+		}
+		if($qtdadeincsom == 0){
+			$whereclause = $whereclause . ")";
+		}
+	}
+	foreach($excluir as $name => $inex){
+		if($primex){
+			$whereclause = $whereclause . " AND " . "(NLIN NOT LIKE '%$name%'";
+			$qtdadeexcluir = $qtdadeexcluir - 1;
+			$primex = false;
+		}
+		else{
+			$whereclause = $whereclause . " AND " . "NLIN NOT LIKE '%$name%'";
+			$qtdadeexcluir = $qtdadeexcluir - 1;
+		}
+		if($qtdadeexcluir == 0){
+			$whereclause = $whereclause . ")";
+		}
+	}
+	foreach($incluir as $name => $inex){
+		if($priminc){
+			$whereclause = $whereclause . " AND " . "(NLIN LIKE '%$name%'";
+			$qtdadeinc = $qtdadeinc - 1;
+			$priminc = false;
+		}
+		else{
+			$whereclause = $whereclause . " OR " . "NLIN LIKE '%$name%'";
+			$qtdadeinc = $qtdadeinc - 1;
+		}
+		if($qtdadeinc == 0){
+			$whereclause = $whereclause . ")";
+		}
+	}
+		
+
+	return $whereclause;
 	
 }
 
@@ -264,65 +302,65 @@ h1{ color: #0C424F; font-family: 'Raleway',sans-serif;
 	<div class="container" style="float:left;">
 		<h2>Elementos</h2>
 			<label for="scales">Possui Carbono?</label>
-			<input type="checkbox" id="pca" name="pca">
+			<input type="checkbox" id="pca" name="pca" <?php echo isset($_POST['pca']) ? 'checked' : '' ?>>
 			<label for="scales">Quantidade de Carbono:</label> 
-			<input type="number" name="carbono" min="0" style="width: 4em;">
+			<input type="number" name="carbono" min="0" style="width: 4em;" value="<?php echo isset($_POST['carbono']) ? $_POST['carbono'] : '' ?>">
 		
 			<div style="clear:both;">&nbsp;</div>
 		
 			<label for="scales">Possui Oxigênio?</label>
-			<input type="checkbox" id="pox" name="pox">
+			<input type="checkbox" id="pox" name="pox" <?php echo isset($_POST['pox']) ? 'checked' : '' ?>>
 			<label for="scales">Quantidade de Oxigênio:</label> 
-			<input type="number" name="oxigenio" min="0" style="width: 4em;">
+			<input type="number" name="oxigenio" min="0" style="width: 4em;" value="<?php echo isset($_POST['oxigenio']) ? $_POST['oxigenio'] : '' ?>">
 
 			<div style="clear:both;">&nbsp;</div>
 			
 			<label for="scales">Possui Hidrogênio?</label>
-			<input type="checkbox" id="phi" name="phi">
+			<input type="checkbox" id="phi" name="phi" <?php echo isset($_POST['phi']) ? 'checked' : '' ?>>
 			<label for="scales">Quantidade de Hidrogênio:</label> 
-			<input type="number" name="hidrogenio" min="0" style="width: 4em;">
+			<input type="number" name="hidrogenio" min="0" style="width: 4em;" value="<?php echo isset($_POST['hidrogenio']) ? $_POST['hidrogenio'] : '' ?>">
 			
 			<div style="clear:both;">&nbsp;</div>
 			
 			<label for="scales">Possui Nitrogênio?</label>
-			<input type="checkbox" id="pni" name="pni">
+			<input type="checkbox" id="pni" name="pni" <?php echo isset($_POST['pni']) ? 'checked' : '' ?>>
 			<label for="scales">Quantidade de Nitrogênio:</label> 
-			<input type="number" name="nitrogenio" min="0" style="width: 4em;">
+			<input type="number" name="nitrogenio" min="0" style="width: 4em;" value="<?php echo isset($_POST['nitrogenio']) ? $_POST['nitrogenio'] : '' ?>"> 
 			
 			<div style="clear:both;">&nbsp;</div>
 			
 			<label for="scales">Possui Enxofre?</label>
-			<input type="checkbox" id="pen" name="pen">
+			<input type="checkbox" id="pen" name="pen" <?php echo isset($_POST['pen']) ? 'checked' : '' ?>>
 			<label for="scales">Quantidade de Enxofre:</label> 
-			<input type="number" name="enxofre" min="0" style="width: 4em;">
+			<input type="number" name="enxofre" min="0" style="width: 4em;" value="<?php echo isset($_POST['enxofre']) ? $_POST['enxofre'] : '' ?>">
 			
 			<div style="clear:both;">&nbsp;</div>
 			
 			<label for="scales">Possui Cloro?</label>
-			<input type="checkbox" id="pcl" name="pcl">
+			<input type="checkbox" id="pcl" name="pcl" <?php echo isset($_POST['pcl']) ? 'checked' : '' ?>>
 			<label for="scales">Quantidade de Cloro:</label> 
-			<input type="number" name="cloro" min="0" style="width: 4em;">
+			<input type="number" name="cloro" min="0" style="width: 4em;" value="<?php echo isset($_POST['cloro']) ? $_POST['cloro'] : '' ?>">
 			
 			<div style="clear:both;">&nbsp;</div>
 			
 			<label for="scales">Possui Bromo?</label>
-			<input type="checkbox" id="pbr" name="pbr">
+			<input type="checkbox" id="pbr" name="pbr" <?php echo isset($_POST['pbr']) ? 'checked' : '' ?>>
 			<label for="scales">Quantidade de Bromo:</label> 
-			<input type="number" name="bromo" min="0" style="width: 4em;">
+			<input type="number" name="bromo" min="0" style="width: 4em;" value="<?php echo isset($_POST['bromo']) ? $_POST['bromo'] : '' ?>">
 			
 			<div style="clear:both;">&nbsp;</div>
 			
 			<label for="scales">Possui Iodo?</label>
-			<input type="checkbox" id="pio" name="pio">
+			<input type="checkbox" id="pio" name="pio" <?php echo isset($_POST['pio']) ? 'checked' : '' ?>>
 			<label for="scales">Quantidade de Iodo:</label> 
-			<input type="number" name="iodo" min="0" style="width: 4em;">
+			<input type="number" name="iodo" min="0" style="width: 4em;" value="<?php echo isset($_POST['iodo']) ? $_POST['iodo'] : '' ?>">
 			
 			<div style="clear:both;">&nbsp;</div>
 			
 			<label for="scales">Possui Fluor?</label>
-			<input type="checkbox" id="pfl" name="pfl">
+			<input type="checkbox" id="pfl" name="pfl" <?php echo isset($_POST['pfl']) ? 'checked' : '' ?>>
 			<label for="scales">Quantidade de Fluor:</label> 
-			<input type="number" name="fluor" min="0" style="width: 4em;">
+			<input type="number" name="fluor" min="0" style="width: 4em;" value="<?php echo isset($_POST['fluor']) ? $_POST['fluor'] : '' ?>">
 		
 		<div style="clear:both;">&nbsp;</div>
 		
@@ -335,16 +373,16 @@ h1{ color: #0C424F; font-family: 'Raleway',sans-serif;
 	<div class = "container" style="float:left;">
 		<h2>Propriedades</h2>
 		<label for="scales">Peso Molecular</label>
-		<input type="number" step="0.01" min = "0" name = "pesomol1" style="width: 6em;"> à <input type="number" min = "0" step="0.01" name = "pesomol2" style="width: 6em;"> 
+		<input type="number" step="0.01" min = "0" name = "pesomol1" style="width: 6em;" value="<?php echo isset($_POST['pesomol1']) ? $_POST['pesomol1'] : '' ?>"> à <input type="number" min = "0" step="0.01" name = "pesomol2" style="width: 6em;" value="<?php echo isset($_POST['pesomol2']) ? $_POST['pesomol2'] : '' ?>"> 
 		<div style="clear:both;">&nbsp;</div>
 	
 	
 		<label for="scales">Ponto de Fusão</label>
-		<input type="number" step="0.01" min = "0" name = "pf1" style="width: 6em;"> à <input type="number" min = "0" step="0.01" name = "pf2" style="width: 6em;">
+		<input type="number" step="0.01" min = "0" name = "pf1" style="width: 6em;" value="<?php echo isset($_POST['pf1']) ? $_POST['pf1'] : '' ?>"> à <input type="number" min = "0" step="0.01" name = "pf2" style="width: 6em;" value="<?php echo isset($_POST['pf2']) ? $_POST['pf2'] : '' ?>">
 		<div style="clear:both;">&nbsp;</div>
 
 		<label for="scales">Ponto de Ebulição</label>
-		<input type="number" step="0.01" min = "0" name = "pe1" style="width: 6em;"> à <input type="number" min = "0" step="0.01" name = "pe2" style="width: 6em;">
+		<input type="number" step="0.01" min = "0" name = "pe1" style="width: 6em;" value="<?php echo isset($_POST['pe1']) ? $_POST['pe1'] : '' ?>"> à <input type="number" min = "0" step="0.01" name = "pe2" style="width: 6em;"value="<?php echo isset($_POST['pe2']) ? $_POST['pe2'] : '' ?>">
 		<div style="clear:both;">&nbsp;</div>
 		</div>
 		
@@ -352,46 +390,46 @@ h1{ color: #0C424F; font-family: 'Raleway',sans-serif;
 		<h2>Grupo Funcional / Esqueleto de Carbono</h2>
 
 		
-		<input type="text" name="gfunc1" maxlength="10">
-		<label><input type="radio" name="inex1" value="inclui" id="inclui" checked>Incluir</label>
-		<label><input type="radio" name="inex1" value="incsom" id="exclui">Incluir simultâneo</label>
-		<label><input type="radio" name="inex1" value="exclui" id="exclui">Excluir</label>
+		<input type="text" name="gfunc1" maxlength="10" value="<?php echo isset($_POST['gfunc1']) ? $_POST['gfunc1'] : '' ?>">
+		<label><input type="radio" name="inex1" value="inclui" id="inclui" <?php echo (!isset($_POST['inex1']) or (isset($_POST['inex1']) and ($_POST['inex1'] == 'inclui'))) ? 'checked' : '' ?>>Incluir</label>
+		<label><input type="radio" name="inex1" value="incsom" id="exclui" <?php echo (isset($_POST['inex1']) and ($_POST['inex1'] == 'incsom')) ? 'checked' : '' ?>>Incluir simultâneo</label>
+		<label><input type="radio" name="inex1" value="exclui" id="exclui" <?php echo (isset($_POST['inex1']) and ($_POST['inex1'] == 'exclui')) ? 'checked' : '' ?>>Excluir</label>
 		
 		
 		<div style="clear:both;">&nbsp;</div>
 		
-		<input type="text" name="gfunc2" maxlength="10">
-		<label><input type="radio" name="inex2" value="inclui" id="inclui" checked>Incluir</label>
-		<label><input type="radio" name="inex2" value="incsom" id="exclui">Incluir simultâneo</label>
-		<label><input type="radio" name="inex2" value="exclui" id="exclui">Excluir</label>
+		<input type="text" name="gfunc2" maxlength="10" value="<?php echo isset($_POST['gfunc2']) ? $_POST['gfunc2'] : '' ?>">
+		<label><input type="radio" name="inex2" value="inclui" id="inclui" <?php echo (!isset($_POST['inex2']) or (isset($_POST['inex2']) and ($_POST['inex2'] == 'inclui'))) ? 'checked' : '' ?>>Incluir</label>
+		<label><input type="radio" name="inex2" value="incsom" id="exclui" <?php echo (isset($_POST['inex2']) and ($_POST['inex2'] == 'incsom')) ? 'checked' : '' ?>>Incluir simultâneo</label>
+		<label><input type="radio" name="inex2" value="exclui" id="exclui" <?php echo (isset($_POST['inex2']) and ($_POST['inex2'] == 'exclui')) ? 'checked' : '' ?>>Excluir</label>
 		
 		<div style="clear:both;">&nbsp;</div>
 		
-		<input type="text" name="gfunc3" maxlength="10">
-		<label><input type="radio" name="inex3" value="inclui" id="inclui" checked>Incluir</label>
-		<label><input type="radio" name="inex3" value="incsom" id="exclui">Incluir simultâneo</label>
-		<label><input type="radio" name="inex3" value="exclui" id="exclui">Excluir</label>
+		<input type="text" name="gfunc3" maxlength="10" value="<?php echo isset($_POST['gfunc3']) ? $_POST['gfunc3'] : '' ?>">
+		<label><input type="radio" name="inex3" value="inclui" id="inclui" <?php echo (!isset($_POST['inex3']) or (isset($_POST['inex3']) and ($_POST['inex3'] == 'inclui'))) ? 'checked' : '' ?>>Incluir</label>
+		<label><input type="radio" name="inex3" value="incsom" id="exclui" <?php echo (isset($_POST['inex3']) and ($_POST['inex3'] == 'incsom')) ? 'checked' : '' ?>>Incluir simultâneo</label>
+		<label><input type="radio" name="inex3" value="exclui" id="exclui" <?php echo (isset($_POST['inex3']) and ($_POST['inex3'] == 'exclui')) ? 'checked' : '' ?>>Excluir</label>
 		
 		<div style="clear:both;">&nbsp;</div>
 	
-		<input type="text" name="gfunc4" maxlength="10">
-		<label><input type="radio" name="inex4" value="inclui" id="inclui" checked>Incluir</label>
-		<label><input type="radio" name="inex4" value="incsom" id="exclui">Incluir simultâneo</label>
-		<label><input type="radio" name="inex4" value="exclui" id="exclui">Excluir</label>
+		<input type="text" name="gfunc4" maxlength="10" value="<?php echo isset($_POST['gfunc4']) ? $_POST['gfunc4'] : '' ?>">
+		<label><input type="radio" name="inex4" value="inclui" id="inclui" <?php echo (!isset($_POST['inex4']) or (isset($_POST['inex4']) and ($_POST['inex4'] == 'inclui'))) ? 'checked' : '' ?>>Incluir</label>
+		<label><input type="radio" name="inex4" value="incsom" id="exclui" <?php echo (isset($_POST['inex4']) and ($_POST['inex4'] == 'incsom')) ? 'checked' : '' ?>>Incluir simultâneo</label>
+		<label><input type="radio" name="inex4" value="exclui" id="exclui" <?php echo (isset($_POST['inex4']) and ($_POST['inex4'] == 'exclui')) ? 'checked' : '' ?>>Excluir</label>
 		
 		<div style="clear:both;">&nbsp;</div>
 		
-		<input type="text" name="gfunc5" maxlength="10">
-		<label><input type="radio" name="inex5" value="inclui" id="inclui" checked>Incluir</label>
-		<label><input type="radio" name="inex5" value="incsom" id="exclui">Incluir simultâneo</label>
-		<label><input type="radio" name="inex5" value="exclui" id="exclui">Excluir</label>
+		<input type="text" name="gfunc5" maxlength="10" value="<?php echo isset($_POST['gfunc5']) ? $_POST['gfunc5'] : '' ?>">
+		<label><input type="radio" name="inex5" value="inclui" id="inclui"  <?php echo (!isset($_POST['inex5']) or (isset($_POST['inex5']) and ($_POST['inex5'] == 'inclui'))) ? 'checked' : '' ?>>Incluir</label>
+		<label><input type="radio" name="inex5" value="incsom" id="exclui" <?php echo (isset($_POST['inex5']) and ($_POST['inex5'] == 'incsom')) ? 'checked' : '' ?>>Incluir simultâneo</label>
+		<label><input type="radio" name="inex5" value="exclui" id="exclui" <?php echo (isset($_POST['inex5']) and ($_POST['inex5'] == 'exclui')) ? 'checked' : '' ?>>Excluir</label>
 		
 		<div style="clear:both;">&nbsp;</div>		
 		
-		<input type="text" name="gfunc6" maxlength="10">
-		<label><input type="radio" name="inex6" value="inclui" id="inclui" checked>Incluir</label>
-		<label><input type="radio" name="inex6" value="incsom" id="exclui">Incluir simultâneo</label>
-		<label><input type="radio" name="inex6" value="exclui" id="exclui">Excluir</label>
+		<input type="text" name="gfunc6" maxlength="10" value="<?php echo isset($_POST['gfunc6']) ? $_POST['gfunc6'] : '' ?>">
+		<label><input type="radio" name="inex6" value="inclui" id="inclui" <?php echo (!isset($_POST['inex6']) or (isset($_POST['inex6']) and ($_POST['inex6'] == 'inclui'))) ? 'checked' : '' ?>>Incluir</label>
+		<label><input type="radio" name="inex6" value="incsom" id="exclui" <?php echo (isset($_POST['inex6']) and ($_POST['inex6'] == 'incsom')) ? 'checked' : '' ?>>Incluir simultâneo</label>
+		<label><input type="radio" name="inex6" value="exclui" id="exclui" <?php echo (isset($_POST['inex6']) and ($_POST['inex6'] == 'exclui')) ? 'checked' : '' ?>>Excluir</label>
 		
 		<div style="clear:both;">&nbsp;</div>
 				<div class="tooltip" >Modo de uso para busca por ECGF (Referencias)
@@ -409,7 +447,7 @@ Excluir: elimina as moléculas com os grupos assinalados.</span>
 			<div class = "container" style="float:left;">
 			<h2>CAS</h2>
 			<label for="scales">CAS: </label>
-			<input type="text" name="cas" maxlength="15">
+			<input type="text" name="cas" maxlength="15" value="<?php echo isset($_POST['cas']) ? $_POST['cas'] : '' ?>">
 			
 		</div>
 		<div style="clear:both;">&nbsp;</div>
@@ -438,6 +476,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 	$apenaspossui = array(); //array associativo onde a chave é o nome da coluna
 	$filtros = array();  //array associativo onde a chave é o nome da coluna
+	$arrayescarb = array();
 	$oxigenio = $_POST['oxigenio'];
 	$hidrogenio = $_POST['hidrogenio'];
 	$carbono = $_POST['carbono'];
@@ -512,28 +551,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		$npe2 = true;
 	}
 	if(!(_empty($gf1))){
+		$arrayescarb += array($gf1=>$ie1);	
 		$pesq = true;
-		$qtdesq = $qtdesq + 1;
 	}
 	if(!(_empty($gf2))){
+		$arrayescarb += array($gf2=>$ie2);
 		$pesq = true;
-		$qtdesq = $qtdesq + 1;
 	}
 	if(!(_empty($gf3))){
+		$arrayescarb += array($gf3=>$ie3);
 		$pesq = true;
-		$qtdesq = $qtdesq + 1;
 	}
 	if(!(_empty($gf4))){
+		$arrayescarb += array($gf4=>$ie4);
 		$pesq = true;
-		$qtdesq = $qtdesq + 1;
 	}	
 	if(!(_empty($gf5))){
+		$arrayescarb += array($gf5=>$ie5);
 		$pesq = true;
-		$qtdesq = $qtdesq + 1;
 	}	
 	if(!(_empty($gf6))){
+		$arrayescarb += array($gf6=>$ie6);
 		$pesq = true;
-		$qtdesq = $qtdesq + 1;
 	}		
 	if(empty($filtros) and empty($apenaspossui) and $npospm1 and $npospm2 and $npf1 and $npf2 and $npe1 and $npe2 and !$pesq and (_empty($cas))){
 
@@ -553,16 +592,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 			$whereclause = $whereclause . " $init" . "$key > 0"; //key é o nome da coluna na base de dados
 			$init = "AND ";
 		}
-		$arpmolar = BuildProp($npospm1, $npospm2, $pesomol1, $pesomol2, $whereclause, $init);
-		$arpfusao = BuildProp($npf1, $npf2, $pf1, $pf2, $arpmolar[0], $arpmolar[1]);
-		$arpebul = BuildProp($npe1, $npe2, $pe1, $pe2, $arpfusao[0], $arpfusao[1]);
-		$argf1 = BuildEsqCarb($primesq, $ie1, $gf1, $qtdesq, $arpebul[0], $arpebul[1]);
-		$argf2 = BuildEsqCarb($argf1[2], $ie2, $gf2, $argf1[3], $argf1[0], $argf1[1]);
-		$argf3 = BuildEsqCarb($argf2[2], $ie3, $gf3, $argf2[3], $argf2[0], $argf2[1]);
-		$argf4 = BuildEsqCarb($argf3[2], $ie4, $gf4, $argf3[3], $argf3[0], $argf3[1]);
-		$argf5 = BuildEsqCarb($argf4[2], $ie5, $gf5, $argf4[3], $argf4[0], $argf4[1]);
-		$argf6 = BuildEsqCarb($argf5[2], $ie6, $gf6, $argf5[3], $argf5[0], $argf5[1]);
-		$whereclause = $argf6[0];
+		$arpmolar = BuildProp($npospm1, $npospm2, $pesomol1, $pesomol2, $whereclause, $init, 'PMOL');
+		$arpfusao = BuildProp($npf1, $npf2, $pf1, $pf2, $arpmolar[0], $arpmolar[1],'PF');
+		$arpebul = BuildProp($npe1, $npe2, $pe1, $pe2, $arpfusao[0], $arpfusao[1], 'PE');
+		$whereclause = $arpebul[0];
+		$whereclause = BuildEsqCarb($arrayescarb, $whereclause);
 		$init = $argf6[1];
 
 		if(!(_empty($cas))){
@@ -574,15 +608,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <?php
 
-
-
+$order = "ORDER BY NCOM";
+#echo $whereclause;
 if(!empty($whereclause)){
-	$result = $conn->query("SELECT * FROM UNIV1_160222 $whereclause");
-	echo "$whereclause";
+	$result = $conn->query("SELECT * FROM UNIV1_090722 $whereclause $order");
 }
 else{
 	
-	$result = $conn->query("SELECT * FROM UNIV1_160222");
+	$result = $conn->query("SELECT * FROM UNIV1_090722");
 }
 if(empty($result->num_rows)){
 	echo"<div style=\"clear:both;\">&nbsp;</div>Numero de registros na tabela = 0";
