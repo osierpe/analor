@@ -1,13 +1,16 @@
+<!DOCTYPE html>
+
 <?php
 require "connect.php";
 include_once("script.php");
 ?>
 
-
 <html>
+
 <head>
 <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 <div>
 <h1>Analor</h1>
