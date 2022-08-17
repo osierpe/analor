@@ -611,11 +611,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 $order = "ORDER BY NCOM";
 #echo $whereclause;
 if(!empty($whereclause)){
-	$result = $conn->query("SELECT * FROM UNIV1_090722 $whereclause $order");
+	$result = $conn->query("SELECT * FROM UNIV1_010822 $whereclause $order");
 }
 else{
 	
-	$result = $conn->query("SELECT * FROM UNIV1_090722");
+	$result = $conn->query("SELECT * FROM UNIV1_010822");
 }
 if(empty($result->num_rows)){
 	echo"<div style=\"clear:both;\">&nbsp;</div>Numero de registros na tabela = 0";
