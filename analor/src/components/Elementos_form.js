@@ -1,4 +1,4 @@
-export default function Elemento_form(props) {
+export default function Elementos_form(props) {
   return (
     <div className='elementos__form'>
       <label htmlFor='scales'>Possui {props.elemento}?</label>
