@@ -5,12 +5,12 @@ import GrupoFuncEsqCar from './components/GrupoFuncEsqCar.js';
 import Cas from './components/Cas.js';
 export default function App() {
   return (
-    <>
+    <form method='post'>
       <Logo />
       <Elementos />
       <Propriedades />
       <GrupoFuncEsqCar />
       <Cas />
-    </>
+    </form>
   );
 }
