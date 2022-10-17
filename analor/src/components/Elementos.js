@@ -1,4 +1,4 @@
-import Elementos_form from './Elementos_form';
+import ElementosForm from './ElementosForm';
 
 const elementos = [
   'Carbono',
@@ -14,7 +14,7 @@ const elementos = [
 
 export default function Elementos() {
   const elementosForms = elementos.map(el => {
-    return <Elementos_form elemento={el} key={el.slice(0, 2).toLowerCase()} />;
+    return <ElementosForm elemento={el} key={el.slice(0, 2).toLowerCase()} />;
   });
   return (
     <div className='elementos'>

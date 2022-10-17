@@ -1,4 +1,4 @@
-export default function Propriedades_form(props) {
+export default function PropriedadesForm(props) {
   return (
     <div className='propriedades__form'>
       <label htmlFor='scales'>{props.caracteristica}</label>

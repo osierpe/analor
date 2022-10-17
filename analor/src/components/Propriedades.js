@@ -1,4 +1,4 @@
-import Propriedades_form from './Propriedades_form';
+import PropriedadesForm from './PropriedadesForm';
 import f from '../functions.js';
 
 const caracteristicas = [
@@ -9,7 +9,7 @@ const caracteristicas = [
 export default function Propriedades() {
   const propriedades_form = caracteristicas.map(car => {
     return (
-      <Propriedades_form
+      <PropriedadesForm
         caracteristica={car}
         iniciais={f.pegarIniciais(car)}
         key={f.pegarIniciais(car)}

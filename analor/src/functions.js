@@ -6,4 +6,6 @@ const pegarIniciais = function (str) {
   return (palavras[0][0] + palavras[1][0]).toLowerCase();
 };
 
-export default { pegarIniciais };
+const func = { pegarIniciais };
+
+export default func
