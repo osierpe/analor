@@ -1,6 +1,7 @@
 export default function FormAnalise(props) {
-  //  Elementos
+  // TODO: passar tudo para componentes separados
 
+  //  Elementos
   if (props.item.tipo === 'possui') {
     const elementosEl = props.item.elementos.map(el => {
       return (
