@@ -1,10 +1,12 @@
-export default function Buttons() {
+export default function Buttons(props) {
   return (
     <div className='btns'>
-      <a href='/ref.php' class='button' target='_blank'>
+      <a href='/' className='button'>
         Referencia Grup Func & Esq Carbono
       </a>
-      <input type='submit' value='Aplicar filtro' class='envia'></input>
+      <button className='button submit' onClick={props.handleSubmit}>
+        Aplicar filtro
+      </button>
     </div>
   );
 }
