@@ -8,10 +8,16 @@ const analiseEl = dados.map(dado => {
 
 export default function Form() {
   return (
-    <form>
-      <h1>Analor</h1>
-      {analiseEl}
-      <Buttons />
-    </form>
+    <>
+      <header>
+        <h1 className='Logo'>Analor</h1>
+      </header>
+      <main>
+        <form>
+          <div className='analise'>{analiseEl}</div>
+          <Buttons />
+        </form>
+      </main>
+    </>
   );
 }
