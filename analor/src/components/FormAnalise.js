@@ -8,6 +8,8 @@ export default function FormAnalise(props) {
         <div className='elementos__input' key={el}>
           <label htmlFor={`tem${el}`}>Possui {el}</label>
           <input type='checkbox' id={`tem${el}`} name={`tem${el}`} />
+          <label htmlFor={`quant${el}`}>Quantidade de {el}</label>
+          <input type='number' id={`quant${el}`} name={`quant${el}`} min='0' />
         </div>
       );
     });
@@ -32,7 +34,7 @@ export default function FormAnalise(props) {
         .replace(' ', '')}`;
 
       return (
-        <div className='propriedades__form' key={fisQui}>
+        <div className='propriedades__input' key={fisQui}>
           <label htmlFor={fisQui.replace(' ', '')}>{fisQui}</label>
           <input
             id={camelCaseName}
@@ -52,10 +54,10 @@ export default function FormAnalise(props) {
       );
     });
     return (
-      <div className='propriedades'>
+      <section className='propriedades'>
         <h2 className='propriedades__título'>Propriedades</h2>
         <div className='propriedades__input'>{propriedadesEl}</div>
-      </div>
+      </section>
     );
   }
 
@@ -65,7 +67,7 @@ export default function FormAnalise(props) {
     const ecgfEl = [];
     for (let i = 1; i < 7; i++) {
       ecgfEl.push(
-        <div className='ecgf__form' key={`gFunc${i}`}>
+        <div className='ecgf__input' key={`gFunc${i}`}>
           <input type='text' name={`gFunc${i}`} maxLength='10' />
           <label>
             <input type='radio' name={`inex${i}`} id='inclui' value='incluir' />
@@ -89,8 +91,8 @@ export default function FormAnalise(props) {
     }
 
     return (
-      <div className='ecgf'>
-        <h1 className='ecgf__título'>Grupo Funcional / Esqueleto de Carbono</h1>
+      <section className='ecgf'>
+        <h2 className='ecgf__título'>Grupo Funcional / Esqueleto de Carbono</h2>
         {ecgfEl}
         <h3 className='tooltip'>
           {' '}
@@ -109,14 +111,14 @@ export default function FormAnalise(props) {
           Modo de uso para busca por {props.item.nome.toUpperCase()} (Botões)
         </h3>
         <p className='tooltip_text'>{props.item.descrição[1]}</p>
-      </div>
+      </section>
     );
   }
 
   // CAS
   else if (props.item.tipo === 'texto') {
     return (
-      <div className='cas'>
+      <section className='cas'>
         <h2 className='cas__título'>{props.item.nome}</h2>
         <label>
           {props.item.nome}:
@@ -126,7 +128,7 @@ export default function FormAnalise(props) {
             maxLength='15'
           />
         </label>
-      </div>
+      </section>
     );
   }
 }
