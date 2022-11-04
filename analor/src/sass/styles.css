@@ -1,8 +1,65 @@
+@charset "UTF-8";
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@400;600;800&display=swap");
 * {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 10px;
 }
 
 body {
-  font-size: 10px;
+  font-family: "Raleway", sans-serif;
+}
+
+header {
+  background-color: #dddddd;
+  margin: 1rem 1rem 0 1rem;
+}
+header h1 {
+  color: #0c424f;
+  font-size: 6.4rem;
+  text-align: center;
+  font-weight: 800;
+}
+
+.analise {
+  margin: 6rem 3rem;
+  display: flex;
+}
+.analise > section {
+  max-width: 55rem;
+  margin-right: 3.5rem;
+  text-align: center;
+}
+.analise h2 {
+  font-size: 2rem;
+}
+.analise .elementos__inputBox {
+  margin-top: 1.5rem;
+}
+.analise .elementos__input {
+  font-size: 1.5rem;
+}
+.analise .elementos__input--checkbox {
+  margin-left: 2rem;
+}
+.analise .elementos__input label {
+  display: inline-block;
+  margin-left: 2rem;
+}
+.analise .elementos__input--número {
+  margin: 0 0 0 1rem;
+  max-width: 4.5rem;
+}
+.analise .propriedades__inputBox {
+  margin-top: 1.5rem;
+}
+.analise .propriedades__inputBox input {
+  margin: 0 0.5rem;
+}
+.analise .propriedades__input {
+  margin-top: 0.5rem;
 }/*# sourceMappingURL=styles.css.map */
