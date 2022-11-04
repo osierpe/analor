@@ -6,10 +6,25 @@ export default function FormAnalise(props) {
     const elementosEl = props.item.elementos.map(el => {
       return (
         <div className='elementos__input' key={el}>
-          <label htmlFor={`tem${el}`}>Possui {el}</label>
-          <input type='checkbox' id={`tem${el}`} name={`tem${el}`} />
-          <label htmlFor={`quant${el}`}>Quantidade de {el}</label>
-          <input type='number' id={`quant${el}`} name={`quant${el}`} min='0' />
+          <label htmlFor={`tem${el}`}>
+            Possui {el}
+            <input
+              className='elementos__input--checkbox'
+              type='checkbox'
+              id={`tem${el}`}
+              name={`tem${el}`}
+            />
+          </label>
+          <label htmlFor={`quant${el}`}>
+            Quantidade de {el}:
+            <input
+              type='number'
+              className='elementos__input--número'
+              id={`quant${el}`}
+              name={`quant${el}`}
+              min='0'
+            />
+          </label>
         </div>
       );
     });
@@ -17,11 +32,11 @@ export default function FormAnalise(props) {
     return (
       <section className='elementos'>
         <h2 className='elementos__título'>Elementos</h2>
-        {elementosEl}
-        <h3 className='tooltip'>
-          Modo de busca por {props.item.nome.toLowerCase()}
-        </h3>
-        <p className='tooltip__text'>{props.item.descrição}</p>
+        <div className='elementos__inputBox'>{elementosEl}</div>
+        <div className='tooltip'>
+          <h3>Modo de busca por {props.item.nome.toLowerCase()}</h3>
+          <p className='tooltip__text'>{props.item.descrição}</p>
+        </div>
       </section>
     );
   }
@@ -56,7 +71,7 @@ export default function FormAnalise(props) {
     return (
       <section className='propriedades'>
         <h2 className='propriedades__título'>Propriedades</h2>
-        <div className='propriedades__input'>{propriedadesEl}</div>
+        <div className='propriedades__inputBox'>{propriedadesEl}</div>
       </section>
     );
   }
@@ -94,23 +109,19 @@ export default function FormAnalise(props) {
       <section className='ecgf'>
         <h2 className='ecgf__título'>Grupo Funcional / Esqueleto de Carbono</h2>
         {ecgfEl}
-        <h3 className='tooltip'>
-          {' '}
-          Modo de uso para busca por {props.item.nome.toUpperCase()}{' '}
-          (Referencias)
-        </h3>
-        <p className='tooltip_text'>{props.item.descrição[0]}</p>
-        <h3 className='tooltip'>
-          {' '}
-          Modo de uso para busca por {props.item.nome.toUpperCase()}{' '}
-          (Referencias)
-        </h3>
-        <p className='tooltip_text'>{props.item.descrição[0]}</p>
-        <h3 className='tooltip'>
-          {' '}
-          Modo de uso para busca por {props.item.nome.toUpperCase()} (Botões)
-        </h3>
-        <p className='tooltip_text'>{props.item.descrição[1]}</p>
+        <div className='tooltip'>
+          <h3>
+            Modo de uso para busca por {props.item.nome.toUpperCase()}{' '}
+            (Referencias)
+          </h3>
+          <p className='tooltip__text'>{props.item.descrição[0]}</p>
+        </div>
+        <div className='tooltip'>
+          <h3>
+            Modo de uso para busca por {props.item.nome.toUpperCase()} (Botões)
+          </h3>
+          <p className='tooltip__text'>{props.item.descrição[1]}</p>
+        </div>
       </section>
     );
   }
