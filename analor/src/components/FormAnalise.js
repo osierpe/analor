@@ -44,10 +44,11 @@ export default function FormAnalise(props) {
   //   Propriedades
   else if (props.item.tipo === 'alcance') {
     const propriedadesEl = props.item.propFisQui.map(fisQui => {
-      const camelCaseName = `${fisQui.charAt(0).toLowerCase}${fisQui
+      const camelCaseName = `${fisQui.charAt(0).toLowerCase()}${fisQui
         .slice(1)
+        .replace('de ', '')
         .replace(' ', '')}`;
-
+      console.log(camelCaseName);
       return (
         <div className='propriedades__input' key={fisQui}>
           <label htmlFor={fisQui.replace(' ', '')}>{fisQui}</label>
