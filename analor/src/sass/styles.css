@@ -67,4 +67,14 @@ header h1 {
 }
 .analise .propriedades__input input {
   width: 6rem;
+}
+.analise .ecgf__inputBox {
+  margin-top: 1.5rem;
+}
+.analise .ecgf__input {
+  margin-top: 1.5rem;
+  font-size: 1.5rem;
+}
+.analise .ecgf__input label {
+  margin: 0 0.75rem;
 }/*# sourceMappingURL=styles.css.map */
