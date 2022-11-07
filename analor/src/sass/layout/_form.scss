@@ -1,3 +1,5 @@
+@use '../abstracts/' as *;
+
 .analise {
   margin: 6rem 3rem;
   display: flex;
@@ -90,10 +92,27 @@
 }
 
 .cas {
+  &__título {
+    margin-bottom: 1.5rem;
+  }
   label {
     font-size: 1.5rem;
     input {
       margin-left: 0.5rem;
     }
+  }
+}
+
+.btns {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .button {
+    @include button-styling(#16747a);
+    margin-right: 0.5rem;
+  }
+  #submit {
+    @include button-styling(#307433);
   }
 }

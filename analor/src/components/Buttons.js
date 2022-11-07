@@ -4,7 +4,7 @@ export default function Buttons(props) {
       <a href='/' className='button'>
         Referencia Grup Func & Esq Carbono
       </a>
-      <button className='button submit' onClick={props.handleSubmit}>
+      <button className='button' id='submit' onClick={props.handleSubmit}>
         Aplicar filtro
       </button>
     </div>
