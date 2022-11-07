@@ -109,7 +109,7 @@ export default function FormAnalise(props) {
     return (
       <section className='ecgf'>
         <h2 className='ecgf__título'>Grupo Funcional / Esqueleto de Carbono</h2>
-        {ecgfEl}
+        <div className='ecgf__inputBox'>{ecgfEl}</div>
         <div className='tooltip'>
           <h3>
             Modo de uso para busca por {props.item.nome.toUpperCase()}{' '}
