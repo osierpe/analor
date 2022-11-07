@@ -79,9 +79,47 @@ header h1 {
   margin: 0 0.75rem;
 }
 
+.cas__título {
+  margin-bottom: 1.5rem;
+}
 .cas label {
   font-size: 1.5rem;
 }
 .cas label input {
   margin-left: 0.5rem;
+}
+
+.btns {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.btns .button {
+  background-color: #16747a;
+  color: #ffffff;
+  cursor: pointer;
+  border-radius: 1rem;
+  padding: 1.5rem 2rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+  text-decoration: none;
+  border: none;
+  margin-right: 0.5rem;
+}
+.btns .button:hover {
+  background-color: #11575c;
+}
+.btns #submit {
+  background-color: #307433;
+  color: #ffffff;
+  cursor: pointer;
+  border-radius: 1rem;
+  padding: 1.5rem 2rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+  text-decoration: none;
+  border: none;
+}
+.btns #submit:hover {
+  background-color: #265b28;
 }/*# sourceMappingURL=styles.css.map */

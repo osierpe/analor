@@ -1,0 +1,15 @@
+@mixin button-styling($color) {
+  background-color: $color;
+  color: #ffffff;
+  cursor: pointer;
+  border-radius: 1rem;
+  padding: 1.5rem 2rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+  text-decoration: none;
+  border: none;
+
+  &:hover {
+    background-color: darken($color, 7%);
+  }
+}
