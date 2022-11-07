@@ -77,4 +77,11 @@ header h1 {
 }
 .analise .ecgf__input label {
   margin: 0 0.75rem;
+}
+
+.cas label {
+  font-size: 1.5rem;
+}
+.cas label input {
+  margin-left: 0.5rem;
 }/*# sourceMappingURL=styles.css.map */
