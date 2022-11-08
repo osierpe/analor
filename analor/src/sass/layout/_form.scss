@@ -3,7 +3,6 @@
 .analise {
   margin: 6rem 3rem;
   display: flex;
-  // justify-content: space-between;
 
   & > section {
     max-width: 55rem;
@@ -14,20 +13,6 @@
   h2 {
     font-size: 2rem;
   }
-
-  // .tooltip {
-  //   transition: all 2.5s;
-  //   &:hover {
-  //     :nth-child(2) {
-  //       visibility: visible;
-  //     }
-  //   }
-  //   &__text {
-  //     transition: opacity 0.5s;
-  //     visibility: hidden;
-  //     background-color: aliceblue;
-  //   }
-  // }
 
   .elementos {
     &__inputBox {
@@ -89,16 +74,57 @@
       }
     }
   }
+
+  .cas {
+    &__título {
+      margin-bottom: 1.5rem;
+    }
+    label {
+      font-size: 1.5rem;
+      input {
+        margin-left: 0.5rem;
+      }
+    }
+  }
 }
 
-.cas {
-  &__título {
-    margin-bottom: 1.5rem;
-  }
-  label {
+.tooltip {
+  position: relative;
+  margin-top: 2.5rem;
+
+  h3 {
+    color: #005bd6;
     font-size: 1.5rem;
-    input {
-      margin-left: 0.5rem;
+    font-weight: 500;
+    text-decoration: underline;
+  }
+
+  &:hover &__text {
+    opacity: 100%;
+  }
+
+  &__text {
+    transition: all 0.5s;
+    position: absolute;
+    bottom: 125%;
+    max-width: 25rem;
+    left: 20%;
+    font-size: 1.2rem;
+    font-weight: 600;
+    background-color: #555;
+    color: white;
+    padding: 1rem;
+    border-radius: 1rem;
+    opacity: 0;
+    &::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      margin-left: -5px;
+      border-width: 5px;
+      border-style: solid;
+      border-color: #555 transparent transparent transparent;
     }
   }
 }
