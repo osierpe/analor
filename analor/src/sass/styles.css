@@ -99,10 +99,9 @@ header h1 {
   text-decoration: underline;
 }
 .tooltip:hover .tooltip__text {
-  opacity: 100%;
+  display: block;
 }
 .tooltip__text {
-  transition: all 0.5s;
   position: absolute;
   bottom: 125%;
   max-width: 25rem;
@@ -113,7 +112,7 @@ header h1 {
   color: white;
   padding: 1rem;
   border-radius: 1rem;
-  opacity: 0;
+  display: none;
 }
 .tooltip__text::after {
   content: "";
@@ -148,7 +147,7 @@ header h1 {
   background-color: #11575c;
 }
 .btns #submit {
-  background-color: #307433;
+  background-color: #4cb951;
   color: #ffffff;
   cursor: pointer;
   border-radius: 1rem;
@@ -160,5 +159,5 @@ header h1 {
   transition: all 0.25s;
 }
 .btns #submit:hover {
-  background-color: #265b28;
+  background-color: #3fa244;
 }/*# sourceMappingURL=styles.css.map */

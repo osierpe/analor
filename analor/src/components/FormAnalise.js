@@ -1,3 +1,4 @@
+/* eslint-disable no-eval */
 export default function FormAnalise(props) {
   // TODO: passar tudo para componentes separados
 
@@ -13,6 +14,7 @@ export default function FormAnalise(props) {
               type='checkbox'
               id={`tem${el}`}
               name={`tem${el}`}
+              checked={eval(`props.formData.tem${el}`)}
             />
           </label>
           <label htmlFor={`quant${el}`}>
@@ -23,6 +25,7 @@ export default function FormAnalise(props) {
               id={`quant${el}`}
               name={`quant${el}`}
               min='0'
+              value={eval(`props.formData.quant${el}`)}
             />
           </label>
         </div>
@@ -48,7 +51,7 @@ export default function FormAnalise(props) {
         .slice(1)
         .replace('de ', '')
         .replace(' ', '')}`;
-      console.log(camelCaseName);
+
       return (
         <div className='propriedades__input' key={fisQui}>
           <label htmlFor={fisQui.replace(' ', '')}>{fisQui}</label>
@@ -58,6 +61,7 @@ export default function FormAnalise(props) {
             step='0.1'
             min='0'
             name={`${camelCaseName}Min`}
+            value={eval(`props.formData.${camelCaseName}Min`)}
           />
           à{' '}
           <input
@@ -65,6 +69,7 @@ export default function FormAnalise(props) {
             min='0'
             step='0.1'
             name={`${camelCaseName}Max`}
+            value={eval(`props.formData.${camelCaseName}Max`)}
           />
         </div>
       );
@@ -84,7 +89,13 @@ export default function FormAnalise(props) {
     for (let i = 1; i < 7; i++) {
       ecgfEl.push(
         <div className='ecgf__input' key={`gFunc${i}`}>
-          <input type='text' name={`gFunc${i}`} maxLength='10' />
+          <input
+            type='text'
+            name={`gFunc${i}`}
+            maxLength='10'
+            value={eval(`props.formData.gFunc${i}`)}
+            checked={eval(``)}
+          />
           <label>
             <input type='radio' name={`inex${i}`} id='inclui' value='incluir' />
             Incluir
