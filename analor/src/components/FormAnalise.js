@@ -75,6 +75,7 @@ export default function FormAnalise(props) {
             step='0.1'
             name={`${camelCaseName}Max`}
             value={eval(`props.formData.${camelCaseName}Max`)}
+            onChange={props.handleChange}
           />
         </div>
       );
@@ -99,7 +100,6 @@ export default function FormAnalise(props) {
             name={`gFunc${i}`}
             maxLength='10'
             value={eval(`props.formData.gFunc${i}`)}
-            checked={eval(``)}
             onChange={props.handleChange}
           />
           <label>
@@ -108,6 +108,7 @@ export default function FormAnalise(props) {
               name={`inex${i}`}
               id='inclui'
               value='incluir'
+              onChange={props.handleChange}
               checked={eval(`props.formData.inex${i} === 'incluir'`)}
             />
             Incluir
@@ -118,6 +119,7 @@ export default function FormAnalise(props) {
               name={`inex${i}`}
               id='incSim'
               value='incSim'
+              onChange={props.handleChange}
               checked={eval(`props.formData.inex${i} === 'incSim'`)}
             />
             Incluir Simultâneo
@@ -128,6 +130,7 @@ export default function FormAnalise(props) {
               name={`inex${i}`}
               id='excluir'
               value='excluir'
+              onChange={props.handleChange}
               checked={eval(`props.formData.inex${i} === 'excluir'`)}
             />
             Excluir
