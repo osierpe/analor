@@ -5,6 +5,8 @@ export default function FormAnalise(props) {
   //  Elementos
   if (props.item.tipo === 'possui') {
     const elementosEl = props.item.elementos.map(el => {
+      console.log(props.formData);
+
       return (
         <div className='elementos__input' key={el}>
           <label htmlFor={`tem${el}`}>
@@ -15,6 +17,7 @@ export default function FormAnalise(props) {
               id={`tem${el}`}
               name={`tem${el}`}
               checked={eval(`props.formData.tem${el}`)}
+              onChange={props.handleChange}
             />
           </label>
           <label htmlFor={`quant${el}`}>
@@ -26,6 +29,7 @@ export default function FormAnalise(props) {
               name={`quant${el}`}
               min='0'
               value={eval(`props.formData.quant${el}`)}
+              onChange={props.handleChange}
             />
           </label>
         </div>
@@ -62,6 +66,7 @@ export default function FormAnalise(props) {
             min='0'
             name={`${camelCaseName}Min`}
             value={eval(`props.formData.${camelCaseName}Min`)}
+            onChange={props.handleChange}
           />
           à{' '}
           <input
@@ -95,13 +100,26 @@ export default function FormAnalise(props) {
             maxLength='10'
             value={eval(`props.formData.gFunc${i}`)}
             checked={eval(``)}
+            onChange={props.handleChange}
           />
           <label>
-            <input type='radio' name={`inex${i}`} id='inclui' value='incluir' />
+            <input
+              type='radio'
+              name={`inex${i}`}
+              id='inclui'
+              value='incluir'
+              checked={eval(`props.formData.inex${i} === 'incluir'`)}
+            />
             Incluir
           </label>
           <label>
-            <input type='radio' name={`inex${i}`} id='incSim' value='incSim' />
+            <input
+              type='radio'
+              name={`inex${i}`}
+              id='incSim'
+              value='incSim'
+              checked={eval(`props.formData.inex${i} === 'incSim'`)}
+            />
             Incluir Simultâneo
           </label>
           <label>
@@ -110,6 +128,7 @@ export default function FormAnalise(props) {
               name={`inex${i}`}
               id='excluir'
               value='excluir'
+              checked={eval(`props.formData.inex${i} === 'excluir'`)}
             />
             Excluir
           </label>
@@ -149,6 +168,8 @@ export default function FormAnalise(props) {
             type='text'
             name={props.item.nome.toLowerCase()}
             maxLength='15'
+            value={props.formData.cas}
+            onChange={props.handleChange}
           />
         </label>
       </section>

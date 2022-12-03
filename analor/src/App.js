@@ -7,46 +7,46 @@ import './sass/styles.css';
 export default function App() {
   const [formData, setFormData] = useState({
     //Elementos
-    temCarbono: undefined,
-    quantCarbono: undefined,
-    temOxigênio: undefined,
-    quantOxigênio: undefined,
-    temHidrogênio: undefined,
-    quantHidrogênio: undefined,
-    temNitrogênio: undefined,
-    quantNitrogênio: undefined,
-    temEnxofre: undefined,
-    quantEnxofre: undefined,
-    temCloro: undefined,
-    quantCloro: undefined,
-    temBromo: undefined,
-    quantBromo: undefined,
-    temIodo: undefined,
-    quantIodo: undefined,
-    temFlúor: undefined,
-    quantFlúor: undefined,
+    temCarbono: '',
+    quantCarbono: '',
+    temOxigênio: '',
+    quantOxigênio: '',
+    temHidrogênio: '',
+    quantHidrogênio: '',
+    temNitrogênio: '',
+    quantNitrogênio: '',
+    temEnxofre: '',
+    quantEnxofre: '',
+    temCloro: '',
+    quantCloro: '',
+    temBromo: '',
+    quantBromo: '',
+    temIodo: '',
+    quantIodo: '',
+    temFlúor: '',
+    quantFlúor: '',
 
     // Propriedades
 
-    pesoMolecularMin: undefined,
-    pesoMolecularMax: undefined,
-    pontoFusãoMin: undefined,
-    pontoFusãoMax: undefined,
-    pontoEbuliçãoMin: undefined,
-    pontoEbuliçãoMax: undefined,
+    pesoMolecularMin: '',
+    pesoMolecularMax: '',
+    pontoFusãoMin: '',
+    pontoFusãoMax: '',
+    pontoEbuliçãoMin: '',
+    pontoEbuliçãoMax: '',
 
     // ECGF
-    gfunc1: '',
+    gFunc1: '',
     inex1: 'incluir',
-    gfunc2: '',
+    gFunc2: '',
     inex2: 'incluir',
-    gfunc3: '',
+    gFunc3: '',
     inex3: 'incluir',
-    gfunc4: '',
+    gFunc4: '',
     inex4: 'incluir',
-    gfunc5: '',
+    gFunc5: '',
     inex5: 'incluir',
-    gfunc6: '',
+    gFunc6: '',
     inex6: 'incluir',
 
     //cas
@@ -54,10 +54,11 @@ export default function App() {
   });
 
   const handleChange = function (event) {
-    const { name, value } = event.target;
+    console.log(event.target);
+    const { name, value, type, checked } = event.target;
     setFormData(prevData => ({
       ...prevData,
-      [name]: value,
+      [name]: type === 'checkbox' ? checked : value,
     }));
   };
 
@@ -67,7 +68,7 @@ export default function App() {
         item={dado}
         key={dado.nome}
         formData={formData}
-        setFormData={setFormData}
+        handleChange={handleChange}
       />
     );
   });
