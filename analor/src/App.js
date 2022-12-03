@@ -54,7 +54,6 @@ export default function App() {
   });
 
   const handleChange = function (event) {
-    console.log(event.target);
     const { name, value, type, checked } = event.target;
     setFormData(prevData => ({
       ...prevData,
