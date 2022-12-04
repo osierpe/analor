@@ -5,8 +5,6 @@ export default function FormAnalise(props) {
   //  Elementos
   if (props.item.tipo === 'possui') {
     const elementosEl = props.item.elementos.map(el => {
-      console.log(props.formData);
-
       return (
         <div className='elementos__input' key={el}>
           <label htmlFor={`tem${el}`}>
