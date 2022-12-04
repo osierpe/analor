@@ -1,3 +1,4 @@
+/* eslint-disable no-eval */
 import { useState } from 'react';
 import dados from './components/dadosForm';
 import FormAnalise from './components/FormAnalise';
@@ -55,10 +56,28 @@ export default function App() {
 
   const handleChange = function (event) {
     const { name, value, type, checked } = event.target;
-    setFormData(prevData => ({
-      ...prevData,
-      [name]: type === 'checkbox' ? checked : value,
-    }));
+
+    if (name.slice(0, 5) === 'quant') {
+      const temElemento = `tem${name.slice(5)}`;
+
+      setFormData(prevData => ({
+        ...prevData,
+        [name]: value,
+        [temElemento]: value > 0,
+      }));
+    } else if (name.slice(0, 3) === 'tem') {
+      const quantElemento = `quant${name.slice(3)}`;
+      setFormData(prevData => ({
+        ...prevData,
+        [name]: checked ? checked : '',
+        [quantElemento]: !checked ? '' : '',
+      }));
+    } else {
+      setFormData(prevData => ({
+        ...prevData,
+        [name]: type === 'checkbox' ? checked : value,
+      }));
+    }
   };
 
   const analiseEl = dados.map(dado => {
