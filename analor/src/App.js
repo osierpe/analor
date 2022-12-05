@@ -117,7 +117,7 @@ export default function App() {
   return (
     <>
       <header>
-        <h1 className='Logo'>Analor</h1>
+        <h1 className='logo'>Analor</h1>
       </header>
       <main>
         <form>
