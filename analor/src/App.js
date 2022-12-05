@@ -72,6 +72,29 @@ export default function App() {
         [name]: checked ? checked : '',
         [quantElemento]: !checked ? '' : '',
       }));
+      //
+      // Código velho para manter o max sempre acima do min, que não estava funcionando
+
+      // } else if (name.slice(-3) === 'Max') {
+      //   const valorMin = name.replace(/Max$/, 'Min');
+      //   setFormData(prevData => ({
+      //     ...prevData,
+      //     [name]:
+      //       value > eval(`formData.${valorMin}`)
+      //         ? value
+      //         : eval(`formData.${valorMin}`),
+      //   }));
+      //
+    } else if (name.slice(-3) === 'Min') {
+      const valorMax = name.replace(/Min$/, 'Max');
+      setFormData(prevData => ({
+        ...prevData,
+        [name]: value,
+        [valorMax]:
+          value > eval(`formData.${valorMax}`)
+            ? value
+            : eval(`formData.${valorMax}`),
+      }));
     } else {
       setFormData(prevData => ({
         ...prevData,
