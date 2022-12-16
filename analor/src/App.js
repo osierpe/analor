@@ -114,13 +114,17 @@ export default function App() {
     );
   });
 
+  const handleSubmit = event => {
+    event.preventDefault();
+  };
+
   return (
     <>
       <header>
         <h1 className='logo'>Analor</h1>
       </header>
       <main>
-        <form>
+        <form onSubmit={handleSubmit}>
           <div className='analise'>{analiseEl}</div>
           <Buttons />
         </form>
