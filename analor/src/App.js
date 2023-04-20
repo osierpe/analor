@@ -116,6 +116,11 @@ export default function App() {
 
   const handleSubmit = event => {
     event.preventDefault();
+
+    fetch('http://localhost:5000', {
+      method: 'POST',
+      body: formData
+    })
   };
 
   return (
