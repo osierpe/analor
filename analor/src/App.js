@@ -118,7 +118,7 @@ export default function App() {
     event.preventDefault()
 
     const response = await fetch('http://localhost:5000', {
-      method: 'GET',
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
