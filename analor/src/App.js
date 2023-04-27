@@ -115,19 +115,15 @@ export default function App() {
   });
 
   const handleSubmit = async (event) => {
-    event.preventDefault()
+    event.preventDefault();
 
-    const response = await fetch('http://localhost:5000', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(formData)
-    });
+  const queryParams = new URLSearchParams(formData).toString();
+  const response = await fetch(`/search?${queryParams}`);
 
-    const data = await response.json();
-    console.log(data)
-  };
+  const data = await response.json();
+  console.log(data); // Do something with the response data
+}
+
 
   return (
     <>
