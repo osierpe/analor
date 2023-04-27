@@ -114,13 +114,19 @@ export default function App() {
     );
   });
 
-  const handleSubmit = event => {
-    event.preventDefault();
+  const handleSubmit = async (event) => {
+    event.preventDefault()
 
-    fetch('http://localhost:5000', {
-      method: 'POST',
-      body: formData
-    })
+    const response = await fetch('http://localhost:5000', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(formData)
+    });
+
+    const data = await response.json();
+    console.log(data)
   };
 
   return (
