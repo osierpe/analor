@@ -1,118 +1,198 @@
-/* eslint-disable no-eval */
 import { useState } from 'react';
-import dados from './components/dadosForm';
-import FormAnalise from './components/FormAnalise';
 import Buttons from './components/Buttons';
 import './sass/styles.css';
+import Elementos from './components/Elementos';
+import FisQui from './components/FisQui';
+import Ecgf from './components/Ecgf';
 
 export default function App() {
   const [formData, setFormData] = useState({
-    //Elementos
-    temCarbono: '',
-    quantCarbono: '',
-    temOxigênio: '',
-    quantOxigênio: '',
-    temHidrogênio: '',
-    quantHidrogênio: '',
-    temNitrogênio: '',
-    quantNitrogênio: '',
-    temEnxofre: '',
-    quantEnxofre: '',
-    temCloro: '',
-    quantCloro: '',
-    temBromo: '',
-    quantBromo: '',
-    temIodo: '',
-    quantIodo: '',
-    temFlúor: '',
-    quantFlúor: '',
+    
+    elementos:
+     [ {
+        nome: 'Carbono',
+        tem: '',
+        quantidade: ''
+      },
+      {
+        nome: 'Hidrogênio',
+        tem: '',
+        quantidade: ''
+      },
+      {
+        nome: 'Nitrogênio',
+        tem: '',
+        quantidade: ''
+      },
+      {
+        nome: 'Oxigênio',
+        tem: '',
+        quantidade: ''
+      },
+      {
+        nome: 'Flúor',
+        tem: '',
+        quantidade: ''
+      },
+      {
+        nome: 'Cloro',
+        tem: '',
+        quantidade: ''
+      },
+      {
+        nome: 'Bromo',
+        tem: '',
+        quantidade: ''
+      },
+      {
+        nome: 'Iodo',
+        tem: '',
+        quantidade: ''
+      },
+      {
+        nome: 'Enxofre',
+        tem: '',
+        quantidade: ''
+      },
+      
+      ]
+    ,
 
-    // Propriedades
+    propriedades:
+      [{
+        nome: 'Peso Molecular',
+        alcance: ['', '']
+      },
+      {
+        nome: 'Ponto de Fusão',
+        alcance: ['', '']},
+      {
+        nome: 'Ponto de Ebulição',
+        alcance: ['', '']}
+    ]
+    ,
 
-    pesoMolecularMin: '',
-    pesoMolecularMax: '',
-    pontoFusãoMin: '',
-    pontoFusãoMax: '',
-    pontoEbuliçãoMin: '',
-    pontoEbuliçãoMax: '',
-
-    // ECGF
-    gFunc1: '',
-    inex1: 'incluir',
-    gFunc2: '',
-    inex2: 'incluir',
-    gFunc3: '',
-    inex3: 'incluir',
-    gFunc4: '',
-    inex4: 'incluir',
-    gFunc5: '',
-    inex5: 'incluir',
-    gFunc6: '',
-    inex6: 'incluir',
-
-    //cas
+    ecgf: [{
+      gFunc: '',
+      inex: 'incluir'
+    }, {
+      gFunc: '',
+      inex: 'incluir'
+    }, {
+      gFunc: '',
+      inex: 'incluir'
+    }, {
+      gFunc: '',
+      inex: 'incluir'
+    }, {
+      gFunc: '',
+      inex: 'incluir'
+    }, {
+      gFunc: '',
+      inex: 'incluir'
+    }],
+ 
     cas: '',
   });
 
-  const handleChange = function (event) {
-    const { name, value, type, checked } = event.target;
+  const handleChange = (e) => {
 
-    if (name.slice(0, 5) === 'quant') {
-      const temElemento = `tem${name.slice(5)}`;
+    const atualizarFormData = function(propType, parentKey, childKey, value, checked) {
+      
+      if(!childKey && propType !== 'cas'){
+        const newArr = formData[propType].map((item, i) => {
+          if(Number(parentKey.slice(-1)) === i) {
+           const newItem = {
+                gFunc: parentKey.slice(0, -1) === 'gFunc' ? value : item.gFunc,
+                inex: parentKey.slice(0, -1) === 'inex' ? value : item.inex
+            }
+            return newItem
+          } else {
+            return item
+          }
+        })
 
-      setFormData(prevData => ({
-        ...prevData,
-        [name]: value,
-        [temElemento]: value > 0,
-      }));
-    } else if (name.slice(0, 3) === 'tem') {
-      const quantElemento = `quant${name.slice(3)}`;
-      setFormData(prevData => ({
-        ...prevData,
-        [name]: checked ? checked : '',
-        [quantElemento]: !checked ? '' : '',
-      }));
-      //
-      // Código velho para manter o max sempre acima do min, que não estava funcionando
+        setFormData((prevFormData) => {
 
-      // } else if (name.slice(-3) === 'Max') {
-      //   const valorMin = name.replace(/Max$/, 'Min');
-      //   setFormData(prevData => ({
-      //     ...prevData,
-      //     [name]:
-      //       value > eval(`formData.${valorMin}`)
-      //         ? value
-      //         : eval(`formData.${valorMin}`),
-      //   }));
-      //
-    } else if (name.slice(-3) === 'Min') {
-      const valorMax = name.replace(/Min$/, 'Max');
-      setFormData(prevData => ({
-        ...prevData,
-        [name]: value,
-        [valorMax]:
-          value > eval(`formData.${valorMax}`)
-            ? value
-            : eval(`formData.${valorMax}`),
+          return (
+            {
+              ...prevFormData,
+              [propType]: newArr
+            }
+          )
+        })
+        }
+
+      else if (childKey) {const newArr = formData[propType].map((item) => {
+        if (parentKey === item.nome) {
+          let newItem;
+    
+          switch (childKey) {
+            case 'tem':
+              newItem = {
+                nome: item.nome,
+                tem: checked ? checked : '',
+                quantidade: checked ? item.quantidade : ''
+              };
+              break;
+    
+            case 'quantidade':
+              newItem = {
+                nome: item.nome,
+                tem: value > 0,
+                quantidade: value
+              };
+              break;
+    
+            case 'min':
+            case 'max':
+              newItem = {
+                nome: item.nome,
+                alcance: [
+                  childKey === 'min' ? (value > item.alcance[1] ? item.alcance[1] : value) : item.alcance[0],
+                  childKey === 'max' ? value : item.alcance[1]
+                ]
+              };
+              break;
+    
+            default:
+              newItem = item;
+          }
+    
+          return newItem;
+        }
+    
+        return item;
+      });
+      
+      
+      
+    
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        [propType]: [...newArr]
       }));
-    } else {
-      setFormData(prevData => ({
-        ...prevData,
-        [name]: type === 'checkbox' ? checked : value,
-      }));
+    }    
+    else if (propType === 'cas') {
+      setFormData(prevFormData => ({
+        ...prevFormData,
+        [propType]: value
+      }))
     }
-  };
-
-  const analiseEl = dados.map(dado => {
-    return (
-      <FormAnalise
-        item={dado}
-        key={dado.nome}
-        formData={formData}
-        handleChange={handleChange}
-      />
-    );
-  });
+  }
+  const { name, value, checked } = e.target;
+  const [parentKey, childKey] = name.split('-');
+    if(childKey === 'tem' || childKey === 'quantidade') {
+      atualizarFormData('elementos', parentKey, childKey, value, checked)
+    } else if (childKey === 'min' || childKey === 'max') {
+      atualizarFormData('propriedades', parentKey, childKey, value, checked)
+    } else if (name.slice(0, -1) === 'gFunc' || name.slice(0, -1) === 'inex') {
+      atualizarFormData('ecgf', parentKey, false, value)
+    } else if (name === 'cas') {
+      atualizarFormData('cas', false, false, value)
+    }
+    
+  }
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -121,9 +201,8 @@ export default function App() {
   const response = await fetch(`/search?${queryParams}`);
 
   const data = await response.json();
-  console.log(data); // Do something with the response data
+  console.log(data);
 }
-
 
   return (
     <>
@@ -132,10 +211,27 @@ export default function App() {
       </header>
       <main>
         <form onSubmit={handleSubmit}>
-          <div className='analise'>{analiseEl}</div>
+          <div className='analise'>
+            <Elementos formData={formData} handleChange={handleChange}/>
+            <FisQui formData={formData} handleChange={handleChange}/>
+            <Ecgf formData={formData} handleChange={handleChange}/>
+      <section className='cas'>
+        <h2 className='cas__título'>CAS</h2>
+        <label>
+          CAS:
+          <input
+            type='text'
+            name='cas'
+            maxLength='15'
+            value={formData.cas}
+            onChange={handleChange}
+          />
+        </label>
+      </section>
+          </div>
           <Buttons />
         </form>
       </main>
     </>
   );
-}
+  }
