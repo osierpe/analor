@@ -206,7 +206,7 @@ export default function App() {
 
 		const formDataJson = JSON.stringify(formData);
 		const queryParams = new URLSearchParams({ data: formDataJson }).toString();
-		const response = await fetch(`/search?${queryParams}`);
+		const response = await fetch(`http://localhost:5000/search?${queryParams}`);
 
 		const data = await response.json();
 		console.log(data);
