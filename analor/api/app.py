@@ -21,7 +21,7 @@ def search():
     whereclause = ''
 
     clauses.append(addColumnEqualValue('=','cas', parameter_dict['cas']))
-
+    print(parameter_dict['propriedades'])
     clauses.append(buildElementsWhereClause(parameter_dict['elementos']))
 
     for clause in clauses:
@@ -62,6 +62,14 @@ def buildElementsWhereClause(elements):
             firstElement = False
     return casWhereClause
         
+def buildPropsWhereClause(properties):
+    propertiesWhereClause = ''
+    for propertie in properties:
+        if propertie['alcance'][1]:
+            if propertie['alcance'][0]:
+                propertiesWhereClause = f'round(nomedacol, {len(str(propertie["alcance"][0]).split(".")[1])}) >= {propertie["alcance"][0]} AND round(nomedacol,{len(str(propertie["alcance"][1]).split(".")[1])}) <= {propertie["alcance"][1]}'
+        else:
+            
 
 def addColumnEqualValue(operator, colName, value) -> str:
     if value:
