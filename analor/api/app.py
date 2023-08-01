@@ -10,7 +10,7 @@ def search():
     args = request.args
     parameter_dict = args.to_dict()['data']
     parameter_dict = json.loads(parameter_dict)
-    conn = psycopg2.connect(database="new_db_analor",
+    conn = psycopg2.connect(database="analor",
                             user="postgres",
                             password="admin",
                             host="localhost", port="5432")
@@ -34,9 +34,9 @@ def search():
         firstClause = False
 
     if whereclause:
-        cur.execute(f'''SELECT * FROM UNIV1_210523 WHERE {whereclause};''')
+        cur.execute(f'''SELECT * FROM UNIV1_teste WHERE {whereclause};''')
     else:
-        cur.execute(f'''SELECT * FROM UNIV1_210523;''')
+        cur.execute(f'''SELECT * FROM UNIV1_teste;''')
 
     resultRows = cur.fetchall()
   

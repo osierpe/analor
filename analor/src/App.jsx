@@ -4,6 +4,7 @@ import './sass/styles.css';
 import Elementos from './components/Elementos';
 import FisQui from './components/FisQui';
 import Ecgf from './components/Ecgf';
+import CompostosTable from './components/CompostosTable';
 
 export default function App() {
 	const [formData, setFormData] = useState({
@@ -97,6 +98,8 @@ export default function App() {
 
 		cas: '',
 	});
+
+	const [resultados, setResultados] = useState(null);
 
 	const handleChange = (e) => {
 		const atualizarFormData = function (
@@ -209,7 +212,7 @@ export default function App() {
 		const response = await fetch(`http://localhost:5000/search?${queryParams}`);
 
 		const data = await response.json();
-		console.log(data);
+		setResultados(data);
 	};
 
 	return (
@@ -248,6 +251,7 @@ export default function App() {
 					</div>
 					<Buttons />
 				</form>
+				{resultados && <CompostosTable compostos={resultados}></CompostosTable>}
 			</main>
 		</>
 	);
