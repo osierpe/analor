@@ -12,7 +12,7 @@ export default function FisQui(props) {
               id={camelCaseName}
               type='number'
               step='0.1'
-              min='-200'
+              min= {fisQui.nome === 'Peso Molecular' ? '0' : '-273'}
               name={`${fisQui.nome}-min`}
               value={props.formData.propriedades[index].alcance[0]}
               onChange={props.handleChange}

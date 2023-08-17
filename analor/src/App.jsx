@@ -203,7 +203,6 @@ export default function App() {
 			atualizarFormData('cas', false, false, value);
 		}
 	};
-
 	const handleSubmit = async (event) => {
 		event.preventDefault();
 
