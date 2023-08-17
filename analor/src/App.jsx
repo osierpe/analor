@@ -130,54 +130,58 @@ export default function App() {
 				});
 			} else if (childKey) {
 				const newArr = formData[propType].map((item) => {
-					if (parentKey === item.nome) {
-						let newItem;
-
-						switch (childKey) {
-							case 'tem':
-								newItem = {
-									nome: item.nome,
-									tem: checked ? checked : '',
-									quantidade: checked
-										? item.tem === false
-											? ''
-											: item.quantidade
-										: '',
-								};
-								console.log(item);
-								break;
-
-							case 'quantidade':
-								newItem = {
-									nome: item.nome,
-									tem: value > 0,
-									quantidade: value,
-								};
-								break;
-
-							case 'min':
-							case 'max':
-								newItem = {
-									nome: item.nome,
-									alcance: [
-										childKey === 'min'
-											? value > item.alcance[1]
-												? item.alcance[1]
-												: value
-											: item.alcance[0],
-										childKey === 'max' ? value : item.alcance[1],
-									],
-								};
-								break;
-
-							default:
-								newItem = item;
-						}
-
-						return newItem;
+				  if (parentKey === item.nome) {
+					let newItem;
+			  
+					switch (childKey) {
+					  case 'tem':
+						newItem = {
+						  nome: item.nome,
+						  tem: checked ? checked : '',
+						  quantidade: checked
+							? item.tem === false
+							  ? ''
+							  : item.quantidade
+							: '',
+						};
+						break;
+			  
+					  case 'quantidade':
+						newItem = {
+						  nome: item.nome,
+						  tem: value > 0,
+						  quantidade: value,
+						};
+						break;
+			  
+					  case 'min':
+						newItem = {
+						  ...item,
+						  alcance: [
+							item.alcance[1] === '' ? value : Math.min(value, item.alcance[1]),
+							item.alcance[1],
+						  ],
+						};
+						break;
+			  
+					  case 'max':
+						newItem = {
+						  ...item,
+						  alcance: [
+							Math.min(value, item.alcance[0]),
+							value,
+						  ],
+						};
+						break;
+			  
+					  default:
+						newItem = item;
 					}
-
-					return item;
+			  
+					return newItem;
+				  }
+			  
+				  return item;
 				});
 
 				setFormData((prevFormData) => ({
