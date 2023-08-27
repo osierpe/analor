@@ -11,7 +11,8 @@ export default function FisQui(props) {
             <input
               id={camelCaseName}
               type='number'
-              step='0.1'
+              step='1'
+              pattern="[0-9]{10}"
               min= {fisQui.nome === 'Peso Molecular' ? '0' : '-273'}
               name={`${fisQui.nome}-min`}
               value={props.formData.propriedades[index].alcance[0]}
@@ -21,8 +22,9 @@ export default function FisQui(props) {
             <input
               type='number'
               min='0'
-              step='0.1'
+              step='1'
               name={`${fisQui.nome}-max`}
+              pattern="[0-9]{10}"
               value={props.formData.propriedades[index].alcance[1]}
               onChange={props.handleChange}
             />
