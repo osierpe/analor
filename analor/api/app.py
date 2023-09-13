@@ -3,6 +3,7 @@ import json
 import psycopg2
 from psycopg2.extras import RealDictCursor
 
+
 app = Flask(__name__)
 
 @app.route('/search')
@@ -21,7 +22,8 @@ def search():
     whereclause = ''
 
     clauses.append(addColumnEqualValue('=','cas', parameter_dict['cas']))
-    print(parameter_dict['propriedades'])
+    asxcd = buildPropsWhereClause(parameter_dict['propriedades'])
+    # print(parameter_dict['propriedades'])
     clauses.append(buildElementsWhereClause(parameter_dict['elementos']))
 
     for clause in clauses:
@@ -65,10 +67,23 @@ def buildElementsWhereClause(elements):
 def buildPropsWhereClause(properties):
     propertiesWhereClause = ''
     for propertie in properties:
-        if propertie['alcance'][1]:
-            if propertie['alcance'][0]:
-                propertiesWhereClause = f'round(nomedacol, {len(str(propertie["alcance"][0]).split(".")[1])}) >= {propertie["alcance"][0]} AND round(nomedacol,{len(str(propertie["alcance"][1]).split(".")[1])}) <= {propertie["alcance"][1]}'
-        else:
+        print(propertie)
+        match propertie['nome'].lower():
+            case 'peso molecular': 
+                columnName = 'pmol'
+            case 'ponto de fusão':
+                columnName = 'pf'
+            case 'ponto de ebulição':
+                columnName = 'pe'
+        if propertie['alcance'][0]:
+            propertiesWhereClause = f'{columnName} >= {propertie["alcance"][0]}' 
+            if propertie['alcance'][1]:
+                propertiesWhereClause += addAndConnector()
+                propertiesWhereClause += f'{columnName} <= {propertie["alcance"][1]}'
+        elif properties['alcance'][1]:
+                propertiesWhereClause = f'{columnName} <= {propertie["alcance"][1]}'
+        print(propertiesWhereClause)
+    return 0
             
 
 def addColumnEqualValue(operator, colName, value) -> str:
@@ -90,8 +105,6 @@ def formatRowsResult(data):
     result = []
     for row in data:
         rowDictionary = dict(row)
-        print(row)
-        print(rowDictionary)
         cleanedRowDictionary = { key:str(value).strip() for key, value in rowDictionary.items()}
         result.append(cleanedRowDictionary)
     return result
