@@ -49,17 +49,44 @@ export default function FisQui_Range({
       },
     )
 
-    set_form_data({
-      ...form_data,
+    set_form_data((prev_form_data) => ({
+      ...prev_form_data,
       propriedades: new_propriedades_array,
-    })
+    }))
   }
 
   const handle_input = function (event: any) {
-    console.log(event.target, 'oi')
+    console.log(event.target.value)
+
+    const new_props_array = form_data.propriedades.map((form_prop) => {
+      if (event.target.name.slice(0, -4) !== form_prop.nome) {
+        return form_prop
+      }
+
+      const isMax = event.target.name.slice(-3) === 'max'
+
+      return {
+        ...form_prop,
+        alcance: [
+          isMax ? form_prop.alcance[0] : Number(event.target.value),
+          isMax ? Number(event.target.value) : form_prop.alcance[1],
+        ],
+      }
+    })
+
+    console.log(new_props_array, form_data.propriedades)
+
+    set_form_data((prev_form_data) => ({
+      ...prev_form_data,
+      propriedades: new_props_array.map((prop) => ({
+        ...prop,
+        alcance: prop.alcance as [number | null, number | null], // Ensure correct type
+      })),
+    }))
   }
 
   function get_value(val: 'min' | 'max'): number | undefined {
+    console.log('getting value')
     for (let i = 0; i < form_data.propriedades.length; i++) {
       if (form_data.propriedades[i].nome === nome) {
         if (val === 'min' && form_data.propriedades[i].alcance[0] !== null) {
