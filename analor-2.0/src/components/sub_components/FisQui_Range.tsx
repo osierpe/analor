@@ -14,13 +14,39 @@ export default function FisQui_Range({
   set_form_data,
   form_data,
 }: FisQui_Props) {
-  console.log(form_data)
+  //TODO: Fazer um botão de clear
+
+  function check_min_max(arr: Array<any>, name: string): Array<any> {
+    const newArr = arr.map((prop) => {
+      if (name !== prop.nome) {
+        return prop
+      }
+
+      console.log(Math.min(prop.alcance[0], prop.alcance[1]))
+
+      return {
+        ...prop,
+        alcance: [
+          prop.alcance[0] === null
+            ? prop.alcance[0]
+            : prop.alcance[1] === null
+            ? prop.alcance[0]
+            : Math.min(prop.alcance[0], prop.alcance[1]),
+          prop.alcance[1] === null
+            ? prop.alcance[1]
+            : Math.max(prop.alcance[0], prop.alcance[1]),
+        ],
+      }
+    })
+
+    return newArr
+  }
 
   const handle_increment = function (
     isInverted: boolean = false,
     is_max: boolean = false,
   ) {
-    const new_propriedades_array: any[] = form_data.propriedades.map(
+    let new_propriedades_array: any[] = form_data.propriedades.map(
       (form_prop) => {
         if (nome === form_prop.nome) {
           if (form_prop.alcance !== null) {
@@ -49,6 +75,8 @@ export default function FisQui_Range({
       },
     )
 
+    new_propriedades_array = check_min_max(new_propriedades_array, nome)
+
     set_form_data((prev_form_data) => ({
       ...prev_form_data,
       propriedades: new_propriedades_array,
@@ -56,9 +84,7 @@ export default function FisQui_Range({
   }
 
   const handle_input = function (event: any) {
-    console.log(event.target.value)
-
-    const new_props_array = form_data.propriedades.map((form_prop) => {
+    let new_props_array = form_data.propriedades.map((form_prop) => {
       if (event.target.name.slice(0, -4) !== form_prop.nome) {
         return form_prop
       }
@@ -74,19 +100,23 @@ export default function FisQui_Range({
       }
     })
 
+    new_props_array = check_min_max(
+      new_props_array,
+      event.target.name.slice(0, -4),
+    )
     console.log(new_props_array, form_data.propriedades)
 
     set_form_data((prev_form_data) => ({
       ...prev_form_data,
+      //Precisei fazer esse check extra de type só aqui, typescript é estranho as vezes. NÃO MEXER
       propriedades: new_props_array.map((prop) => ({
         ...prop,
-        alcance: prop.alcance as [number | null, number | null], // Ensure correct type
+        alcance: prop.alcance as [number | null, number | null],
       })),
     }))
   }
 
   function get_value(val: 'min' | 'max'): number | undefined {
-    console.log('getting value')
     for (let i = 0; i < form_data.propriedades.length; i++) {
       if (form_data.propriedades[i].nome === nome) {
         if (val === 'min' && form_data.propriedades[i].alcance[0] !== null) {
