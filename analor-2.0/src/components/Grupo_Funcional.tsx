@@ -51,7 +51,7 @@ export default function Grupo_Funcional({
       <div className="ecgf" key={`ecgf${i}`}>
         <div className="dropdown">
           <img
-            src="/public/dropdown_arrow.svg"
+            src="/dropdown_arrow.svg"
             alt="seta de dropdown"
             className="dropdown__arrow"
           />
@@ -114,7 +114,7 @@ export default function Grupo_Funcional({
     <div className="grupo_funcional">
       <div className="grupo_funcional__header">
         <h2>Quais são os grupos funcionais presentes na amostra?</h2>
-        <img src="/public/i-icon.svg" alt="ícone de informação" />
+        <img src="/i-icon.svg" alt="ícone de informação" />
       </div>
       <div className="grupo_funcional__body">
         {display_correct_amount(ecgf_elements, cur_displaying)}

@@ -62,7 +62,7 @@ export default function Elementos({
       <div className="elementos__header">
         <h2>Quais elementos estão presentes na amostra?</h2>
         <img
-          src="/public/i-icon.svg"
+          src="/i-icon.svg"
           alt="ícone de informação"
           className="elementos__header--info"
         />
