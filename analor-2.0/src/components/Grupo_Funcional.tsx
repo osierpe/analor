@@ -36,7 +36,7 @@ export default function Grupo_Funcional({
         }
         return {
           ...ecgf,
-          gFunc: event.target.value,
+          gFunc: event.target.value !== '' ? event.target.value : null,
         }
       })
       set_form_data((prev_form_data) => ({
