@@ -4,8 +4,6 @@ export default function Identificadores({
   form_data,
   set_form_data,
 }: form_props) {
-  console.log(form_data)
-
   const handle_change = function (event: any) {
     const value = event.target.value
     const name = event.target.name

@@ -22,8 +22,6 @@ export default function FisQui_Range({
         return prop
       }
 
-      console.log(Math.min(prop.alcance[0], prop.alcance[1]))
-
       return {
         ...prop,
         alcance: [
@@ -104,7 +102,6 @@ export default function FisQui_Range({
       new_props_array,
       event.target.name.slice(0, -4),
     )
-    console.log(new_props_array, form_data.propriedades)
 
     set_form_data((prev_form_data) => ({
       ...prev_form_data,
