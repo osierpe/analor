@@ -1,13 +1,15 @@
 import { useState } from 'react'
+import { Form_Data } from './form'
+
 import Header from './components/Header'
 import Navigation from './components/Navigation'
-
-import { Form_Data } from './form'
 import Elementos from './components/Elementos'
 import Submit_Btn from './components/Submit_Btn'
 import Propriedades from './components/Propriedades'
 import Grupo_Funcional from './components/Grupo_Funcional'
 import Identificadores from './components/Identificadores'
+
+import './Sass/styles.css'
 
 function App() {
   const [cur_page, set_cur_page] = useState(0)
