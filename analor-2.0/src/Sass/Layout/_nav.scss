@@ -5,19 +5,16 @@ nav {
   padding: 1rem 2rem;
   border-radius: 4rem;
   margin-bottom: 3rem;
+  font-size: 1.5rem;
+  .separator {
+    width: 0.2rem;
+    height: 2.4rem;
+    align-self: center;
+    background-color: #d9e1d4;
+  }
 
   .nav_link {
     display: flex;
-
-    &:not(:nth-child(4))::after {
-      content: '';
-      width: 0.2rem;
-      height: 160%;
-      background-color: #d9e1d4;
-      align-self: center;
-      margin-left: 7.5rem;
-      justify-content: flex-end;
-    }
   }
 
   .active {
