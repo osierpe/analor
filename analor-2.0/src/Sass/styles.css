@@ -6,6 +6,7 @@
 }
 
 html {
+  background-color: #ebf0e8;
   font-size: 10px;
 }
 
@@ -34,4 +35,29 @@ header h1 {
   margin-left: 20%;
   margin-right: 20%;
   margin-bottom: 5rem;
+}
+
+nav {
+  background-color: #ffffff;
+  display: flex;
+  justify-content: space-around;
+  padding: 1rem 2rem;
+  border-radius: 4rem;
+  margin-bottom: 2rem;
+}
+nav .nav_link {
+  display: flex;
+}
+nav .nav_link:not(:nth-child(4))::after {
+  content: "";
+  width: 0.2rem;
+  height: 100%;
+  background-color: #d9e1d4;
+  align-self: center;
+  margin-left: 7.5rem;
+  justify-content: flex-end;
+}
+nav .active {
+  transition: all 0.5s;
+  color: green;
 }/*# sourceMappingURL=styles.css.map */

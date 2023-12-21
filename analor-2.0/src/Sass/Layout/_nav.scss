@@ -1,0 +1,27 @@
+nav {
+  background-color: #ffffff;
+  display: flex;
+  justify-content: space-around;
+  padding: 1rem 2rem;
+  border-radius: 4rem;
+  margin-bottom: 2rem;
+
+  .nav_link {
+    display: flex;
+
+    &:not(:nth-child(4))::after {
+      content: '';
+      width: 0.2rem;
+      height: 100%;
+      background-color: #d9e1d4;
+      align-self: center;
+      margin-left: 7.5rem;
+      justify-content: flex-end;
+    }
+  }
+
+  .active {
+    transition: all 0.5s;
+    color: green;
+  }
+}
