@@ -1,0 +1,9 @@
+main {
+  background-color: #d9e1d4;
+  background-image: url('../../../public/Logo\ verde.svg'),
+    linear-gradient(to right, transparent, #d9e1d4); /* A gradient for the background */
+
+  background-repeat: no-repeat, no-repeat;
+  background-position: calc(100% - 2rem) calc(100% - 2rem), top left;
+  background-size: auto, auto;
+}
