@@ -27,4 +27,11 @@ header h1 {
   margin-left: 1.6rem;
   font-size: 3rem;
   color: white;
+}
+
+.content {
+  margin-top: 1.5rem;
+  margin-left: 20%;
+  margin-right: 20%;
+  margin-bottom: 5rem;
 }/*# sourceMappingURL=styles.css.map */

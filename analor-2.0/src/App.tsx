@@ -52,9 +52,11 @@ function App() {
   return (
     <>
       <Header />
-      <Navigation set_cur_page={set_cur_page} />
-      <main>{get_cur_page()}</main>
-      <Submit_Btn handle_submit={handle_submit} />
+      <div className="content">
+        <Navigation set_cur_page={set_cur_page} cur_page={cur_page} />
+        <main>{get_cur_page()}</main>
+        <Submit_Btn handle_submit={handle_submit} />
+      </div>
     </>
   )
 }
