@@ -54,10 +54,12 @@ nav .separator {
 }
 nav .nav_link {
   display: flex;
+  cursor: pointer;
 }
 nav .active {
   transition: all 0.5s;
   color: green;
+  cursor: default;
 }
 
 main {
