@@ -133,6 +133,9 @@ main h3 {
 .elementos__body--elemento .quantidade input {
   -webkit-appearance: none;
   margin: 0;
+  border: none;
+  border-radius: 1rem;
+  padding: 0.5rem 1rem;
   -moz-appearance: textfield;
   width: 5rem;
   text-align: center;
