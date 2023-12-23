@@ -1,0 +1,15 @@
+@mixin main_header {
+  padding-top: 2rem;
+  display: flex;
+  h2 {
+    font-size: 1.6rem;
+    font-weight: 400;
+    margin-left: auto;
+    color: #416747;
+  }
+  img {
+    margin-left: auto;
+    margin-right: 3rem;
+    cursor: help;
+  }
+}

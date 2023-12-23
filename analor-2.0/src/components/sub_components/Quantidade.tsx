@@ -77,7 +77,9 @@ export default function Quantidade({
         onChange={handle_input}
       />
       <span
-        className={`btn ${elemento.quantidade === null ? 'active' : ''}`}
+        className={`btn question-mark ${
+          elemento.quantidade === null ? 'active' : ''
+        }`}
         onClick={() => true}
       >
         ?

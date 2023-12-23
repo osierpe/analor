@@ -1,4 +1,11 @@
 main {
+  h2,
+  h3 {
+    font-size: 1.6rem;
+    font-weight: 400;
+    font-family: 'Lexend';
+  }
+
   background-color: #d9e1d4;
   background-image: url('../../../public/Logo\ verde.svg'),
     linear-gradient(to right, transparent, #d9e1d4); /* A gradient for the background */

@@ -1,0 +1,80 @@
+@use '../abstracts/' as *;
+
+.elementos {
+  padding-bottom: 1rem;
+  &__header {
+    @include main_header;
+  }
+  &__body {
+    margin-top: 5rem;
+    margin-bottom: 4rem;
+    margin-left: 15rem;
+    margin-right: auto;
+
+    &--elemento {
+      display: flex;
+      flex-wrap: nowrap;
+      align-items: center;
+      margin-bottom: 2rem;
+
+      .quantidade {
+        display: flex;
+        align-items: center;
+        margin-left: 3rem;
+        h3 {
+          margin-right: 2rem;
+        }
+        .btn.question-mark {
+          margin-left: 1rem;
+          transition: all 0.25s;
+        }
+        .btn.question-mark:hover {
+          background-color: #ffc700;
+        }
+        .btn {
+          cursor: pointer;
+          font-size: 1.2rem;
+          font-weight: 400;
+          background-color: white;
+          padding: 0.4rem 0.8rem;
+          border-radius: 10rem;
+          margin-right: 0.6rem;
+        }
+        input {
+          -webkit-appearance: none;
+          margin: 0;
+          -moz-appearance: textfield;
+          width: 5rem;
+          text-align: center;
+          font-weight: 400;
+          font-family: 'Lexend';
+        }
+      }
+
+      h3 {
+        margin-right: 5rem;
+      }
+      button {
+        cursor: pointer;
+        font-weight: 400;
+        border: none;
+        background-color: white;
+        padding: 0.5rem 1.5rem;
+        border-radius: 0.7rem;
+        margin-right: 1rem;
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.096);
+      }
+      button.active.sim {
+        background-color: #5eb33a;
+        color: white;
+      }
+      button.active.nao {
+        color: white;
+        background-color: #c22927;
+      }
+      button.active.nao-sei {
+        background-color: #ffc700;
+      }
+    }
+  }
+}
