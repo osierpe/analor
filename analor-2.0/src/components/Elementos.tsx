@@ -14,7 +14,7 @@ export default function Elementos({
       if (el.nome !== nome) return el
       return {
         nome: el.nome,
-        quantidade: el.quantidade,
+        quantidade: val ? el.quantidade : null,
         tem: val,
       }
     })

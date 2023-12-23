@@ -46,6 +46,7 @@ function App() {
   }
 
   const handle_submit = () => {
+    console.log(form_data)
     console.log('submit :)')
   }
 
