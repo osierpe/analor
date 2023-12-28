@@ -68,6 +68,8 @@ main {
   background-repeat: no-repeat, no-repeat;
   background-position: calc(100% - 2rem) calc(100% - 2rem), top left;
   background-size: auto, auto;
+  height: 70rem;
+  border-radius: 1rem;
 }
 main h2,
 main h3 {
@@ -101,8 +103,10 @@ main h3 {
   margin-right: auto;
 }
 .elementos__body--elemento {
-  display: flex;
-  flex-wrap: nowrap;
+  display: grid;
+  grid-template-columns: 1fr 2fr 2fr;
+  grid-template-rows: 1fr;
+  gap: 1rem;
   align-items: center;
   margin-bottom: 2rem;
 }

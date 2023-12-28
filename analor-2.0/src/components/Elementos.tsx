@@ -27,25 +27,26 @@ export default function Elementos({
   const elementos_elements = form_data.elementos.map((elemento) => (
     <div className="elementos__body--elemento" key={elemento.nome}>
       <h3>Possui {elemento.nome}?</h3>
-
-      <button
-        className={`sim ${elemento.tem ? 'active' : ''}`}
-        onClick={() => handle_el_btn(elemento.nome, true)}
-      >
-        Sim
-      </button>
-      <button
-        className={`nao ${elemento.tem === false ? 'active' : ''}`}
-        onClick={() => handle_el_btn(elemento.nome, false)}
-      >
-        Não
-      </button>
-      <button
-        className={`nao-sei ${elemento.tem === null ? 'active' : ''}`}
-        onClick={() => handle_el_btn(elemento.nome, null)}
-      >
-        Não sei
-      </button>
+      <div className="btns_container">
+        <button
+          className={`sim ${elemento.tem ? 'active' : ''}`}
+          onClick={() => handle_el_btn(elemento.nome, true)}
+        >
+          Sim
+        </button>
+        <button
+          className={`nao ${elemento.tem === false ? 'active' : ''}`}
+          onClick={() => handle_el_btn(elemento.nome, false)}
+        >
+          Não
+        </button>
+        <button
+          className={`nao-sei ${elemento.tem === null ? 'active' : ''}`}
+          onClick={() => handle_el_btn(elemento.nome, null)}
+        >
+          Não sei
+        </button>
+      </div>
 
       {elemento.tem === true ? (
         <Quantidade
