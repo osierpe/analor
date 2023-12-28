@@ -4,9 +4,11 @@ interface Submit_Props {
 
 export default function Submit_Btn({ handle_submit }: Submit_Props) {
   return (
-    <button onClick={() => handle_submit()}>
-      <img src="/symbol-1.svg" alt="símbolo de átomo" />
-      Mostrar Resultado
-    </button>
+    <div className="submit_btn_container">
+      <button onClick={() => handle_submit()}>
+        <img src="/symbol-1.svg" alt="símbolo de átomo" />
+        Mostrar Resultado
+      </button>
+    </div>
   )
 }

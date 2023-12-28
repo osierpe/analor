@@ -1,0 +1,31 @@
+.submit_btn_container {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  position: relative;
+  margin-top: 3rem;
+
+  button {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+
+    padding: 1rem;
+    border: solid black 0.2rem;
+    border-radius: 1rem;
+    font-size: 1.8rem;
+    font-weight: 500;
+    background-color: #5eb33a;
+
+    transition: all 0.5s;
+    img {
+      margin-right: 1rem;
+    }
+  }
+  button:hover {
+    position: absolute;
+    top: -0.2rem;
+    background-color: lighten($color: #5eb33a, $amount: 10);
+    box-shadow: 0 0.5rem 2rem rgba(0, 0, 0, 0.286);
+  }
+}
