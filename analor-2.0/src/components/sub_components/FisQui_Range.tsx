@@ -133,11 +133,11 @@ export default function FisQui_Range({
   return (
     <div className="propriedades__body--range">
       <h3>{nome}:</h3>
-      <div className="min">
-        <div className="plus" onClick={() => handle_increment(false, false)}>
+      <div className="propriedades__body--range-min">
+        <div className="btn" onClick={() => handle_increment(false, false)}>
           +
         </div>
-        <div className="minus" onClick={() => handle_increment(true, false)}>
+        <div className="btn" onClick={() => handle_increment(true, false)}>
           -
         </div>
         <input
@@ -148,11 +148,11 @@ export default function FisQui_Range({
           onChange={handle_input}
         />
       </div>
-      <div className="max">
-        <div className="plus" onClick={() => handle_increment(false, true)}>
+      <div className="propriedades__body--range-max">
+        <div className="btn" onClick={() => handle_increment(false, true)}>
           +
         </div>
-        <div className="minus" onClick={() => handle_increment(true, true)}>
+        <div className="btn" onClick={() => handle_increment(true, true)}>
           -
         </div>
         <input
