@@ -130,7 +130,7 @@ main h3 {
   font-size: 1.2rem;
   font-weight: 400;
   background-color: white;
-  padding: 0.4rem 0.8rem;
+  padding: 0.380952381rem 0.8rem;
   border-radius: 10rem;
   margin-right: 0.6rem;
 }
@@ -200,4 +200,20 @@ main h3 {
   top: -0.2rem;
   background-color: #79c957;
   box-shadow: 0 0.5rem 2rem rgba(0, 0, 0, 0.286);
+}
+
+.propriedades__header {
+  padding-top: 2rem;
+  display: flex;
+}
+.propriedades__header h2 {
+  font-size: 1.8rem;
+  font-weight: 400;
+  margin-left: auto;
+  color: #416747;
+}
+.propriedades__header img {
+  margin-left: auto;
+  margin-right: 3rem;
+  cursor: help;
 }/*# sourceMappingURL=styles.css.map */

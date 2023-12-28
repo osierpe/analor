@@ -13,3 +13,27 @@
     cursor: help;
   }
 }
+
+@mixin custom_num_field($width) {
+  -webkit-appearance: none;
+  appearance: none;
+  margin: 0;
+  border: none;
+  border-radius: 1rem;
+  padding: 0.5rem 1rem;
+  -moz-appearance: textfield;
+  width: $width;
+  text-align: center;
+  font-weight: 400;
+  font-family: 'Lexend';
+}
+
+@mixin custom_increment_btn($font_size, $size) {
+  cursor: pointer;
+  font-size: $font_size;
+  font-weight: 400;
+  background-color: white;
+  padding: calc($size / 2.1) $size;
+  border-radius: 10rem;
+  margin-right: 0.6rem;
+}
