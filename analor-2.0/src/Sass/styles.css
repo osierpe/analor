@@ -63,6 +63,7 @@ nav .active {
 }
 
 main {
+  position: relative;
   background-color: #d9e1d4;
   background-image: url("../../../public/Logo verde.svg"), linear-gradient(to right, transparent, #d9e1d4); /* A gradient for the background */
   background-repeat: no-repeat, no-repeat;
@@ -216,4 +217,45 @@ main h3 {
   margin-left: auto;
   margin-right: 3rem;
   cursor: help;
+}
+.propriedades__body {
+  grid-template-rows: repeat(3 1fr);
+  margin-top: 5rem;
+  padding: 0 20%;
+}
+.propriedades__body--range {
+  display: grid;
+  grid-template-columns: 1fr 1fr 2fr;
+  align-items: center;
+  margin-bottom: 5rem;
+}
+.propriedades__body--range h3 {
+  font-size: 1.8rem;
+  font-weight: 500;
+}
+.propriedades__body--range-min, .propriedades__body--range-max {
+  display: flex;
+}
+.propriedades__body--range-min input, .propriedades__body--range-max input {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+       appearance: none;
+  margin: 0;
+  border: none;
+  border-radius: 1rem;
+  padding: 0.5rem 1rem;
+  -moz-appearance: textfield;
+  width: 8rem;
+  text-align: center;
+  font-weight: 400;
+  font-family: "Lexend";
+}
+.propriedades__body--range-min .btn, .propriedades__body--range-max .btn {
+  cursor: pointer;
+  font-size: 1.2rem;
+  font-weight: 400;
+  background-color: white;
+  padding: 0.5714285714rem 1.2rem;
+  border-radius: 10rem;
+  margin-right: 0.6rem;
 }/*# sourceMappingURL=styles.css.map */

@@ -4,4 +4,31 @@
   &__header {
     @include main_header;
   }
+  &__body {
+    grid-template-rows: repeat(3 1fr);
+    margin-top: 5rem;
+    padding: 0 20%;
+    &--range {
+      h3 {
+        font-size: 1.8rem;
+        font-weight: 500;
+      }
+      display: grid;
+      grid-template-columns: 1fr 1fr 2fr;
+      align-items: center;
+      margin-bottom: 5rem;
+      &-min,
+      &-max {
+        display: flex;
+
+        input {
+          @include custom_num_field(8rem);
+        }
+
+        .btn {
+          @include custom_increment_btn(1.2rem, 1.2rem);
+        }
+      }
+    }
+  }
 }
