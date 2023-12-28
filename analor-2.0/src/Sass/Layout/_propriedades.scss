@@ -1,0 +1,7 @@
+@use '../abstracts/' as *;
+
+.propriedades {
+  &__header {
+    @include main_header;
+  }
+}

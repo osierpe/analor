@@ -34,26 +34,10 @@
           background-color: #ffc700;
         }
         .btn {
-          cursor: pointer;
-          font-size: 1.2rem;
-          font-weight: 400;
-          background-color: white;
-          padding: 0.4rem 0.8rem;
-          border-radius: 10rem;
-          margin-right: 0.6rem;
+          @include custom_increment_btn(1.2rem, 0.8rem);
         }
         input {
-          -webkit-appearance: none;
-          appearance: none;
-          margin: 0;
-          border: none;
-          border-radius: 1rem;
-          padding: 0.5rem 1rem;
-          -moz-appearance: textfield;
-          width: 5rem;
-          text-align: center;
-          font-weight: 400;
-          font-family: 'Lexend';
+          @include custom_num_field(5rem);
         }
       }
 
