@@ -119,16 +119,20 @@ export default function Grupo_Funcional({
       <div className="grupo_funcional__body">
         {display_correct_amount(ecgf_elements, cur_displaying)}
       </div>
-      <div className="plus_button">
-        <div
-          className="plus_button__btn"
-          onClick={() =>
-            cur_displaying >= 6 ? null : set_cur_displaying(cur_displaying + 1)
-          }
-        >
-          +
+      {cur_displaying < 6 && (
+        <div className="plus_button">
+          <div
+            className="plus_button__btn"
+            onClick={() =>
+              cur_displaying >= 6
+                ? null
+                : set_cur_displaying(cur_displaying + 1)
+            }
+          >
+            +
+          </div>
         </div>
-      </div>
+      )}
     </div>
   )
 }
