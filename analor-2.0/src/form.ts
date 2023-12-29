@@ -87,27 +87,27 @@ class Form_Data {
     this.ecgf = [
       {
         gFunc: null,
-        inex: 'incSim',
+        inex: 'incluir',
       },
       {
         gFunc: null,
-        inex: 'incSim',
+        inex: 'incluir',
       },
       {
         gFunc: null,
-        inex: 'incSim',
+        inex: 'incluir',
       },
       {
         gFunc: null,
-        inex: 'incSim',
+        inex: 'incluir',
       },
       {
         gFunc: null,
-        inex: 'incSim',
+        inex: 'incluir',
       },
       {
         gFunc: null,
-        inex: 'incSim',
+        inex: 'incluir',
       },
     ]
 
