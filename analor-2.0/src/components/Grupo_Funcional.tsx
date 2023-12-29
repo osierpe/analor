@@ -55,6 +55,7 @@ export default function Grupo_Funcional({
             alt="seta de dropdown"
             className="dropdown__arrow"
           />
+          <div className="separator"></div>
           <input
             type="text"
             name={`gfunc${i}`}
@@ -63,40 +64,39 @@ export default function Grupo_Funcional({
             placeholder={`Grupo Funcional 0${i + 1}`}
             onChange={handle_change}
           />
-          <div className="ecgf__buttons">
-            <label>
-              <input
-                type="radio"
-                value="incSim"
-                name={`gfunc${i}`}
-                onChange={handle_change}
-                checked={ecgf.inex === 'incSim'}
-              />
-              Incluir Simultâneo
-            </label>
+        </div>
+        <div className="ecgf__buttons">
+          <label>
+            Incluir:
+            <input
+              type="radio"
+              value="incluir"
+              name={`gfunc${i}`}
+              onChange={handle_change}
+              checked={ecgf.inex === 'incluir'}
+            />
+          </label>
+          <label>
+            Incluir Simultâneo:
+            <input
+              type="radio"
+              value="incSim"
+              name={`gfunc${i}`}
+              onChange={handle_change}
+              checked={ecgf.inex === 'incSim'}
+            />
+          </label>
 
-            <label>
-              <input
-                type="radio"
-                value="incluir"
-                name={`gfunc${i}`}
-                onChange={handle_change}
-                checked={ecgf.inex === 'incluir'}
-              />
-              Incluir
-            </label>
-
-            <label>
-              <input
-                type="radio"
-                value="excluir"
-                name={`gfunc${i}`}
-                onChange={handle_change}
-                checked={ecgf.inex === 'excluir'}
-              />
-              Excluir
-            </label>
-          </div>
+          <label>
+            Excluir:
+            <input
+              type="radio"
+              value="excluir"
+              name={`gfunc${i}`}
+              onChange={handle_change}
+              checked={ecgf.inex === 'excluir'}
+            />
+          </label>
         </div>
       </div>
     )
@@ -119,6 +119,7 @@ export default function Grupo_Funcional({
       <div className="grupo_funcional__body">
         {display_correct_amount(ecgf_elements, cur_displaying)}
       </div>
+
       {cur_displaying < 6 && (
         <div className="plus_button">
           <div
@@ -133,6 +134,7 @@ export default function Grupo_Funcional({
           </div>
         </div>
       )}
+      <div className="bottom_separator"></div>
     </div>
   )
 }
