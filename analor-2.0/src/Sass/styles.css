@@ -361,4 +361,20 @@ main h3 {
   width: auto;
   height: 0.1rem;
   background-color: black;
+}
+
+.identificadores__header {
+  padding-top: 2rem;
+  display: flex;
+}
+.identificadores__header h2 {
+  font-size: 1.8rem;
+  font-weight: 400;
+  margin-left: auto;
+  color: #416747;
+}
+.identificadores__header img {
+  margin-left: auto;
+  margin-right: 3rem;
+  cursor: help;
 }/*# sourceMappingURL=styles.css.map */

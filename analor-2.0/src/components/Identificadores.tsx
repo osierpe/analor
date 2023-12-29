@@ -15,8 +15,8 @@ export default function Identificadores({
   }
 
   return (
-    <div className="indentificadores">
-      <div className="indentificadores__header">
+    <div className="identificadores">
+      <div className="identificadores__header">
         <h2>Pesquise por compostos específicos.</h2>
         <img src="/i-icon.svg" alt="ícone de informação" />
       </div>
