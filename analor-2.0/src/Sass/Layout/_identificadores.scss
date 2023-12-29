@@ -1,0 +1,7 @@
+@use '../abstracts/' as *;
+
+.identificadores {
+  &__header {
+    @include main_header;
+  }
+}
