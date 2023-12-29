@@ -9,6 +9,7 @@
     margin-top: 5rem;
     padding: 0 20%;
     &--range {
+      position: relative;
       h3 {
         font-size: 1.8rem;
         font-weight: 500;
@@ -20,13 +21,33 @@
       &-min,
       &-max {
         display: flex;
-
         input {
           @include custom_num_field(8rem);
         }
 
         .btn {
           @include custom_increment_btn(1.2rem, 1.2rem);
+        }
+      }
+      &-min {
+        &_text {
+          position: absolute;
+          top: -3rem;
+          font-size: 1.5rem;
+          left: 27rem;
+          color: #416747;
+          font-weight: 500;
+        }
+      }
+      &-max {
+        &_text {
+          position: absolute;
+          top: -3rem;
+          font-size: 1.5rem;
+          left: 44rem;
+          font-weight: 500;
+
+          color: #416747;
         }
       }
     }
