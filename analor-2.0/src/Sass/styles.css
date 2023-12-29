@@ -281,4 +281,20 @@ main h3 {
   left: 44rem;
   font-weight: 500;
   color: #416747;
+}
+
+.grupo_funcional__header {
+  padding-top: 2rem;
+  display: flex;
+}
+.grupo_funcional__header h2 {
+  font-size: 1.8rem;
+  font-weight: 400;
+  margin-left: auto;
+  color: #416747;
+}
+.grupo_funcional__header img {
+  margin-left: auto;
+  margin-right: 3rem;
+  cursor: help;
 }/*# sourceMappingURL=styles.css.map */

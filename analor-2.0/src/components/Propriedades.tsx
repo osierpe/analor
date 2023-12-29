@@ -5,7 +5,7 @@ export default function Propriedades({ form_data, set_form_data }: form_props) {
   return (
     <div className="propriedades">
       <div className="propriedades__header">
-        <h2>Quais são as propriedades físico-químicas da amostra</h2>
+        <h2>Quais são as propriedades físico-químicas da amostra?</h2>
         <img src="i-icon.svg" alt="ícone de informação" />
       </div>
 
