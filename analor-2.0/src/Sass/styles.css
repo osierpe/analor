@@ -377,4 +377,28 @@ main h3 {
   margin-left: auto;
   margin-right: 3rem;
   cursor: help;
+}
+.identificadores__body {
+  margin: 4rem 20% 0 20%;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  row-gap: 2rem;
+}
+.identificadores__body label {
+  display: grid;
+  grid-template-columns: 1fr 10fr;
+  align-items: center;
+  font-size: 1.8rem;
+}
+.identificadores__body label .identificadores__body--text {
+  justify-self: end;
+}
+.identificadores__body label input {
+  font-family: "Lexend";
+  font-size: 1.8rem;
+  margin-left: 1rem;
+  border: none;
+  border-radius: 1rem;
+  padding: 1rem;
+  width: 50rem;
 }/*# sourceMappingURL=styles.css.map */

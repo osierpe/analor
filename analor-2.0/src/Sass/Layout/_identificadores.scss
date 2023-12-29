@@ -4,4 +4,30 @@
   &__header {
     @include main_header;
   }
+  &__body {
+    margin: 4rem 20% 0 20%;
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    row-gap: 2rem;
+
+    label {
+      display: grid;
+      grid-template-columns: 1fr 10fr;
+      align-items: center;
+      font-size: 1.8rem;
+      .identificadores__body--text {
+        justify-self: end;
+      }
+
+      input {
+        font-family: 'Lexend';
+        font-size: 1.8rem;
+        margin-left: 1rem;
+        border: none;
+        border-radius: 1rem;
+        padding: 1rem;
+        width: 50rem;
+      }
+    }
+  }
 }

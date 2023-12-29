@@ -22,7 +22,7 @@ export default function Identificadores({
       </div>
       <div className="identificadores__body">
         <label>
-          Cas:
+          <span className="identificadores__body--text">Cas:</span>
           <input
             type="text"
             name="cas"
@@ -32,7 +32,7 @@ export default function Identificadores({
           />
         </label>
         <label>
-          Nome:
+          <span className="identificadores__body--text">Nome:</span>
           <input
             type="text"
             name="nome"
