@@ -134,6 +134,9 @@ main h3 {
   padding: 0.380952381rem 0.8rem;
   border-radius: 10rem;
   margin-right: 0.6rem;
+  -webkit-user-select: none; /* Safari */ /* IE 10 and IE 11 */
+  -moz-user-select: none;
+       user-select: none; /* Standard syntax */
 }
 .elementos__body--elemento .quantidade input {
   -webkit-appearance: none;
@@ -224,6 +227,7 @@ main h3 {
   padding: 0 20%;
 }
 .propriedades__body--range {
+  position: relative;
   display: grid;
   grid-template-columns: 1fr 1fr 2fr;
   align-items: center;
@@ -258,4 +262,23 @@ main h3 {
   padding: 0.5714285714rem 1.2rem;
   border-radius: 10rem;
   margin-right: 0.6rem;
+  -webkit-user-select: none; /* Safari */ /* IE 10 and IE 11 */
+  -moz-user-select: none;
+       user-select: none; /* Standard syntax */
+}
+.propriedades__body--range-min_text {
+  position: absolute;
+  top: -3rem;
+  font-size: 1.5rem;
+  left: 27rem;
+  color: #416747;
+  font-weight: 500;
+}
+.propriedades__body--range-max_text {
+  position: absolute;
+  top: -3rem;
+  font-size: 1.5rem;
+  left: 44rem;
+  font-weight: 500;
+  color: #416747;
 }/*# sourceMappingURL=styles.css.map */

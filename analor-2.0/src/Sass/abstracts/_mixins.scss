@@ -36,4 +36,7 @@
   padding: calc($size / 2.1) $size;
   border-radius: 10rem;
   margin-right: 0.6rem;
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none; /* Standard syntax */
 }

@@ -134,6 +134,7 @@ export default function FisQui_Range({
     <div className="propriedades__body--range">
       <h3>{nome}:</h3>
       <div className="propriedades__body--range-min">
+        <span className="propriedades__body--range-min_text">min</span>
         <div className="btn" onClick={() => handle_increment(false, false)}>
           +
         </div>
@@ -149,6 +150,7 @@ export default function FisQui_Range({
         />
       </div>
       <div className="propriedades__body--range-max">
+        <span className="propriedades__body--range-max_text">max</span>
         <div className="btn" onClick={() => handle_increment(false, true)}>
           +
         </div>
