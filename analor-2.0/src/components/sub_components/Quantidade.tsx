@@ -41,6 +41,25 @@ export default function Quantidade({
     })
   }
 
+  const clear_selection = function (): void {
+    const new_elementos_array: any[] = form_data.elementos.map((form_el) => {
+      if (elemento.nome === form_el.nome) {
+        if (form_el.quantidade !== null) {
+          return {
+            ...form_el,
+            quantidade: null,
+          }
+        }
+      }
+      return form_el
+    })
+
+    set_form_data({
+      ...form_data,
+      elementos: new_elementos_array,
+    })
+  }
+
   const handle_input = function (event: any) {
     const new_elementos_array = form_data.elementos.map((el) => {
       if (el.nome !== event.target.name) {
@@ -80,7 +99,7 @@ export default function Quantidade({
         className={`btn question-mark ${
           elemento.quantidade === null ? 'active' : ''
         }`}
-        onClick={() => true}
+        onClick={() => clear_selection()}
       >
         ?
       </span>
