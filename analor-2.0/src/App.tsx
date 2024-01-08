@@ -4,7 +4,6 @@ import { Form_Data } from './form'
 import Header from './components/Header'
 import Navigation from './components/Navigation'
 import Elementos from './components/Elementos'
-import Submit_Btn from './components/Submit_Btn'
 import Propriedades from './components/Propriedades'
 import Grupo_Funcional from './components/Grupo_Funcional'
 import Identificadores from './components/Identificadores'
@@ -45,8 +44,15 @@ function App() {
     }
   }
 
-  const handle_submit = () => {
-    console.log('submit :)')
+  const handle_submit = async (event: Event) => {
+    event.preventDefault()
+
+    const formDataJson = JSON.stringify(form_data)
+    const queryParams = new URLSearchParams({ data: formDataJson }).toString()
+    const response = await fetch(`http://localhost:5000/search?${queryParams}`)
+
+    const data = await response.json()
+    console.log(data)
   }
 
   return (
@@ -55,7 +61,12 @@ function App() {
       <div className="content">
         <Navigation set_cur_page={set_cur_page} cur_page={cur_page} />
         <main>{get_cur_page()}</main>
-        <Submit_Btn handle_submit={handle_submit} />
+        <div className="submit_btn_container">
+          <button type="submit" onClick={() => handle_submit}>
+            <img src="/symbol-1.svg" alt="símbolo de átomo" />
+            Mostrar Resultado
+          </button>
+        </div>
       </div>
     </>
   )
