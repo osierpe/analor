@@ -16,9 +16,13 @@ export default function FisQui_Range({
 }: FisQui_Props) {
   //TODO: Fazer um botão de clear
 
-  const check_min_max = (arr: Array<any>, name: string): Array<any> => {
+  const check_min_max = (
+    arr: Array<any>,
+    nome: string,
+    is_max: boolean = false,
+  ): Array<any> => {
     const new_arr = arr.map((prop) => {
-      if (name !== prop.nome) {
+      if (nome !== prop.nome) {
         return prop
       }
 
@@ -26,9 +30,13 @@ export default function FisQui_Range({
 
       if (min !== null && max !== null) {
         if (min > max) {
-          max = min
+          if (is_max) {
+            min = max
+          } else max = min
         } else if (max < min) {
-          min = max
+          if (!is_max) {
+            max = min
+          } else min = max
         }
       }
 
@@ -71,7 +79,7 @@ export default function FisQui_Range({
       return formProp
     })
 
-    const updatedArray = check_min_max(new_propriedades_array, nome)
+    const updatedArray = check_min_max(new_propriedades_array, nome, is_max)
     set_form_data((prevFormData) => ({
       ...prevFormData,
       propriedades: updatedArray,
@@ -79,10 +87,11 @@ export default function FisQui_Range({
   }
 
   const handle_input = (event: any) => {
+    const is_max = event.target.name.slice(-3) === 'max'
+
     const newPropsArray = form_data.propriedades.map((formProp) => {
       if (event.target.name.slice(0, -4) === formProp.nome) {
-        const isMax = event.target.name.slice(-3) === 'max'
-        const updated_alcance = isMax
+        const updated_alcance = is_max
           ? [formProp.alcance[0], Number(event.target.value)]
           : [Number(event.target.value), formProp.alcance[1]]
 
@@ -94,6 +103,7 @@ export default function FisQui_Range({
     const updatedArray = check_min_max(
       newPropsArray,
       event.target.name.slice(0, -4),
+      is_max,
     )
     set_form_data((prevFormData) => ({
       ...prevFormData,
