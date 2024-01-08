@@ -16,118 +16,103 @@ export default function FisQui_Range({
 }: FisQui_Props) {
   //TODO: Fazer um botão de clear
 
-  function check_min_max(arr: Array<any>, name: string): Array<any> {
-    const newArr = arr.map((prop) => {
+  const check_min_max = (arr: Array<any>, name: string): Array<any> => {
+    const new_arr = arr.map((prop) => {
       if (name !== prop.nome) {
         return prop
       }
 
+      let [min, max] = prop.alcance
+
+      if (min !== null && max !== null) {
+        if (min > max) {
+          max = min
+        } else if (max < min) {
+          min = max
+        }
+      }
+
       return {
         ...prop,
-        alcance: [
-          prop.alcance[0] === null
-            ? prop.alcance[0]
-            : prop.alcance[1] === null
-            ? prop.alcance[0]
-            : Math.min(prop.alcance[0], prop.alcance[1]),
-          prop.alcance[1] === null
-            ? prop.alcance[1]
-            : Math.max(prop.alcance[0], prop.alcance[1]),
-        ],
+        alcance: [min, max],
       }
     })
 
-    return newArr
+    return new_arr
   }
 
-  const handle_increment = function (
-    isInverted: boolean = false,
-    is_max: boolean = false,
-  ) {
-    let new_propriedades_array: any[] = form_data.propriedades.map(
-      (form_prop) => {
-        if (nome === form_prop.nome) {
-          if (form_prop.alcance !== null) {
-            return {
-              ...form_prop,
-              alcance: [
-                is_max
-                  ? form_prop.alcance[0]
-                  : form_prop.alcance[0] === null
-                  ? 1
-                  : isInverted
-                  ? --form_prop.alcance[0]
-                  : ++form_prop.alcance[0],
-                is_max
-                  ? form_prop.alcance[1] === null
-                    ? 1
-                    : isInverted
-                    ? --form_prop.alcance[1]
-                    : ++form_prop.alcance[1]
-                  : form_prop.alcance[1],
-              ],
-            }
-          }
-        }
-        return form_prop
-      },
-    )
+  const handle_increment = (is_inverted = false, is_max = false) => {
+    const new_propriedades_array = form_data.propriedades.map((formProp) => {
+      if (nome === formProp.nome && formProp.alcance !== null) {
+        let [min, max] = formProp.alcance
+        const updatedMin = is_max
+          ? min
+          : min === null
+          ? 1
+          : is_inverted
+          ? --min
+          : ++min
+        const updated_max = is_max
+          ? max === null
+            ? 1
+            : is_inverted
+            ? --max
+            : ++max
+          : max
 
-    new_propriedades_array = check_min_max(new_propriedades_array, nome)
+        return { ...formProp, alcance: [updatedMin, updated_max] }
+      }
+      return formProp
+    })
 
-    set_form_data((prev_form_data) => ({
-      ...prev_form_data,
-      propriedades: new_propriedades_array,
+    const updatedArray = check_min_max(new_propriedades_array, nome)
+    set_form_data((prevFormData) => ({
+      ...prevFormData,
+      propriedades: updatedArray,
     }))
   }
 
-  const handle_input = function (event: any) {
-    let new_props_array = form_data.propriedades.map((form_prop) => {
-      if (event.target.name.slice(0, -4) !== form_prop.nome) {
-        return form_prop
-      }
+  const handle_input = (event: any) => {
+    const newPropsArray = form_data.propriedades.map((formProp) => {
+      if (event.target.name.slice(0, -4) === formProp.nome) {
+        const isMax = event.target.name.slice(-3) === 'max'
+        const updated_alcance = isMax
+          ? [formProp.alcance[0], Number(event.target.value)]
+          : [Number(event.target.value), formProp.alcance[1]]
 
-      const isMax = event.target.name.slice(-3) === 'max'
-
-      return {
-        ...form_prop,
-        alcance: [
-          isMax ? form_prop.alcance[0] : Number(event.target.value),
-          isMax ? Number(event.target.value) : form_prop.alcance[1],
-        ],
+        return { ...formProp, alcance: updated_alcance }
       }
+      return formProp
     })
 
-    new_props_array = check_min_max(
-      new_props_array,
+    const updatedArray = check_min_max(
+      newPropsArray,
       event.target.name.slice(0, -4),
     )
-
-    set_form_data((prev_form_data) => ({
-      ...prev_form_data,
-      //Precisei fazer esse check extra de type só aqui, typescript é estranho as vezes. NÃO MEXER
-      propriedades: new_props_array.map((prop) => ({
+    set_form_data((prevFormData) => ({
+      ...prevFormData,
+      propriedades: updatedArray.map((prop) => ({
         ...prop,
         alcance: prop.alcance as [number | null, number | null],
       })),
     }))
   }
 
-  function get_value(val: 'min' | 'max'): number | undefined {
-    for (let i = 0; i < form_data.propriedades.length; i++) {
-      if (form_data.propriedades[i].nome === nome) {
-        if (val === 'min' && form_data.propriedades[i].alcance[0] !== null) {
-          return form_data.propriedades[i].alcance[0] as number
-        } else if (
-          val === 'max' &&
-          form_data.propriedades[i].alcance[1] !== null
-        ) {
-          return form_data.propriedades[i].alcance[1] as number
-        }
+  const get_value = (val: string | undefined) => {
+    const prop = form_data.propriedades.find(
+      (formProp) => formProp.nome === nome,
+    )
 
-        return undefined
-      }
+    if (prop) {
+      const [min, max] = prop.alcance
+      return val === 'min' && min !== null
+        ? min
+        : val === 'max' && max !== null
+        ? max
+        : undefined
     }
+
+    return undefined
   }
 
   return (
