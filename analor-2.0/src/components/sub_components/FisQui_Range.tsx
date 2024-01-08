@@ -42,6 +42,8 @@ export default function FisQui_Range({
   }
 
   const handle_increment = (is_inverted = false, is_max = false) => {
+    const can_go_below_zero = !(nome === 'Peso Molecular')
+    console.log(nome, can_go_below_zero)
     const new_propriedades_array = form_data.propriedades.map((formProp) => {
       if (nome === formProp.nome && formProp.alcance !== null) {
         let [min, max] = formProp.alcance
@@ -50,13 +52,17 @@ export default function FisQui_Range({
           : min === null
           ? 1
           : is_inverted
-          ? --min
+          ? can_go_below_zero
+            ? --min
+            : Math.max(0, --min)
           : ++min
         const updated_max = is_max
           ? max === null
             ? 1
             : is_inverted
-            ? --max
+            ? can_go_below_zero
+              ? --max
+              : Math.max(0, --max)
             : ++max
           : max
 
@@ -130,7 +136,7 @@ export default function FisQui_Range({
           type="number"
           name={`${nome}-min`}
           value={get_value('min')}
-          min={min ? min : -273}
+          min={min !== -273 ? min : -273}
           onChange={handle_input}
         />
       </div>
@@ -146,7 +152,7 @@ export default function FisQui_Range({
           type="number"
           name={`${nome}-max`}
           value={get_value('max')}
-          min={min ? min : -273}
+          min={min !== -273 ? min : -273}
           onChange={handle_input}
         />
       </div>
