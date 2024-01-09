@@ -30,4 +30,15 @@
       }
     }
   }
+
+  @include smaller_desktop {
+    &__body {
+      label {
+        grid-template-columns: 1fr 7fr;
+        input {
+          width: 40rem;
+        }
+      }
+    }
+  }
 }
