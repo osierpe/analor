@@ -1,6 +1,12 @@
+@use '../abstracts/' as *;
+
 .content {
   margin-top: 3rem;
   margin-left: 20%;
   margin-right: 20%;
   margin-bottom: 5rem;
+
+  @include smaller_desktop {
+    margin-top: 1.5rem;
+  }
 }
