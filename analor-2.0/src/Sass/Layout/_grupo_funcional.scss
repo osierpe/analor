@@ -39,10 +39,10 @@
 
       &__buttons {
         align-content: center;
+        font-size: 1.8rem;
         label {
           margin-right: 2rem;
         }
-        font-size: 1.8rem;
         input {
           margin-left: 1rem;
           width: 2rem;
@@ -72,5 +72,25 @@
     width: auto;
     height: 0.1rem;
     background-color: black;
+  }
+
+  @include smaller_desktop {
+    &__body {
+      margin: 2rem 10% 0 10%;
+      font-size: 1.2rem;
+      .ecgf {
+        .dropdown {
+          input {
+            width: 12rem;
+            font-size: 1.1rem;
+          }
+          &__buttons {
+            label {
+              font-size: 1.2rem;
+            }
+          }
+        }
+      }
+    }
   }
 }
