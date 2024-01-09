@@ -9,6 +9,11 @@ html {
   background-color: #ebf0e8;
   font-size: 10px;
 }
+@media (max-width: 799px) {
+  html {
+    background-color: #d9e1d4;
+  }
+}
 
 html {
   font-family: Lexend;
@@ -16,6 +21,8 @@ html {
 
 header {
   background-color: #404040;
+}
+header .logo_container {
   display: flex;
   padding: 1rem;
   align-items: center;
@@ -28,6 +35,16 @@ header h1 {
   margin-left: 1.6rem;
   font-size: 3rem;
   color: white;
+}
+@media (max-width: 799px) {
+  header {
+    background-color: #ebf0e9;
+    display: flex;
+    justify-content: space-around;
+  }
+  header h1 {
+    color: black;
+  }
 }
 
 .content {
