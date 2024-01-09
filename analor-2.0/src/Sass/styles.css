@@ -469,4 +469,12 @@ main h3 {
   border-radius: 1rem;
   padding: 1rem;
   width: 50rem;
+}
+@media (min-width: 1100px) and (max-width: 1500px) {
+  .identificadores__body label {
+    grid-template-columns: 1fr 7fr;
+  }
+  .identificadores__body label input {
+    width: 40rem;
+  }
 }/*# sourceMappingURL=styles.css.map */
