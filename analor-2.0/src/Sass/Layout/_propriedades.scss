@@ -1,6 +1,8 @@
 @use '../abstracts/' as *;
 
 .propriedades {
+  //baseline, 1980 x 1080p
+
   &__header {
     @include main_header;
   }
@@ -48,6 +50,36 @@
           font-weight: 500;
 
           color: #416747;
+        }
+      }
+    }
+  }
+
+  // 1280 x 720p
+  @include smaller_desktop {
+    h3 {
+      font-size: 1.5rem;
+    }
+    &__body {
+      //padding: 0 10%;
+
+      &--range {
+        grid-template-columns: 1fr 2fr 2fr;
+
+        &-min {
+          &_text {
+            position: absolute;
+            top: -3rem;
+            font-size: 1.5rem;
+            left: 19rem;
+          }
+        }
+        &-max {
+          &_text {
+            position: absolute;
+            top: -3rem;
+            left: 37rem;
+          }
         }
       }
     }
