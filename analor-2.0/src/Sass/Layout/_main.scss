@@ -1,3 +1,5 @@
+@use '../abstracts/' as *;
+
 main {
   position: relative;
 
@@ -16,5 +18,13 @@ main {
   background-position: calc(100% - 2rem) calc(100% - 2rem), top left;
   background-size: auto, auto;
   height: 70rem;
+  @include smaller_desktop {
+    h2,
+    h3 {
+      font-size: 1.4rem;
+    }
+
+    height: 50rem;
+  }
   border-radius: 1rem;
 }

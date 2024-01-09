@@ -36,6 +36,11 @@ header h1 {
   margin-right: 20%;
   margin-bottom: 5rem;
 }
+@media (min-width: 1100px) and (max-width: 1500px) {
+  .content {
+    margin-top: 1.5rem;
+  }
+}
 
 nav {
   background-color: #ffffff;
@@ -61,6 +66,12 @@ nav .active {
   color: green;
   cursor: default;
 }
+@media (min-width: 1100px) and (max-width: 1500px) {
+  nav {
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+  }
+}
 
 main {
   position: relative;
@@ -77,6 +88,15 @@ main h3 {
   font-size: 1.6rem;
   font-weight: 400;
   font-family: "Lexend";
+}
+@media (min-width: 1100px) and (max-width: 1500px) {
+  main {
+    height: 50rem;
+  }
+  main h2,
+  main h3 {
+    font-size: 1.4rem;
+  }
 }
 
 .elementos {
@@ -176,6 +196,17 @@ main h3 {
 .elementos__body--elemento button.active.nao-sei {
   background-color: #ffc700;
 }
+@media (min-width: 1100px) and (max-width: 1500px) {
+  .elementos__body {
+    margin: 2rem auto 2rem 7rem;
+  }
+  .elementos__body--elemento {
+    grid-template-columns: 1.6fr 3fr 3.5fr;
+    grid-template-rows: 1fr;
+    gap: 0px;
+    margin-bottom: 1rem;
+  }
+}
 
 .submit_btn_container {
   display: flex;
@@ -204,6 +235,11 @@ main h3 {
   top: -0.2rem;
   background-color: #79c957;
   box-shadow: 0 0.5rem 2rem rgba(0, 0, 0, 0.286);
+}
+@media (min-width: 1100px) and (max-width: 1500px) {
+  .submit_btn_container {
+    margin-top: 2rem;
+  }
 }
 
 .propriedades__header {

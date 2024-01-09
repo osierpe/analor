@@ -1,3 +1,5 @@
+@use '../abstracts/' as *;
+
 nav {
   background-color: #ffffff;
   display: flex;
@@ -22,5 +24,11 @@ nav {
     transition: all 0.5s;
     color: green;
     cursor: default;
+  }
+
+  @include smaller_desktop {
+    font-size: 1.2rem;
+
+    margin-bottom: 1.5rem;
   }
 }

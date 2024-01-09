@@ -1,3 +1,5 @@
+@use '../abstracts/' as *;
+
 .submit_btn_container {
   display: flex;
   align-items: center;
@@ -27,5 +29,9 @@
     top: -0.2rem;
     background-color: lighten($color: #5eb33a, $amount: 10);
     box-shadow: 0 0.5rem 2rem rgba(0, 0, 0, 0.286);
+  }
+
+  @include smaller_desktop {
+    margin-top: 2rem;
   }
 }
