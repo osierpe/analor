@@ -31,4 +31,8 @@ nav {
 
     margin-bottom: 1.5rem;
   }
+  @include mobile {
+    background-color: transparent;
+    margin-bottom: 0.5rem;
+  }
 }

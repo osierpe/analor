@@ -9,4 +9,9 @@
   @include smaller_desktop {
     margin-top: 1.5rem;
   }
+
+  @include mobile {
+    margin: 1rem 0 0 0;
+    overflow-y: auto;
+  }
 }

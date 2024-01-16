@@ -18,6 +18,8 @@ main {
   background-position: calc(100% - 2rem) calc(100% - 2rem), top left;
   background-size: auto, auto;
   height: 70rem;
+  border-radius: 1rem;
+
   @include smaller_desktop {
     h2,
     h3 {
@@ -26,5 +28,12 @@ main {
 
     height: 50rem;
   }
-  border-radius: 1rem;
+
+  @include mobile {
+    padding: 0 5%;
+    display: grid;
+    overflow-y: auto;
+    // grid-template-columns: 1fr;
+    // grid-template-rows: 1fr 1fr 1fr;
+  }
 }

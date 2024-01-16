@@ -12,6 +12,20 @@
     margin-right: 3rem;
     cursor: help;
   }
+
+  @include mobile {
+    padding: 0;
+    h2 {
+      display: flex;
+      justify-items: space-around;
+      margin: 0;
+      font-size: 1.4rem;
+      flex-wrap: nowrap;
+    }
+    img {
+      display: none;
+    }
+  }
 }
 
 @mixin custom_num_field($width) {
