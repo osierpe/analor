@@ -79,4 +79,19 @@
       }
     }
   }
+
+  @include mobile {
+    &__body {
+      margin: 3.5rem 10% 10%;
+
+      &--elemento {
+        display: grid;
+        grid-template-columns: 1fr;
+
+        .quantidade {
+          margin: 0;
+        }
+      }
+    }
+  }
 }

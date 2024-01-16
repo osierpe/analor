@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Form_Data } from './form'
 
 import Header from './components/Header'
@@ -11,6 +11,18 @@ import Identificadores from './components/Identificadores'
 import './Sass/styles.css'
 
 function App() {
+  const handleResize = () => {
+    setIsMobile(window.innerWidth <= 600)
+  }
+
+  useEffect(() => {
+    window.addEventListener('resize', handleResize)
+    return () => {
+      window.removeEventListener('resize', handleResize)
+    }
+  }, [])
+
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 600)
   const [cur_page, set_cur_page] = useState(0)
   const [form_data, set_form_data] = useState(new Form_Data())
   const [cur_ecgf_displaying, set_cur_ecgf_displaying] = useState(2)
@@ -62,10 +74,20 @@ function App() {
         <Navigation set_cur_page={set_cur_page} cur_page={cur_page} />
         <main>{get_cur_page()}</main>
         <div className="submit_btn_container">
+          {isMobile ? (
+            cur_page !== 0 ? (
+              <h1 onClick={() => set_cur_page(cur_page - 1)}>true</h1>
+            ) : null
+          ) : null}
           <button type="submit" onClick={() => handle_submit}>
             <img src="/symbol-1.svg" alt="símbolo de átomo" />
             Mostrar Resultado
           </button>
+          {isMobile ? (
+            cur_page !== 3 ? (
+              <h1 onClick={() => set_cur_page(cur_page + 1)}>true</h1>
+            ) : null
+          ) : null}
         </div>
       </div>
     </>
