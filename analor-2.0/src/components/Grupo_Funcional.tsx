@@ -2,6 +2,7 @@ import { form_props } from '../form'
 
 interface ecgf_props extends form_props {
   cur_displaying: number
+  is_mobile: boolean
   set_cur_displaying: React.Dispatch<React.SetStateAction<number>>
 }
 
@@ -10,6 +11,7 @@ export default function Grupo_Funcional({
   set_form_data,
   cur_displaying,
   set_cur_displaying,
+  is_mobile,
 }: ecgf_props) {
   const handle_change = function (event: any) {
     const e_name = event.target.name
@@ -47,6 +49,41 @@ export default function Grupo_Funcional({
   }
 
   const ecgf_elements = form_data.ecgf.map((ecgf, i) => {
+    const btnContent = (
+      <>
+        {' '}
+        <label>
+          Incluir:
+          <input
+            type="radio"
+            value="incluir"
+            name={`gfunc${i}`}
+            onChange={handle_change}
+            checked={ecgf.inex === 'incluir'}
+          />
+        </label>
+        <label>
+          Incluir Simultâneo:
+          <input
+            type="radio"
+            value="incSim"
+            name={`gfunc${i}`}
+            onChange={handle_change}
+            checked={ecgf.inex === 'incSim'}
+          />
+        </label>
+        <label>
+          Excluir:
+          <input
+            type="radio"
+            value="excluir"
+            name={`gfunc${i}`}
+            onChange={handle_change}
+            checked={ecgf.inex === 'excluir'}
+          />
+        </label>
+      </>
+    )
     return (
       <div className="ecgf" key={`ecgf${i}`}>
         <div className="dropdown">
@@ -65,39 +102,11 @@ export default function Grupo_Funcional({
             onChange={handle_change}
           />
         </div>
-        <div className="ecgf__buttons">
-          <label>
-            Incluir:
-            <input
-              type="radio"
-              value="incluir"
-              name={`gfunc${i}`}
-              onChange={handle_change}
-              checked={ecgf.inex === 'incluir'}
-            />
-          </label>
-          <label>
-            Incluir Simultâneo:
-            <input
-              type="radio"
-              value="incSim"
-              name={`gfunc${i}`}
-              onChange={handle_change}
-              checked={ecgf.inex === 'incSim'}
-            />
-          </label>
-
-          <label>
-            Excluir:
-            <input
-              type="radio"
-              value="excluir"
-              name={`gfunc${i}`}
-              onChange={handle_change}
-              checked={ecgf.inex === 'excluir'}
-            />
-          </label>
-        </div>
+        {is_mobile ? (
+          btnContent
+        ) : (
+          <div className="ecgf__buttons"> {btnContent}</div>
+        )}
       </div>
     )
   })
