@@ -463,6 +463,37 @@ main h3 {
     left: 37rem;
   }
 }
+@media (max-width: 799px) {
+  .propriedades__body--range {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
+    row-gap: 5rem;
+  }
+  .propriedades__body--range h3 {
+    display: block;
+    place-self: center;
+    grid-column: span 2;
+  }
+  .propriedades__body--range-min, .propriedades__body--range-max {
+    place-self: center;
+    position: relative;
+  }
+  .propriedades__body--range-min input, .propriedades__body--range-max input {
+    padding: 1.2rem 2rem;
+  }
+  .propriedades__body--range-min_text {
+    top: -3rem;
+    left: 2.5rem;
+  }
+  .propriedades__body--range-max_text {
+    top: -3rem;
+    left: 2.5rem;
+  }
+  .propriedades__body--range .btn {
+    display: none;
+  }
+}
 
 .grupo_funcional__header {
   padding-top: 2rem;
