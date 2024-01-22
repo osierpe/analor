@@ -38,11 +38,11 @@
   @include mobile {
     margin: 2rem 0;
     display: grid;
-    grid-template-columns: 1fr 2fr 1fr;
-
+    grid-template-columns: 1fr 1fr 1fr;
     justify-items: center;
 
     button {
+      order: 1;
       font-size: 1.5rem;
       transition: none;
       border-radius: 2rem;
@@ -51,10 +51,16 @@
         margin-right: 0;
       }
     }
+    .left-btn {
+      order: 0;
+    }
+    .right-btn {
+      order: 2;
+    }
     button:hover {
       position: static;
       background-color: lighten($color: #5eb33a, $amount: 10);
-      box-shadow: 0 0.5rem 2rem rgba(0, 0, 0, 0.286);
+      box-shadow: none;
     }
   }
 }

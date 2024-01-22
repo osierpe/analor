@@ -76,8 +76,15 @@ function App() {
         <div className="submit_btn_container">
           {isMobile ? (
             cur_page !== 0 ? (
-              <h1 onClick={() => set_cur_page(cur_page - 1)}>true</h1>
-            ) : null
+              <h1
+                onClick={() => set_cur_page(cur_page - 1)}
+                className="left-btn"
+              >
+                btn esquerda
+              </h1>
+            ) : (
+              <div className="left-btn"></div>
+            )
           ) : null}
           <button type="submit" onClick={() => handle_submit}>
             <img src="/symbol-1.svg" alt="símbolo de átomo" />
@@ -85,8 +92,15 @@ function App() {
           </button>
           {isMobile ? (
             cur_page !== 3 ? (
-              <h1 onClick={() => set_cur_page(cur_page + 1)}>true</h1>
-            ) : null
+              <h1
+                onClick={() => set_cur_page(cur_page + 1)}
+                className="right-btn"
+              >
+                btn direita
+              </h1>
+            ) : (
+              <div className="right-btn"></div>
+            )
           ) : null}
         </div>
       </div>

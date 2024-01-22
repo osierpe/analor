@@ -82,10 +82,10 @@ export default function Quantidade({
   return (
     <div className={`quantidade ${!elemento.tem ? 'inactive' : ''}`}>
       <h3>Quantidade:</h3>
-      <span className="btn" onClick={() => handle_increment()}>
+      <span className="btn increment" onClick={() => handle_increment()}>
         +
       </span>
-      <span className="btn" onClick={() => handle_increment(true)}>
+      <span className="btn increment" onClick={() => handle_increment(true)}>
         -
       </span>
       <input
