@@ -42,6 +42,7 @@ function App() {
             set_form_data={set_form_data}
             cur_displaying={cur_ecgf_displaying}
             set_cur_displaying={set_cur_ecgf_displaying}
+            is_mobile={isMobile}
           />
         )
       case 3:

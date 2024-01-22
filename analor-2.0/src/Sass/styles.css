@@ -603,6 +603,23 @@ main h3 {
     font-size: 1.2rem;
   }
 }
+@media (max-width: 799px) {
+  .grupo_funcional__body .ecgf {
+    display: grid;
+    grid-template-rows: repeat(4, 1fr);
+  }
+  .grupo_funcional__body .ecgf .dropdown {
+    margin-bottom: 1rem;
+  }
+  .grupo_funcional__body .ecgf label {
+    font-size: 1.5rem;
+  }
+  .grupo_funcional__body .ecgf label input {
+    margin-left: 1rem;
+    width: 2rem;
+    height: 2rem;
+  }
+}
 
 .identificadores__header {
   padding-top: 2rem;
