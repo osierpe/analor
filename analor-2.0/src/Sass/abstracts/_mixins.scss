@@ -20,7 +20,8 @@
       justify-items: space-around;
       margin: 0;
       font-size: 1.4rem;
-      flex-wrap: nowrap;
+      max-width: 30rem;
+      text-align: center;
     }
     img {
       display: none;

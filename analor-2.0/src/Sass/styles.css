@@ -162,7 +162,8 @@ main h3 {
     justify-items: space-around;
     margin: 0;
     font-size: 1.4rem;
-    flex-wrap: nowrap;
+    max-width: 30rem;
+    text-align: center;
   }
   .elementos__header img {
     display: none;
@@ -269,6 +270,23 @@ main h3 {
   .elementos__body--elemento .quantidade {
     margin: 0;
   }
+  .elementos__body--elemento .quantidade .btn.increment {
+    display: none;
+  }
+  .elementos__body--elemento .quantidade input {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+         appearance: none;
+    margin: 0;
+    border: none;
+    border-radius: 1rem;
+    padding: 0.5rem 1rem;
+    -moz-appearance: textfield;
+    width: 8rem;
+    text-align: center;
+    font-weight: 400;
+    font-family: "Lexend";
+  }
 }
 
 .submit_btn_container {
@@ -308,10 +326,11 @@ main h3 {
   .submit_btn_container {
     margin: 2rem 0;
     display: grid;
-    grid-template-columns: 1fr 2fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
     justify-items: center;
   }
   .submit_btn_container button {
+    order: 1;
     font-size: 1.5rem;
     transition: none;
     border-radius: 2rem;
@@ -320,10 +339,16 @@ main h3 {
   .submit_btn_container button img {
     margin-right: 0;
   }
+  .submit_btn_container .left-btn {
+    order: 0;
+  }
+  .submit_btn_container .right-btn {
+    order: 2;
+  }
   .submit_btn_container button:hover {
     position: static;
     background-color: #79c957;
-    box-shadow: 0 0.5rem 2rem rgba(0, 0, 0, 0.286);
+    box-shadow: none;
   }
 }
 
@@ -351,7 +376,8 @@ main h3 {
     justify-items: space-around;
     margin: 0;
     font-size: 1.4rem;
-    flex-wrap: nowrap;
+    max-width: 30rem;
+    text-align: center;
   }
   .propriedades__header img {
     display: none;
@@ -462,7 +488,8 @@ main h3 {
     justify-items: space-around;
     margin: 0;
     font-size: 1.4rem;
-    flex-wrap: nowrap;
+    max-width: 30rem;
+    text-align: center;
   }
   .grupo_funcional__header img {
     display: none;
@@ -570,7 +597,8 @@ main h3 {
     justify-items: space-around;
     margin: 0;
     font-size: 1.4rem;
-    flex-wrap: nowrap;
+    max-width: 30rem;
+    text-align: center;
   }
   .identificadores__header img {
     display: none;

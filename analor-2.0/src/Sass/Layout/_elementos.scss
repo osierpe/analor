@@ -90,6 +90,14 @@
 
         .quantidade {
           margin: 0;
+
+          .btn.increment {
+            display: none;
+          }
+
+          input {
+            @include custom_num_field(8rem);
+          }
         }
       }
     }
