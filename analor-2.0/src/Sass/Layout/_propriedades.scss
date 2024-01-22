@@ -84,4 +84,43 @@
       }
     }
   }
+
+  @include mobile {
+    &__body {
+      &--range {
+        display: grid;
+        grid-template-rows: 1fr 1fr;
+        grid-template-columns: 1fr 1fr;
+        row-gap: 5rem;
+        h3 {
+          display: block;
+          place-self: center;
+          grid-column: span 2;
+        }
+        &-min,
+        &-max {
+          place-self: center;
+          position: relative;
+          input {
+            padding: 1.2rem 2rem;
+          }
+        }
+        &-min {
+          &_text {
+            top: -3rem;
+            left: 2.5rem;
+          }
+        }
+        &-max {
+          &_text {
+            top: -3rem;
+            left: 2.5rem;
+          }
+        }
+        .btn {
+          display: none;
+        }
+      }
+    }
+  }
 }
