@@ -77,12 +77,11 @@ function App() {
         <div className="submit_btn_container">
           {isMobile ? (
             cur_page !== 0 ? (
-              <h1
+              <img
                 onClick={() => set_cur_page(cur_page - 1)}
                 className="left-btn"
-              >
-                btn esquerda
-              </h1>
+                src="/btn_esquerda.svg"
+              />
             ) : (
               <div className="left-btn"></div>
             )
@@ -93,12 +92,11 @@ function App() {
           </button>
           {isMobile ? (
             cur_page !== 3 ? (
-              <h1
+              <img
                 onClick={() => set_cur_page(cur_page + 1)}
                 className="right-btn"
-              >
-                btn direita
-              </h1>
+                src="/btn_direita.svg"
+              />
             ) : (
               <div className="right-btn"></div>
             )
