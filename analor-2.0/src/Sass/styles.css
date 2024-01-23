@@ -267,6 +267,12 @@ main h3 {
   .elementos__body--elemento {
     display: grid;
     grid-template-columns: 1fr;
+    place-items: center;
+  }
+  .elementos__body--elemento h3 {
+    display: flex;
+    justify-content: space-around;
+    margin: 0;
   }
   .elementos__body--elemento .quantidade {
     margin: 0;
