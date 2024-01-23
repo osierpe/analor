@@ -87,7 +87,12 @@
       &--elemento {
         display: grid;
         grid-template-columns: 1fr;
-
+        place-items: center;
+        h3 {
+          display: flex;
+          justify-content: space-around;
+          margin: 0;
+        }
         .quantidade {
           margin: 0;
 
