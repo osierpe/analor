@@ -15,9 +15,10 @@
 
   @include mobile {
     padding: 0;
+    justify-content: center;
     h2 {
       display: flex;
-      justify-items: space-around;
+      justify-self: center;
       margin: 0;
       font-size: 1.4rem;
       max-width: 30rem;

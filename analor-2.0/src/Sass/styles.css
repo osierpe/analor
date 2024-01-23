@@ -156,10 +156,11 @@ main h3 {
 @media (max-width: 799px) {
   .elementos__header {
     padding: 0;
+    justify-content: center;
   }
   .elementos__header h2 {
     display: flex;
-    justify-items: space-around;
+    justify-self: center;
     margin: 0;
     font-size: 1.4rem;
     max-width: 30rem;
@@ -370,10 +371,11 @@ main h3 {
 @media (max-width: 799px) {
   .propriedades__header {
     padding: 0;
+    justify-content: center;
   }
   .propriedades__header h2 {
     display: flex;
-    justify-items: space-around;
+    justify-self: center;
     margin: 0;
     font-size: 1.4rem;
     max-width: 30rem;
@@ -464,6 +466,9 @@ main h3 {
   }
 }
 @media (max-width: 799px) {
+  .propriedades__body {
+    margin-top: 2rem;
+  }
   .propriedades__body--range {
     display: grid;
     grid-template-rows: 1fr 1fr;
@@ -513,10 +518,11 @@ main h3 {
 @media (max-width: 799px) {
   .grupo_funcional__header {
     padding: 0;
+    justify-content: center;
   }
   .grupo_funcional__header h2 {
     display: flex;
-    justify-items: space-around;
+    justify-self: center;
     margin: 0;
     font-size: 1.4rem;
     max-width: 30rem;
@@ -639,10 +645,11 @@ main h3 {
 @media (max-width: 799px) {
   .identificadores__header {
     padding: 0;
+    justify-content: center;
   }
   .identificadores__header h2 {
     display: flex;
-    justify-items: space-around;
+    justify-self: center;
     margin: 0;
     font-size: 1.4rem;
     max-width: 30rem;
@@ -682,5 +689,25 @@ main h3 {
   }
   .identificadores__body label input {
     width: 40rem;
+  }
+}
+@media (max-width: 799px) {
+  .identificadores__header {
+    justify-content: center;
+  }
+  .identificadores__body {
+    margin: 4rem 5%;
+  }
+  .identificadores__body label {
+    grid-template-rows: 1fr 1fr;
+    grid-template-columns: 1fr;
+    place-items: start;
+  }
+  .identificadores__body label .identificadores__body--text {
+    justify-self: start;
+  }
+  .identificadores__body label input {
+    margin: 0;
+    width: 100%;
   }
 }/*# sourceMappingURL=styles.css.map */
