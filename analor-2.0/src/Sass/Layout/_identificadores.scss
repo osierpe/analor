@@ -41,4 +41,26 @@
       }
     }
   }
+
+  @include mobile {
+    &__header {
+      justify-content: center;
+    }
+
+    &__body {
+      margin: 4rem 5%;
+      label {
+        grid-template-rows: 1fr 1fr;
+        grid-template-columns: 1fr;
+        place-items: start;
+        .identificadores__body--text {
+          justify-self: start;
+        }
+        input {
+          margin: 0;
+          width: 100%;
+        }
+      }
+    }
+  }
 }
