@@ -20,10 +20,10 @@ def search():
     cur = conn.cursor(cursor_factory=RealDictCursor)
     clauses = []
     whereclause = ''
-
     clauses.append(addColumnEqualValue('=','cas', parameter_dict['cas']))
     clauses.append(buildElementsWhereClause(parameter_dict['elementos']))
     clauses.append(buildPropsWhereClause(parameter_dict['propriedades']))
+    clauses.append(buildCarbonSkeletonWhereClause(parameter_dict['ecfg']))
     
     firstClause = True
     for clause in clauses: 
@@ -63,6 +63,30 @@ def buildElementsWhereClause(elements):
             firstElement = False
     return elementWhereClause
         
+def buildCarbonSkeletonWhereClause(ecfgs):
+    carbonSkeletonWhereClause = ''
+    for ecfg in ecfgs:
+        if ecfg['gFunc']:
+            match ecfg['inex']:
+                case 'incSim':
+                    if carbonSkeletonWhereClause:
+                        carbonSkeletonWhereClause += addAndConnector() + f'nlin like {ecfg["gFunc"]}'
+                    else:
+                        carbonSkeletonWhereClause += f'(nlin like {ecfg["gFunc"]}'
+                case 'excluir':
+                    if carbonSkeletonWhereClause:
+                        carbonSkeletonWhereClause += addAndConnector() + f'nlin not like {ecfg["gFunc"]}'
+                    else:
+                        carbonSkeletonWhereClause += f'(nlin not like {ecfg["gFunc"]}'
+                case 'incluir':
+                    if carbonSkeletonWhereClause:
+                        carbonSkeletonWhereClause += addOrConnector() + f'nlin like {ecfg["gFunc"]}'
+                    else:
+                        carbonSkeletonWhereClause += f'(nlin like {ecfg["gFunc"]}'
+
+    carbonSkeletonWhereClause += ')'
+    return carbonSkeletonWhereClause
+
 def buildPropsWhereClause(properties):
     propertiesWhereClause = ''
     for propertie in properties:
