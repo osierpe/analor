@@ -23,8 +23,8 @@ def search():
     clauses.append(addColumnEqualValue('=','cas', parameter_dict['cas']))
     clauses.append(buildElementsWhereClause(parameter_dict['elementos']))
     clauses.append(buildPropsWhereClause(parameter_dict['propriedades']))
-    clauses.append(buildCarbonSkeletonWhereClause(parameter_dict['ecfg']))
-    
+    clauses.append(buildCarbonSkeletonWhereClause(parameter_dict['ecgf']))
+
     firstClause = True
     for clause in clauses: 
         if not clause:
@@ -45,6 +45,10 @@ def search():
     
     cur.close()
     conn.close()
+
+    f = open('demooutput.txt', 'a')
+    f.write(json.dumps(formatedResultRows))
+    f.close()
     return formatedResultRows
   
 def buildElementsWhereClause(elements):
@@ -61,7 +65,8 @@ def buildElementsWhereClause(elements):
                 elementWhereClause += addAndConnector()
             elementWhereClause += addColumnEqualValue('>',elementObject['nome'][0:4].lower(),0)
             firstElement = False
-    return elementWhereClause
+
+    return elementWhereClause if len(elementWhereClause) else None
         
 def buildCarbonSkeletonWhereClause(ecfgs):
     carbonSkeletonWhereClause = ''
@@ -84,7 +89,8 @@ def buildCarbonSkeletonWhereClause(ecfgs):
                     else:
                         carbonSkeletonWhereClause += f'(nlin like {ecfg["gFunc"]}'
 
-    carbonSkeletonWhereClause += ')'
+    if carbonSkeletonWhereClause:
+        carbonSkeletonWhereClause += ')'
     return carbonSkeletonWhereClause
 
 def buildPropsWhereClause(properties):
