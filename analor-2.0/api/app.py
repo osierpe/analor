@@ -17,7 +17,7 @@ def getAbrev():
   
 
     cur = conn.cursor(cursor_factory=RealDictCursor)
-    cur.execute('SELECT NLIN FROM abrev;')
+    cur.execute('SELECT NOME, NLIN FROM abrev;')
     resultRows = cur.fetchall()
     formatedResultRows = formatRowsResult(resultRows)
 
@@ -90,19 +90,19 @@ def buildCarbonSkeletonWhereClause(ecfgs):
             match ecfg['inex']:
                 case 'incSim':
                     if carbonSkeletonWhereClause:
-                        carbonSkeletonWhereClause += addAndConnector() + f'nlin like {ecfg["gFunc"]}'
+                        carbonSkeletonWhereClause += addAndConnector() + f'LOWER(nlin) like {ecfg["gFunc"]}'
                     else:
-                        carbonSkeletonWhereClause += f'(nlin like {ecfg["gFunc"]}'
+                        carbonSkeletonWhereClause += f'(LOWER(nlin) like {ecfg["gFunc"]}'
                 case 'excluir':
                     if carbonSkeletonWhereClause:
-                        carbonSkeletonWhereClause += addAndConnector() + f'nlin not like {ecfg["gFunc"]}'
+                        carbonSkeletonWhereClause += addAndConnector() + f'LOWER(nlin) not like {ecfg["gFunc"]}'
                     else:
-                        carbonSkeletonWhereClause += f'(nlin not like {ecfg["gFunc"]}'
+                        carbonSkeletonWhereClause += f'(LOWER(nlin) not like {ecfg["gFunc"]}'
                 case 'incluir':
                     if carbonSkeletonWhereClause:
-                        carbonSkeletonWhereClause += addOrConnector() + f'nlin like {ecfg["gFunc"]}'
+                        carbonSkeletonWhereClause += addOrConnector() + f'LOWER(nlin) like {ecfg["gFunc"]}'
                     else:
-                        carbonSkeletonWhereClause += f'(nlin like {ecfg["gFunc"]}'
+                        carbonSkeletonWhereClause += f'(LOWER(nlin) like {ecfg["gFunc"]}'
 
     if carbonSkeletonWhereClause:
         carbonSkeletonWhereClause += ')'
