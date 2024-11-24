@@ -6,6 +6,25 @@ from psycopg2.extras import RealDictCursor
 
 app = Flask(__name__)
 
+
+@app.route('/abrev')
+def getAbrev():
+    args = request.args
+    conn = psycopg2.connect(database="new_db_analor",
+                            user="postgres",
+                            password="admin",
+                            host="localhost", port="5432")
+  
+
+    cur = conn.cursor(cursor_factory=RealDictCursor)
+    cur.execute('SELECT NLIN FROM abrev;')
+    resultRows = cur.fetchall()
+    formatedResultRows = formatRowsResult(resultRows)
+
+    cur.close()
+    conn.close()
+    return formatedResultRows
+
 @app.route('/search')
 def search():
     args = request.args
@@ -15,7 +34,7 @@ def search():
                             user="postgres",
                             password="admin",
                             host="localhost", port="5432")
-
+  
 
     cur = conn.cursor(cursor_factory=RealDictCursor)
     clauses = []
@@ -23,10 +42,10 @@ def search():
     clauses.append(addColumnEqualValue('=','cas', parameter_dict['cas']))
     clauses.append(buildElementsWhereClause(parameter_dict['elementos']))
     clauses.append(buildPropsWhereClause(parameter_dict['propriedades']))
-    clauses.append(buildCarbonSkeletonWhereClause(parameter_dict['ecfg']))
+    clauses.append(buildCarbonSkeletonWhereClause(parameter_dict['ecgf']))
 
     firstClause = True
-    for clause in clauses:
+    for clause in clauses: 
         if not clause:
             continue
         if(not firstClause):
@@ -40,13 +59,13 @@ def search():
         cur.execute(f'''SELECT * FROM univ1_210523 ;''')
 
     resultRows = cur.fetchall()
-
+  
     formatedResultRows = formatRowsResult(resultRows)
-
+    
     cur.close()
     conn.close()
     return formatedResultRows
-
+  
 def buildElementsWhereClause(elements):
     elementWhereClause = ''
     firstElement = True
@@ -61,8 +80,9 @@ def buildElementsWhereClause(elements):
                 elementWhereClause += addAndConnector()
             elementWhereClause += addColumnEqualValue('>',elementObject['nome'][0:4].lower(),0)
             firstElement = False
-    return elementWhereClause
 
+    return elementWhereClause if len(elementWhereClause) else None
+        
 def buildCarbonSkeletonWhereClause(ecfgs):
     carbonSkeletonWhereClause = ''
     for ecfg in ecfgs:
@@ -84,14 +104,15 @@ def buildCarbonSkeletonWhereClause(ecfgs):
                     else:
                         carbonSkeletonWhereClause += f'(nlin like {ecfg["gFunc"]}'
 
-    carbonSkeletonWhereClause += ')'
+    if carbonSkeletonWhereClause:
+        carbonSkeletonWhereClause += ')'
     return carbonSkeletonWhereClause
 
 def buildPropsWhereClause(properties):
     propertiesWhereClause = ''
     for propertie in properties:
         match propertie['nome'].lower():
-            case 'peso molecular':
+            case 'peso molecular': 
                 columnName = 'pmol'
             case 'ponto de fusão':
                 columnName = 'pf'
@@ -100,7 +121,7 @@ def buildPropsWhereClause(properties):
         if propertie['alcance'][0]:
             if propertiesWhereClause:
                 propertiesWhereClause += addAndConnector()
-            propertiesWhereClause += f'{columnName} >= {int(propertie["alcance"][0])}'
+            propertiesWhereClause += f'{columnName} >= {int(propertie["alcance"][0])}' 
             if propertie['alcance'][1]:
                 propertiesWhereClause += addAndConnector()
                 propertiesWhereClause += f'{columnName} <= {int(propertie["alcance"][1])}'
@@ -109,7 +130,7 @@ def buildPropsWhereClause(properties):
                 propertiesWhereClause += addAndConnector()
             propertiesWhereClause += f'{columnName} <= {int(propertie["alcance"][1])}'
     return propertiesWhereClause
-
+            
 
 def addColumnEqualValue(operator, colName, value) -> str:
     if value != '':
