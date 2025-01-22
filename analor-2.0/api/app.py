@@ -75,10 +75,15 @@ def buildElementsWhereClause(elements):
                 elementWhereClause += addAndConnector()
             elementWhereClause += addColumnEqualValue('=',elementObject['nome'][0:4].lower(),elementObject['quantidade'])
             firstElement = False
-        elif elementObject['tem']:
+        elif elementObject['tem'] == 'True':
             if not firstElement:
                 elementWhereClause += addAndConnector()
             elementWhereClause += addColumnEqualValue('>',elementObject['nome'][0:4].lower(),0)
+            firstElement = False
+        elif elementObject['tem'] == 'False':
+            if not firstElement:
+                elementWhereClause += addAndConnector()
+            elementWhereClause += addColumnEqualValue('=',elementObject['nome'][0:4].lower(),0)
             firstElement = False
 
     return elementWhereClause if len(elementWhereClause) else None
