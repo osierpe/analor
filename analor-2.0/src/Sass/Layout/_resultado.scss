@@ -1,0 +1,117 @@
+@use '../abstracts/' as *;
+
+.resultados {
+    color: #416747;
+    h3 {
+        font-size: 1.6rem;
+        color: #9C9C9C;
+        font-weight: 500;
+    }
+    p {
+        font-size: 2rem;
+    }
+    &__lista {
+        padding: 3rem;
+
+        &--item {
+            background-color: #EBF0E8;
+            padding: 1rem;
+            margin-bottom: 2rem;
+            border: 0.4rem solid #9c9c9c80;
+            border-radius: 1rem;
+
+            .info_basica {
+                display: grid;
+                grid-template-columns: 3fr 1fr 1fr 1fr 3fr;
+
+                .expandirBtn {
+                    cursor: pointer;
+                    justify-self: end;
+                    display: flex;
+                    padding: 1rem;
+
+                    font-size: 1.8rem;
+                    img {
+                        margin-right: 1.2rem;
+                        width: 2.4rem;
+                    }
+                }
+            }
+
+            .hidden {
+                display: none;
+            }
+
+            &-expandivel {
+                margin: 2rem 0 1rem 0;
+                display: grid;
+                grid-template-columns: 2fr 3fr;
+                .linha {
+                    margin-bottom: 1rem;
+                    border-bottom: 0.1rem #9C9C9C solid;
+                }
+                .col- {
+                    &1 {
+                        margin-right: 2rem;
+                    }
+                    &2{
+                      margin-right: 15rem;
+                      
+                      .container-img {
+                        margin-top: 2.5rem;
+                        background-color: white;
+                        height: 15rem;
+                        border-radius: 2rem;
+                        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.099) ;
+                      }
+                    }
+                }
+            }
+        }
+    }
+
+    &__header {
+        background-color: transparent;
+    
+        &--container {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            margin-bottom: 3rem;
+            h1 {
+                text-align: center;
+                font-size: 2rem;
+                font-weight: 600;
+                color: black;
+
+                @include mobile {
+                    font-size: 2.8rem;
+                }
+            }
+            @include mobile {
+                margin-bottom: 0;
+            }
+            &-btn {
+                cursor: pointer;
+                color: #9C9C9C;
+                display: flex;
+                align-items: center;
+                font-size: 1.2rem;
+    
+                img {
+                    margin-right: 0.8rem;
+                }
+                @include mobile {
+                    margin-left: 2rem;
+                    h2 {
+                        display: none;
+                    }
+                }
+    
+            }
+        }
+    }
+    main {
+        overflow-y: scroll;
+    }
+
+}

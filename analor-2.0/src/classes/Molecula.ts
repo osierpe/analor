@@ -100,3 +100,5 @@ export default class Molecula {
         this.no_ifrj = no_ifrj;
     }
 }
+
+export const moleculaTeste:Molecula = new Molecula("001-00-001", "teste", "teste", "test", "[X>Y]-X-XY", "[X>Y]-X-XY", 100, "teste", 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 100, 100, "Abc_de", [1,10,100], [0,9,10], [10,11,12], [10,11,12], [10,11,12], [10,11,12], "Teste", "Teste", "Teste", false)
