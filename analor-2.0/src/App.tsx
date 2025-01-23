@@ -11,6 +11,7 @@ import Resultados from './components/Resultados'
 
 import './Sass/styles.css'
 import Molecula from './classes/Molecula'
+import { moleculaTeste } from './classes/Molecula'
 
 function App() {
   const handleResize = () => {
@@ -28,7 +29,7 @@ function App() {
   const [cur_page, set_cur_page] = useState(0)
   const [form_data, set_form_data] = useState(new Form_Data())
   const [cur_ecgf_displaying, set_cur_ecgf_displaying] = useState(2)
-
+ const [moleculas, setMoleculas] = useState<Molecula[]>([])
   function get_cur_page() {
     switch (cur_page) {
       case 0:
@@ -55,101 +56,129 @@ function App() {
           />
         )
       case 4:
+        console.log(moleculas)
         return(
-          <Resultados moleculas={moleculas}/>
+          <Resultados moleculas={getMoleculas()} set_cur_page={set_cur_page}/>
         )
       default:
         return null
     }
   }
-
-  const moleculas:Array<Molecula> = []
+  function getMoleculas() {
+    return moleculas
+  }
 
   const handle_submit = async (event:any) => {
+    
     event.preventDefault()
-    const formDataJson = JSON.stringify(form_data)
-    const queryParams = new URLSearchParams({ data: formDataJson }).toString()
+    
+  const formDataJson = JSON.stringify(form_data);
+  const queryParams = new URLSearchParams({ data: formDataJson }).toString();
+
+  try {
     const response = await fetch(`http://localhost:5000/search?${queryParams}`)
 
-    const data:Array<any> = await response.json()
-    
-    if (data !== null) {
-     data.forEach((molecula) => {
-        const _molecula = new Molecula(
-          molecula.cas,
-          molecula.niup,
-          molecula.ncom,
-          molecula.ningles,
-          molecula.nlin,
-          molecula.flin,
-          molecula.pmol,
-          molecula.fmol,
-          molecula.carb,
-          molecula.hidr,
-          molecula.oxig,
-          molecula.nitr,
-          molecula.enxo,
-          molecula.clor,
-          molecula.brom,
-          molecula.iodo,
-          molecula.fluo,
-          molecula.pf,
-          molecula.pfcarac,
-          molecula.pe,
-          molecula.pecarac,
-          molecula.pfder,
-          [
-            molecula.iv1, molecula.iv2, molecula.iv3, molecula.iv4, molecula.iv5,
-            molecula.iv6, molecula.iv7, molecula.iv8, molecula.iv9, molecula.iv10,
-            molecula.iv11, molecula.iv12, molecula.iv13, molecula.iv14, molecula.iv15,
-            molecula.iv16, molecula.iv17, molecula.iv18, molecula.iv19, molecula.iv20
-          ]
-          ,
-          [
-            molecula.iv1car, molecula.iv2car, molecula.iv3car, molecula.iv4car, molecula.iv5car,
-            molecula.iv6car, molecula.iv7car, molecula.iv8car, molecula.iv9car, molecula.iv10car,
-            molecula.iv11car, molecula.iv12car, molecula.iv13car, molecula.iv14car, molecula.iv15car,
-            molecula.iv16car, molecula.iv17car, molecula.iv18car, molecula.iv19car, molecula.iv20car
-          ]
-          ,
-
-          [
-            molecula.ms1, molecula.ms2, molecula.ms3, molecula.ms4, molecula.ms5,
-            molecula.ms6, molecula.ms7, molecula.ms8
-          ],
-          [
-            molecula.ms1car, molecula.ms2car, molecula.ms3car, molecula.ms4car, molecula.ms5car,
-            molecula.ms6car, molecula.ms7car, molecula.ms8car
-          ],
-          [
-            molecula.ims1, molecula.ims2, molecula.ims3, molecula.ims4, molecula.ims5,
-            molecula.ims6, molecula.ims7, molecula.ims8
-          ],
-          [
-            molecula.ims1car, molecula.ims2car, molecula.ims3car, molecula.ims4car, molecula.ims5car,
-            molecula.ims6car, molecula.ims7car, molecula.ims8car
-          ]
-          ,
-          molecula.smiles,
-          molecula.ecgf,
-          molecula.estrutura,
-          molecula.no_ifrj)
-
-          moleculas.push(_molecula)
-      }
-    )
+    if (!response.ok) {
+      setMoleculas(() => {
+        const newMoleculas = [];
+        for (let i = 0; i < 10; i++) {
+          newMoleculas.push(moleculaTeste);
+          console.log(newMoleculas, i);
+        }
+        return newMoleculas;
+      });
+      throw new Error(`HTTP error! Status: ${response.status}`);
     }
-    set_cur_page(4)
-    console.log(data)
+    else {
+      const responseData = await response.json();
+      console.log("Resposta: ", responseData);
+      setMoleculas([]);
+      responseData.forEach((molecula:any) => {
+          const _molecula = new Molecula(
+            molecula.cas,
+            molecula.niup,
+            molecula.ncom,
+            molecula.ningles,
+            molecula.nlin,
+            molecula.flin,
+            molecula.pmol,
+            molecula.fmol,
+            molecula.carb,
+            molecula.hidr,
+            molecula.oxig,
+            molecula.nitr,
+            molecula.enxo,
+            molecula.clor,
+            molecula.brom,
+            molecula.iodo,
+            molecula.fluo,
+            molecula.pf,
+            molecula.pfcarac,
+            molecula.pe,
+            molecula.pecarac,
+            molecula.pfder,
+            [
+              molecula.iv1, molecula.iv2, molecula.iv3, molecula.iv4, molecula.iv5,
+              molecula.iv6, molecula.iv7, molecula.iv8, molecula.iv9, molecula.iv10,
+              molecula.iv11, molecula.iv12, molecula.iv13, molecula.iv14, molecula.iv15,
+              molecula.iv16, molecula.iv17, molecula.iv18, molecula.iv19, molecula.iv20
+            ]
+            ,
+            [
+              molecula.iv1car, molecula.iv2car, molecula.iv3car, molecula.iv4car, molecula.iv5car,
+              molecula.iv6car, molecula.iv7car, molecula.iv8car, molecula.iv9car, molecula.iv10car,
+              molecula.iv11car, molecula.iv12car, molecula.iv13car, molecula.iv14car, molecula.iv15car,
+              molecula.iv16car, molecula.iv17car, molecula.iv18car, molecula.iv19car, molecula.iv20car
+            ]
+            ,
+  
+            [
+              molecula.ms1, molecula.ms2, molecula.ms3, molecula.ms4, molecula.ms5,
+              molecula.ms6, molecula.ms7, molecula.ms8
+            ],
+            [
+              molecula.ms1car, molecula.ms2car, molecula.ms3car, molecula.ms4car, molecula.ms5car,
+              molecula.ms6car, molecula.ms7car, molecula.ms8car
+            ],
+            [
+              molecula.ims1, molecula.ims2, molecula.ims3, molecula.ims4, molecula.ims5,
+              molecula.ims6, molecula.ims7, molecula.ims8
+            ],
+            [
+              molecula.ims1car, molecula.ims2car, molecula.ims3car, molecula.ims4car, molecula.ims5car,
+              molecula.ims6car, molecula.ims7car, molecula.ims8car
+            ]
+            ,
+            molecula.smiles,
+            molecula.ecgf,
+            molecula.estrutura,
+            molecula.no_ifrj)
+  
+            setMoleculas((prevMol) => {
+              const newMol = [...prevMol];
+              newMol.push(_molecula);
+              return newMol;
+            })
+        }
+      )
+    }
+   
+
+  } catch (error) {
+    console.error("Error sending request:", error);
   }
+    set_cur_page(4)
+  }
+
+  
 
   return (
     <>
       <Header />
       <div className="content">
-        <Navigation set_cur_page={set_cur_page} cur_page={cur_page} />
-        <main>{get_cur_page()}</main>
-        <div className="submit_btn_container">
+        {cur_page !== 4 ? <Navigation set_cur_page={set_cur_page} cur_page={cur_page} /> : null}
+        {cur_page !== 4 ? <main>{get_cur_page()}</main> : get_cur_page()}
+        { cur_page === 4 ? null : <div className="submit_btn_container">
           {isMobile ? (
             cur_page !== 0 ? (
               <img
@@ -162,7 +191,7 @@ function App() {
             )
           ) : null}
           <button type="submit" onClick={(e) => handle_submit(e)}>
-            <img src="/symbol-1.svg" alt="símbolo de átomo" />
+            <img src="/atomo.svg" alt="símbolo de átomo" />
             Mostrar Resultado
           </button>
           {isMobile ? (
@@ -176,7 +205,7 @@ function App() {
               <div className="right-btn"></div>
             )
           ) : null}
-        </div>
+        </div>}
       </div>
     </>
   )
