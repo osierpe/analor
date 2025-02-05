@@ -4,7 +4,7 @@ interface quantidade_props extends form_props {
   elemento: {
     nome: string
     tem: boolean | null
-    quantidade: number | null
+    quantidade: number | ''
   }
 }
 
@@ -16,13 +16,13 @@ export default function Quantidade({
   const handle_increment = function (isInverted: boolean = false) {
     const new_elementos_array: any[] = form_data.elementos.map((form_el) => {
       if (elemento.nome === form_el.nome) {
-        if (form_el.quantidade !== null) {
+        if (typeof(form_el.quantidade) === "number") {
           return {
             ...form_el,
             quantidade: isInverted
               ? form_el.quantidade > 1
                 ? form_el.quantidade - 1
-                : null
+                : ''
               : form_el.quantidade + 1,
           }
         } else {
@@ -44,10 +44,10 @@ export default function Quantidade({
   const clear_selection = function (): void {
     const new_elementos_array: any[] = form_data.elementos.map((form_el) => {
       if (elemento.nome === form_el.nome) {
-        if (form_el.quantidade !== null) {
+        if (form_el.quantidade !== '') {
           return {
             ...form_el,
-            quantidade: null,
+            quantidade: '',
           }
         }
       }
@@ -69,7 +69,7 @@ export default function Quantidade({
       return {
         ...el,
         quantidade:
-          Number(event.target.value) > 0 ? Number(event.target.value) : null,
+          Number(event.target.value) > 0 ? Number(event.target.value) : "",
       }
     })
 
@@ -92,12 +92,13 @@ export default function Quantidade({
         type="number"
         min={1}
         name={elemento.nome}
-        value={elemento.quantidade === null ? '' : elemento.quantidade}
+        value={elemento.quantidade === "" ? '' : elemento.quantidade}
         onChange={handle_input}
       />
       <span
+        
         className={`btn question-mark ${
-          elemento.quantidade === null ? 'active' : ''
+          (elemento.quantidade === '') ? 'active' : ''
         }`}
         onClick={() => clear_selection()}
       >
