@@ -13,6 +13,11 @@ export default function Grupo_Funcional({
   set_cur_displaying,
   is_mobile,
 }: ecgf_props) {
+
+  const getAbrev = function (event:any) {
+    
+  }
+
   const handle_change = function (event: any) {
     const e_name = event.target.name
     const index = e_name.slice(-1)

@@ -7,7 +7,7 @@ class Form_Data {
   elementos: {
     nome: string
     tem: boolean | null
-    quantidade: number | null
+    quantidade: number | String
   }[] = []
   propriedades: {
     nome: string
@@ -25,47 +25,47 @@ class Form_Data {
       {
         nome: 'Carbono',
         tem: null,
-        quantidade: null,
+        quantidade: '',
       },
       {
         nome: 'Hidrogênio',
         tem: null,
-        quantidade: null,
+        quantidade: '',
       },
       {
         nome: 'Nitrogênio',
         tem: null,
-        quantidade: null,
+        quantidade: '',
       },
       {
         nome: 'Oxigênio',
         tem: null,
-        quantidade: null,
+        quantidade: '',
       },
       {
         nome: 'Flúor',
         tem: null,
-        quantidade: null,
+        quantidade: '',
       },
       {
         nome: 'Cloro',
         tem: null,
-        quantidade: null,
+        quantidade: '',
       },
       {
         nome: 'Bromo',
         tem: null,
-        quantidade: null,
+        quantidade: '',
       },
       {
         nome: 'Iodo',
         tem: null,
-        quantidade: null,
+        quantidade: '',
       },
       {
         nome: 'Enxofre',
         tem: null,
-        quantidade: null,
+        quantidade: '',
       },
     ]
 
