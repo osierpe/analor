@@ -735,6 +735,7 @@ main h3 {
   padding: 3rem;
 }
 .resultados__lista--item {
+  justify-items: center;
   background-color: #EBF0E8;
   padding: 1rem;
   margin-bottom: 2rem;
@@ -750,6 +751,7 @@ main h3 {
   justify-self: end;
   display: flex;
   padding: 1rem;
+  align-items: center;
   font-size: 1.8rem;
 }
 .resultados__lista--item .info_basica .expandirBtn img {

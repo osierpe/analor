@@ -46,11 +46,11 @@ export default function Resultados(props:ResultadosProps) {
 
                 <div className="pontoFusao">
                     <h3>PF</h3>
-                    <p>{molecula.pf}°C</p>
+                    <p>{String(molecula.pf) !== "None" ? `${molecula.pf}°C` : "N.A"}</p>
                 </div>
                 <div className="pontoEbuliçao">
                     <h3>PE</h3>
-                    <p>{molecula.pe}°C</p>
+                    <p>{String(molecula.pe) !== "None" ? `${molecula.pe}°C` : "N.A"}</p>
                 </div>
                 <div className="pesoMolecular">
                     <h3>PM</h3>
