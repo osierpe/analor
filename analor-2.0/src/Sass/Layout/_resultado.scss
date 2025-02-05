@@ -14,6 +14,7 @@
         padding: 3rem;
 
         &--item {
+            justify-items: center;
             background-color: #EBF0E8;
             padding: 1rem;
             margin-bottom: 2rem;
@@ -29,6 +30,7 @@
                     justify-self: end;
                     display: flex;
                     padding: 1rem;
+                    align-items: center;
 
                     font-size: 1.8rem;
                     img {

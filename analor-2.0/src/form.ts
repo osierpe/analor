@@ -17,7 +17,7 @@ class Form_Data {
     gFunc: null | string
     inex: 'incluir' | 'incSim' | 'excluir'
   }[] = []
-  cas: string | null = null
+  cas: string
   nome: string | null = null
 
   constructor() {
@@ -111,7 +111,7 @@ class Form_Data {
       },
     ]
 
-    this.cas = null
+    this.cas = ""
     this.nome = null
   }
 }
