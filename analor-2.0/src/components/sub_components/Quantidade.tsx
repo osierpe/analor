@@ -4,7 +4,7 @@ interface quantidade_props extends form_props {
   elemento: {
     nome: string
     tem: boolean | null
-    quantidade: number | ''
+    quantidade: any
   }
 }
 

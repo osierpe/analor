@@ -10,9 +10,9 @@ app = Flask(__name__)
 @app.route('/abrev')
 def getAbrev():
     args = request.args
-    conn = psycopg2.connect(database="new_db_analor",
+    conn = psycopg2.connect(database="analor",
                             user="postgres",
-                            password="admin",
+                            password="feykro",
                             host="localhost", port="5432")
   
 
@@ -30,9 +30,9 @@ def search():
     args = request.args
     parameter_dict = args.to_dict()['data']
     parameter_dict = json.loads(parameter_dict)
-    conn = psycopg2.connect(database="new_db_analor",
+    conn = psycopg2.connect(database="analor",
                             user="postgres",
-                            password="admin",
+                            password="feykro",
                             host="localhost", port="5432")
   
 
@@ -54,9 +54,9 @@ def search():
         firstClause = False
 
     if whereclause:
-        cur.execute(f'''SELECT * FROM univ1_210523 WHERE {whereclause};''')
+        cur.execute(f'''SELECT * FROM univ1_050924 WHERE {whereclause};''')
     else:
-        cur.execute(f'''SELECT * FROM univ1_210523 ;''')
+        cur.execute(f'''SELECT * FROM univ1_050924 ;''')
 
     resultRows = cur.fetchall()
   
