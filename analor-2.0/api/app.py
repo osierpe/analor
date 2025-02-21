@@ -92,22 +92,23 @@ def buildCarbonSkeletonWhereClause(ecfgs):
     carbonSkeletonWhereClause = ''
     for ecfg in ecfgs:
         if ecfg['gFunc']:
+            likeToMatch = ecfg["gFunc"]
             match ecfg['inex']:
                 case 'incSim':
                     if carbonSkeletonWhereClause:
-                        carbonSkeletonWhereClause += addAndConnector() + f'LOWER(nlin) like {ecfg["gFunc"]}'"
+                        carbonSkeletonWhereClause += addAndConnector() + f"LOWER(nlin) like '%{likeToMatch}%'"
                     else:
-                        carbonSkeletonWhereClause += f"(LOWER(nlin) like '{ecfg["gFunc"]}'"
+                        carbonSkeletonWhereClause += f"(LOWER(nlin) like '{likeToMatch}'"
                 case 'excluir':
                     if carbonSkeletonWhereClause:
-                        carbonSkeletonWhereClause += addAndConnector() + f"LOWER(nlin) not like '{ecfg["gFunc"]}'"
+                        carbonSkeletonWhereClause += addAndConnector() + f"LOWER(nlin) not like '%{likeToMatch}%'"
                     else:
-                        carbonSkeletonWhereClause += f"(LOWER(nlin) not like '{ecfg["gFunc"]}'"
+                        carbonSkeletonWhereClause += f"(LOWER(nlin) not like '%{likeToMatch}%'"
                 case 'incluir':
                     if carbonSkeletonWhereClause:
-                        carbonSkeletonWhereClause += addOrConnector() + f"LOWER(nlin) like '{ecfg["gFunc"]}'"
+                        carbonSkeletonWhereClause += addOrConnector() + f"LOWER(nlin) like '%{likeToMatch}%'"
                     else:
-                        carbonSkeletonWhereClause += f"(LOWER(nlin) like '{ecfg["gFunc"]}'"
+                        carbonSkeletonWhereClause += f"(LOWER(nlin) like '%{likeToMatch}%'"
 
     if carbonSkeletonWhereClause:
         carbonSkeletonWhereClause += ')'
