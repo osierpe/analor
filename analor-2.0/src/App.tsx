@@ -13,6 +13,18 @@ import './Sass/styles.css'
 import Molecula from './classes/Molecula'
 import { moleculaTeste } from './classes/Molecula'
 
+
+export class Abrev {
+  nome: string
+  nlin: string
+
+  constructor(nome: string, abrev: string) {
+    this.nome = nome
+    this.nlin = abrev
+  }
+}
+
+
 function App() {
   const handleResize = () => {
     setIsMobile(window.innerWidth <= 600)
@@ -26,39 +38,40 @@ function App() {
   }, [])
 
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 600)
-  const [cur_page, set_cur_page] = useState(0)
-  const [form_data, set_form_data] = useState(new Form_Data())
-  const [cur_ecgf_displaying, set_cur_ecgf_displaying] = useState(2)
+  const [curPage, setCurPage] = useState(0)
+  const [formData, setFormData] = useState(new Form_Data())
+  const [curDisplayingEcgf, setCurDisplayingEcgf] = useState(2)
  const [moleculas, setMoleculas] = useState<Molecula[]>([])
-  function get_cur_page() {
-    switch (cur_page) {
+  function getCurPage() {
+    switch (curPage) {
       case 0:
-        return <Elementos form_data={form_data} set_form_data={set_form_data} />
+        return <Elementos form_data={formData} set_form_data={setFormData} />
       case 1:
         return (
-          <Propriedades form_data={form_data} set_form_data={set_form_data} />
+          <Propriedades form_data={formData} set_form_data={setFormData} />
         )
       case 2:
         return (
           <Grupo_Funcional
-            form_data={form_data}
-            set_form_data={set_form_data}
-            cur_displaying={cur_ecgf_displaying}
-            set_cur_displaying={set_cur_ecgf_displaying}
+            form_data={formData}
+            set_form_data={setFormData}
+            cur_displaying={curDisplayingEcgf}
+            set_cur_displaying={setCurDisplayingEcgf}
             is_mobile={isMobile}
+            abrevs={abrevs}
           />
         )
       case 3:
         return (
           <Identificadores
-            form_data={form_data}
-            set_form_data={set_form_data}
+            form_data={formData}
+            set_form_data={setFormData}
           />
         )
       case 4:
         console.log(moleculas)
         return(
-          <Resultados moleculas={getMoleculas()} set_cur_page={set_cur_page}/>
+          <Resultados moleculas={getMoleculas()} set_cur_page={setCurPage}/>
         )
       default:
         return null
@@ -68,11 +81,33 @@ function App() {
     return moleculas
   }
 
-  const handle_submit = async (event:any) => {
+  
+
+  const getAbrevs = async (): Promise<Abrev[]> => {
+    try {
+      const response = await fetch("http://localhost:5000/abrev");
+      if (!response.ok) {
+        console.error("Error fetching data");
+        return [];
+      }
+      const data = await response.json();
+      console.log(data);
+      const abrevs: Abrev[] = [];
+      data.forEach((item: { nlin: string; nome: string }) => {
+        abrevs.push(new Abrev(item.nome, item.nlin));
+      });
+      return abrevs;
+    } catch (error) {
+      console.error("Error sending request:", error);
+      return [];
+    }
+  };
+
+  const handleSubmit = async (event:any) => {
     
     event.preventDefault()
     
-  const formDataJson = JSON.stringify(form_data);
+  const formDataJson = JSON.stringify(formData);
   const queryParams = new URLSearchParams({ data: formDataJson }).toString();
 
   try {
@@ -167,22 +202,22 @@ function App() {
   } catch (error) {
     console.error("Error sending request:", error);
   }
-    set_cur_page(4)
+    setCurPage(4)
   }
 
-  
-
+  const abrevs = getAbrevs()  
+  console.log(abrevs)
   return (
     <>
       <Header />
       <div className="content">
-        {cur_page !== 4 ? <Navigation set_cur_page={set_cur_page} cur_page={cur_page} /> : null}
-        {cur_page !== 4 ? <main>{get_cur_page()}</main> : get_cur_page()}
-        { cur_page === 4 ? null : <div className="submit_btn_container">
+        {curPage !== 4 ? <Navigation set_cur_page={setCurPage} cur_page={curPage} /> : null}
+        {curPage !== 4 ? <main>{getCurPage()}</main> : getCurPage()}
+        { curPage === 4 ? null : <div className="submit_btn_container">
           {isMobile ? (
-            cur_page !== 0 ? (
+            curPage !== 0 ? (
               <img
-                onClick={() => set_cur_page(cur_page - 1)}
+                onClick={() => setCurPage(curPage - 1)}
                 className="left-btn"
                 src="/btn_esquerda.svg"
               />
@@ -190,14 +225,14 @@ function App() {
               <div className="left-btn"></div>
             )
           ) : null}
-          <button type="submit" onClick={(e) => handle_submit(e)}>
+          <button type="submit" onClick={(e) => handleSubmit(e)}>
             <img src="/atomo.svg" alt="símbolo de átomo" />
             Mostrar Resultado
           </button>
           {isMobile ? (
-            cur_page !== 3 ? (
+            curPage !== 3 ? (
               <img
-                onClick={() => set_cur_page(cur_page + 1)}
+                onClick={() => setCurPage(curPage + 1)}
                 className="right-btn"
                 src="/btn_direita.svg"
               />

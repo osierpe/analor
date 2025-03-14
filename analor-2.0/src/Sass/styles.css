@@ -583,6 +583,22 @@ main h3 {
   width: 2rem;
   height: 2rem;
 }
+.grupo_funcional .hidden {
+  display: none;
+}
+.grupo_funcional .dropdown__container {
+  max-height: 10rem;
+  overflow-y: scroll;
+  max-width: 50rem;
+  padding: 1rem;
+  background-color: white;
+  border-radius: 1rem;
+  margin-bottom: 1rem;
+}
+.grupo_funcional .dropdown__item {
+  cursor: pointer;
+  margin-bottom: 0.5rem;
+}
 .grupo_funcional .plus_button {
   margin: 0 20%;
   display: flex;
