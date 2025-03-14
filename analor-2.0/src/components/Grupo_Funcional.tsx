@@ -1,9 +1,12 @@
+import React, { ReactNode, useState } from 'react'
 import { form_props } from '../form'
+import { Abrev } from '../App'
 
 interface ecgf_props extends form_props {
   cur_displaying: number
   is_mobile: boolean
   set_cur_displaying: React.Dispatch<React.SetStateAction<number>>
+  abrevs: any
 }
 
 export default function Grupo_Funcional({
@@ -11,59 +14,67 @@ export default function Grupo_Funcional({
   set_form_data,
   cur_displaying,
   set_cur_displaying,
-  is_mobile,
-}: ecgf_props) {
+  abrevs,
+  is_mobile: isMobile,
+}: ecgf_props): JSX.Element {
+  const [resolvedAbrevs, setResolvedAbrevs] = useState<Abrev[]>([])
+  const [dropdownClicked, setDropdownClicked] = useState<boolean[]>(Array(6).fill(false))
 
-  const getAbrev = function (event:any) {
-    
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    const { name, value, type } = event.target
+    const index = Number(name.slice(-1))
+
+    const newArr = form_data.ecgf.map((ecgf, i) => {
+      if (i !== index) return ecgf
+      return type === 'radio'
+        ? { ...ecgf, inex: value }
+        : { ...ecgf, gFunc: value !== '' ? value : null }
+    })
+
+    set_form_data((prev: any) => ({ ...prev, ecgf: newArr }))
   }
 
-  const handle_change = function (event: any) {
-    const e_name = event.target.name
-    const index = e_name.slice(-1)
+  const truncateElements = (elements: JSX.Element[], count: number): JSX.Element[] =>
+    elements.slice(0, count)
 
-    if (event.target.type === 'radio') {
-      const new_arr = form_data.ecgf.map((ecgf, i) => {
-        if (Number(index) !== i) {
-          return ecgf
-        }
-        return {
-          ...ecgf,
-          inex: event.target.value,
-        }
-      })
-      set_form_data((prev_form_data) => ({
-        ...prev_form_data,
-        ecgf: new_arr,
-      }))
-    } else if (event.target.type === 'text') {
-      const new_arr = form_data.ecgf.map((ecgf, i) => {
-        if (Number(index) !== i) {
-          return ecgf
-        }
-        return {
-          ...ecgf,
-          gFunc: event.target.value !== '' ? event.target.value : null,
-        }
-      })
-      set_form_data((prev_form_data) => ({
-        ...prev_form_data,
-        ecgf: new_arr,
-      }))
+  async function handleDropdown(index: number, e: React.MouseEvent<HTMLDivElement>): Promise<void> {
+    setDropdownClicked(prev => {
+      const newState = [...prev]
+      newState[index] = !newState[index]
+      return newState
+    })
+
+    if (resolvedAbrevs.length === 0) {
+      try {
+        const fetchedAbrevs: Abrev[] = await abrevs
+        fetchedAbrevs.forEach((item: Abrev) => {
+          console.log(item.nome)
+        })
+        setResolvedAbrevs(fetchedAbrevs)
+      } catch (error) {
+        console.error('Error handling dropdown:', error)
+      }
     }
   }
 
-  const ecgf_elements = form_data.ecgf.map((ecgf, i) => {
+  function handleDropdownItemClick(index: number, value: string): void {
+    const newArr = form_data.ecgf.map((ecgf, i) => {
+      if (i !== index) return ecgf
+      return { ...ecgf, gFunc: value }
+    })
+    set_form_data((prev: any) => ({ ...prev, ecgf: newArr }))
+  }
+
+  const ecgfElements = form_data.ecgf.map((ecgf, i) => {
     const btnContent = (
       <>
-        {' '}
         <label>
           Incluir:
           <input
             type="radio"
             value="incluir"
             name={`gfunc${i}`}
-            onChange={handle_change}
+            onChange={handleChange}
             checked={ecgf.inex === 'incluir'}
           />
         </label>
@@ -73,7 +84,7 @@ export default function Grupo_Funcional({
             type="radio"
             value="incSim"
             name={`gfunc${i}`}
-            onChange={handle_change}
+            onChange={handleChange}
             checked={ecgf.inex === 'incSim'}
           />
         </label>
@@ -83,46 +94,49 @@ export default function Grupo_Funcional({
             type="radio"
             value="excluir"
             name={`gfunc${i}`}
-            onChange={handle_change}
+            onChange={handleChange}
             checked={ecgf.inex === 'excluir'}
           />
         </label>
       </>
     )
+
     return (
-      <div className="ecgf" key={`ecgf${i}`}>
-        <div className="dropdown">
-          <img
-            src="/dropdown_arrow.svg"
-            alt="seta de dropdown"
-            className="dropdown__arrow"
-          />
-          <div className="separator"></div>
-          <input
-            type="text"
-            name={`gfunc${i}`}
-            className="dropdown__value"
-            value={ecgf.gFunc !== null ? ecgf.gFunc : ''}
-            placeholder={`Grupo Funcional 0${i + 1}`}
-            onChange={handle_change}
-          />
+      <React.Fragment key={`ecgf-wrapper${i}`}>
+        <div className="ecgf">
+          <div className="dropdown" onClick={(e) => handleDropdown(i, e)}>
+            <img
+              src="/dropdown_arrow.svg"
+              alt="seta de dropdown"
+              className="dropdown__arrow"
+            />
+            <div className="separator"></div>
+            <input
+              type="text"
+              name={`gfunc${i}`}
+              className="dropdown__value"
+              value={ecgf.gFunc || ''}
+              placeholder={`Grupo Funcional 0${i + 1}`}
+              onChange={handleChange}
+            />
+            <div className="dropdown__suggestion hidden"></div>
+          </div>
+          {isMobile ? btnContent : <div className="ecgf__buttons">{btnContent}</div>}
         </div>
-        {is_mobile ? (
-          btnContent
-        ) : (
-          <div className="ecgf__buttons"> {btnContent}</div>
-        )}
-      </div>
+        <div className={`dropdown__container ${dropdownClicked[i] ? '' : 'hidden'}`}>
+          {resolvedAbrevs.map((abrev) => (
+            <p
+              className="dropdown__item"
+              key={abrev.nlin}
+              onClick={() => handleDropdownItemClick(i, abrev.nlin)}
+            >
+              {abrev.nome}
+            </p>
+          ))}
+        </div>
+      </React.Fragment>
     )
   })
-
-  function display_correct_amount(arr: Array<JSX.Element>, num: number) {
-    const truncated_arr = []
-    for (let i = 0; i < num; i++) {
-      truncated_arr.push(arr[i])
-    }
-    return truncated_arr
-  }
 
   return (
     <div className="grupo_funcional">
@@ -131,17 +145,14 @@ export default function Grupo_Funcional({
         <img src="/i-icon.svg" alt="ícone de informação" />
       </div>
       <div className="grupo_funcional__body">
-        {display_correct_amount(ecgf_elements, cur_displaying)}
+        {truncateElements(ecgfElements, cur_displaying)}
       </div>
-
       {cur_displaying < 6 && (
         <div className="plus_button">
           <div
             className="plus_button__btn"
             onClick={() =>
-              cur_displaying >= 6
-                ? null
-                : set_cur_displaying(cur_displaying + 1)
+              cur_displaying < 6 && set_cur_displaying(cur_displaying + 1)
             }
           >
             +
