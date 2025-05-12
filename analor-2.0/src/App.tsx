@@ -24,13 +24,33 @@ export class Abrev {
   }
 }
 
-
+var abrevs:Promise<Abrev[]>;
 function App() {
+  const getAbrevs = async (): Promise<Abrev[]> => {
+    try {
+      const response = await fetch("https://analor-api-0-0-1-41236692482.us-central1.run.app/abrev");
+      if (!response.ok) {
+        console.error("Error fetching data");
+        return [];
+      }
+      const data = await response.json();
+      console.log(data);
+      const abrevs: Abrev[] = [];
+      data.forEach((item: { nlin: string; nome: string }) => {
+        abrevs.push(new Abrev(item.nome, item.nlin));
+      });
+      return abrevs;
+    } catch (error) {
+      console.error("Error sending request:", error);
+      return [];
+    }
+  };
   const handleResize = () => {
     setIsMobile(window.innerWidth <= 600)
   }
 
   useEffect(() => {
+    abrevs = getAbrevs();
     window.addEventListener('resize', handleResize)
     return () => {
       window.removeEventListener('resize', handleResize)
@@ -81,27 +101,6 @@ function App() {
     return moleculas
   }
 
-  
-
-  const getAbrevs = async (): Promise<Abrev[]> => {
-    try {
-      const response = await fetch("http://localhost:5000/abrev");
-      if (!response.ok) {
-        console.error("Error fetching data");
-        return [];
-      }
-      const data = await response.json();
-      console.log(data);
-      const abrevs: Abrev[] = [];
-      data.forEach((item: { nlin: string; nome: string }) => {
-        abrevs.push(new Abrev(item.nome, item.nlin));
-      });
-      return abrevs;
-    } catch (error) {
-      console.error("Error sending request:", error);
-      return [];
-    }
-  };
 
   const handleSubmit = async (event:any) => {
     
@@ -111,7 +110,7 @@ function App() {
   const queryParams = new URLSearchParams({ data: formDataJson }).toString();
 
   try {
-    const response = await fetch(`http://localhost:5000/search?${queryParams}`)
+    const response = await fetch(`https://analor-api-0-0-1-41236692482.us-central1.run.app/search?${queryParams}`)
 
     if (!response.ok) {
       setMoleculas(() => {
@@ -205,8 +204,6 @@ function App() {
     setCurPage(4)
   }
 
-  const abrevs = getAbrevs()  
-  console.log(abrevs)
   return (
     <>
       <Header />

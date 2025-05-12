@@ -1,3 +1,8 @@
 flask
-psycopg2
 Flask-SQLAlchemy==3.0.5
+waitress
+gunicorn
+flask-cors
+google.cloud.logging
+cloud-sql-python-connector[pg8000]
+unidecode
