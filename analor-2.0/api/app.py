@@ -1,25 +1,47 @@
 from flask import Flask, request
 import json
-import psycopg2
-from psycopg2.extras import RealDictCursor
+from flask_cors import CORS
+import google.cloud.logging
+import logging
+import os
+from google.cloud.sql.connector import Connector
+from unidecode import unidecode
+
 
 
 app = Flask(__name__)
+CORS(app, origins=["https://analor-front-0-0-1-41236692482.us-central1.run.app"])
+client = google.cloud.logging.Client()
+client.setup_logging()
+connector = Connector()
 
+@app.route('/debug-env')
+def debug_env():
+    return {
+        "PGHOST": os.getenv("PGHOST"),
+        "PGSSLMODE": os.getenv("PGSSLMODE"),
+    }
+
+@app.route('/debug-socket')
+def debug_socket():
+    exists = os.path.exists('/cloudsql/handy-vortex-458519-u5:us-central1:analor-pg')
+    return {'socket_exists': exists}
 
 @app.route('/abrev')
 def getAbrev():
     args = request.args
-    conn = psycopg2.connect(database="analor",
-                            user="postgres",
-                            password="feykro",
-                            host="localhost", port="5432")
-  
+    conn = connector.connect(
+        "handy-vortex-458519-u5:us-central1:analor-pg",
+        "pg8000",
+        user="analor-app",
+        password="Z0TX-6}G.X$X*]D*",
+        db="postgres"
+    )
 
-    cur = conn.cursor(cursor_factory=RealDictCursor)
+    cur = conn.cursor()
     cur.execute('SELECT NOME, NLIN FROM abrev;')
-    resultRows = cur.fetchall()
-    formatedResultRows = formatRowsResult(resultRows)
+
+    formatedResultRows = formatRowsResult(cur)
 
     cur.close()
     conn.close()
@@ -27,19 +49,25 @@ def getAbrev():
 
 @app.route('/search')
 def search():
+    unix_socket = '/cloudsql/{}'.format("handy-vortex-458519-u5:us-central1:analor-pg")
     args = request.args
     parameter_dict = args.to_dict()['data']
     parameter_dict = json.loads(parameter_dict)
-    conn = psycopg2.connect(database="analor",
-                            user="postgres",
-                            password="feykro",
-                            host="localhost", port="5432")
-  
+    conn = conn = connector.connect(
+        "handy-vortex-458519-u5:us-central1:analor-pg",
+        "pg8000",
+        user="analor-app",
+        password="Z0TX-6}G.X$X*]D*",
+        db="postgres"
+    )
+    logging.info(f'parameters received: {parameter_dict}')
 
-    cur = conn.cursor(cursor_factory=RealDictCursor)
+
+    cur = conn.cursor()
     clauses = []
     whereclause = ''
-    clauses.append(addColumnEqualValue('=','cas', parameter_dict['cas']))
+    if parameter_dict['cas']:
+        clauses.append(addColumnEqualValue('=','cas', f"\'{parameter_dict['cas']}\'"))
     clauses.append(buildElementsWhereClause(parameter_dict['elementos']))
     clauses.append(buildPropsWhereClause(parameter_dict['propriedades']))
     clauses.append(buildCarbonSkeletonWhereClause(parameter_dict['ecgf']))
@@ -52,38 +80,39 @@ def search():
             whereclause += addAndConnector()
         whereclause += clause
         firstClause = False
-
+    logging.info(f'executing where clause: {whereclause}')
     if whereclause:
-        cur.execute(f'''SELECT * FROM univ1_050924 WHERE {whereclause};''')
+        cur.execute(f'''SELECT * FROM analor_0_0_1 WHERE {whereclause};''')
     else:
-        cur.execute(f'''SELECT * FROM univ1_050924 ;''')
+        cur.execute(f'''SELECT * FROM analor_0_0_1 ;''')
 
-    resultRows = cur.fetchall()
   
-    formatedResultRows = formatRowsResult(resultRows)
+    formatedResultRows = formatRowsResult(cur)
     
     cur.close()
     conn.close()
     return formatedResultRows
   
 def buildElementsWhereClause(elements):
+    logging.info(f'elements: {elements}')
+
     elementWhereClause = ''
     firstElement = True
     for elementObject in elements:
         if elementObject['quantidade'] != '':
             if not firstElement:
                 elementWhereClause += addAndConnector()
-            elementWhereClause += addColumnEqualValue('=',elementObject['nome'][0:4].lower(),elementObject['quantidade'])
+            elementWhereClause += addColumnEqualValue('=',unidecode(elementObject['nome'][0:4].lower()),elementObject['quantidade'])
             firstElement = False
-        elif elementObject['tem'] == 'True':
+        elif elementObject['tem'] == True:
             if not firstElement:
                 elementWhereClause += addAndConnector()
-            elementWhereClause += addColumnEqualValue('>',elementObject['nome'][0:4].lower(),0)
+            elementWhereClause += addColumnEqualValue('>',unidecode(elementObject['nome'][0:4].lower()),0)
             firstElement = False
-        elif elementObject['tem'] == 'False':
+        elif elementObject['tem'] == False:
             if not firstElement:
                 elementWhereClause += addAndConnector()
-            elementWhereClause += addColumnEqualValue('=',elementObject['nome'][0:4].lower(),0)
+            elementWhereClause += addColumnEqualValue('=',unidecode(elementObject['nome'][0:4].lower()),0)
             firstElement = False
 
     return elementWhereClause if len(elementWhereClause) else None
@@ -92,7 +121,7 @@ def buildCarbonSkeletonWhereClause(ecfgs):
     carbonSkeletonWhereClause = ''
     for ecfg in ecfgs:
         if ecfg['gFunc']:
-            likeToMatch = ecfg["gFunc"]
+            likeToMatch = ecfg["gFunc"].lower()
             match ecfg['inex']:
                 case 'incSim':
                     if carbonSkeletonWhereClause:
@@ -148,13 +177,11 @@ def addAndConnector() -> str:
 def addOrConnector() -> str:
     return " OR "
 
-def formatRowsResult(data):
+def formatRowsResult(cursor):
+    columns = [desc[0] for desc in cursor.description]
     result = []
-    for row in data:
-        rowDictionary = dict(row)
-        cleanedRowDictionary = { key:str(value).strip() for key, value in rowDictionary.items()}
+    for row in cursor.fetchall():
+        rowDictionary = dict(zip(columns, row))
+        cleanedRowDictionary = { key: str(value).strip() if value is not None else "" for key, value in rowDictionary.items() }
         result.append(cleanedRowDictionary)
     return result
-
-if __name__ == '__main__':
-    app.run(host = 'localhost', port = 5000, debug = True)

@@ -1,4 +1,4 @@
-FROM node:14-slim
+FROM node:18
 
 # Create a directory for our application in the container 
 RUN mkdir -p /usr/src/app
@@ -22,8 +22,8 @@ RUN npm install -g serve
 
 # Install all the node modules required by the React app
 RUN npm install
-# Build the React app
-RUN npm run build
+
+RUN npm install vite
 
 # Serve the 'build' directory on port 4200 using 'serve'
-CMD ["serve", "-s", "-l", "4200", "./build"]
+CMD ["npm", "run", "dev"]
