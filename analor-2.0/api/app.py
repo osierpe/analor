@@ -10,7 +10,7 @@ from unidecode import unidecode
 
 
 app = Flask(__name__)
-CORS(app, origins=["https://analor-front-0-0-1-41236692482.us-central1.run.app"])
+CORS(app, origins=["https://analor-front-0-0-1-41236692482.us-central1.run.app","https://analor.com.br"])
 client = google.cloud.logging.Client()
 client.setup_logging()
 connector = Connector()
