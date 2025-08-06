@@ -68,6 +68,8 @@ def search():
     whereclause = ''
     if parameter_dict['cas']:
         clauses.append(addColumnEqualValue('=','cas', f"\'{parameter_dict['cas']}\'"))
+    if parameter_dict['nome']:
+        clauses.append(addColumnEqualValue('like', 'ncom', f"upper(\'%{parameter_dict['cas']}%\')"))
     clauses.append(buildElementsWhereClause(parameter_dict['elementos']))
     clauses.append(buildPropsWhereClause(parameter_dict['propriedades']))
     clauses.append(buildCarbonSkeletonWhereClause(parameter_dict['ecgf']))
