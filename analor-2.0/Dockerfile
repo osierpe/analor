@@ -1,29 +1,14 @@
-FROM node:18
-
-# Create a directory for our application in the container 
-RUN mkdir -p /usr/src/app
-
-# Set this new directory as our working directory for subsequent instructions
+# Etapa de build
+FROM node:18 as build
 WORKDIR /usr/src/app
-
-# Copy all files in the current directory into the container
 COPY . .
-
-# Set the PYTHONPATH environment variable, which is occasionally necessary for certain node packages
-# 'PWD' is an environment variable that stores the path of the current working directory
-ENV PYTHONPATH=${PYTHONPATH}:${PWD}
-
-# Set the environment variable for the application's port
-# (Be sure to replace '4200' with your application's specific port number if different)
-ENV PORT 4200
-
-# Install 'serve', a static file serving package globally in the container
-RUN npm install -g serve
-
-# Install all the node modules required by the React app
 RUN npm install
+RUN npm run build
 
-RUN npm install vite
-
-# Serve the 'build' directory on port 4200 using 'serve'
-CMD ["npm", "run", "dev"]
+# Etapa de produção
+FROM node:18-alpine
+RUN npm install -g serve
+WORKDIR /app
+COPY --from=build /usr/src/app/dist ./dist
+EXPOSE 8080
+CMD ["serve", "-s", "dist", "-l", "8080"]

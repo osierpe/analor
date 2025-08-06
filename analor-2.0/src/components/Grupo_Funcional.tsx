@@ -1,4 +1,4 @@
-import React, { ReactNode, useState } from 'react'
+import React, { useState } from 'react'
 import { form_props } from '../form'
 import { Abrev } from '../App'
 
@@ -37,7 +37,7 @@ export default function Grupo_Funcional({
   const truncateElements = (elements: JSX.Element[], count: number): JSX.Element[] =>
     elements.slice(0, count)
 
-  async function handleDropdown(index: number, e: React.MouseEvent<HTMLDivElement>): Promise<void> {
+  async function handleDropdown(index: number, _: React.MouseEvent<HTMLDivElement>): Promise<void> {
     setDropdownClicked(prev => {
       const newState = [...prev]
       newState[index] = !newState[index]
