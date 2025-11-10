@@ -29,7 +29,7 @@ var abrevs:Promise<Abrev[]>;
 function App() {
   const getAbrevs = async (): Promise<Abrev[]> => {
     try {
-      const response = await fetch(`http://${envByUrl}/abrev`);
+      const response = await fetch(`https://${envByUrl}/abrev`);
       if (!response.ok) {
         console.error("Error fetching data");
         return [];
