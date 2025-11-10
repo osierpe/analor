@@ -111,7 +111,7 @@ function App() {
   const queryParams = new URLSearchParams({ data: formDataJson }).toString();
 
   try {
-    const response = await fetch(`http://${envByUrl}/search?${queryParams}`)
+    const response = await fetch(`https://${envByUrl}/search?${queryParams}`)
 
     if (!response.ok) {
       setMoleculas(() => {
