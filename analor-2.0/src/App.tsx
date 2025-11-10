@@ -13,6 +13,7 @@ import './Sass/styles.css'
 import Molecula from './classes/Molecula'
 import { moleculaTeste } from './classes/Molecula'
 
+var envByUrl = "analor-api-0-0-1-41236692482.us-central1.run.app"; //"localhost:5000";
 
 export class Abrev {
   nome: string
@@ -28,7 +29,7 @@ var abrevs:Promise<Abrev[]>;
 function App() {
   const getAbrevs = async (): Promise<Abrev[]> => {
     try {
-      const response = await fetch("https://analor-api-0-0-1-41236692482.us-central1.run.app/abrev");
+      const response = await fetch(`http://${envByUrl}/abrev`);
       if (!response.ok) {
         console.error("Error fetching data");
         return [];
@@ -91,7 +92,7 @@ function App() {
       case 4:
         console.log(moleculas)
         return(
-          <Resultados moleculas={getMoleculas()} set_cur_page={setCurPage}/>
+          <Resultados moleculas={getMoleculas()} set_cur_page={setCurPage} amount={moleculas.length}/>
         )
       default:
         return null
@@ -110,7 +111,7 @@ function App() {
   const queryParams = new URLSearchParams({ data: formDataJson }).toString();
 
   try {
-    const response = await fetch(`https://analor-api-0-0-1-41236692482.us-central1.run.app/search?${queryParams}`)
+    const response = await fetch(`http://${envByUrl}/search?${queryParams}`)
 
     if (!response.ok) {
       setMoleculas(() => {

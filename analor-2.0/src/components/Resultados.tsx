@@ -3,6 +3,7 @@ import Molecula from "../classes/Molecula";
 
 interface ResultadosProps {
     moleculas:Array<Molecula>
+    amount: Number
     set_cur_page:any
 }
 
@@ -106,6 +107,9 @@ export default function Resultados(props:ResultadosProps) {
                 </div>
 
                 <h1>Resultado</h1>
+            </div>
+            <div className="resultados__header--container">
+                <h2>Foram encontradas {props.amount.toString()} moléculas</h2>
             </div>
         </header>
         <main>

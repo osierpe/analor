@@ -10,7 +10,7 @@ from unidecode import unidecode
 
 
 app = Flask(__name__)
-CORS(app, origins=["https://analor-front-0-0-1-41236692482.us-central1.run.app","https://analor.com.br"])
+CORS(app, origins=["https://analor-front-0-0-1-41236692482.us-central1.run.app","https://analor.com.br","http://localhost:5173"])
 client = google.cloud.logging.Client()
 client.setup_logging()
 connector = Connector()
@@ -39,7 +39,7 @@ def getAbrev():
     )
 
     cur = conn.cursor()
-    cur.execute('SELECT NOME, NLIN FROM abrev;')
+    cur.execute('SELECT NOME, NLIN FROM abrev order by nlin;')
 
     formatedResultRows = formatRowsResult(cur)
 
@@ -69,7 +69,7 @@ def search():
     if parameter_dict['cas']:
         clauses.append(addColumnEqualValue('=','cas', f"\'{parameter_dict['cas']}\'"))
     if parameter_dict['nome']:
-        clauses.append(addColumnEqualValue('like', 'ncom', f"upper(\'%{parameter_dict['cas']}%\')"))
+        clauses.append(addColumnEqualValue('like', 'ncom', f"upper(\'%{parameter_dict['nome']}%\')"))
     clauses.append(buildElementsWhereClause(parameter_dict['elementos']))
     clauses.append(buildPropsWhereClause(parameter_dict['propriedades']))
     clauses.append(buildCarbonSkeletonWhereClause(parameter_dict['ecgf']))
