@@ -24,14 +24,17 @@ export default function Grupo_Funcional({
     const { name, value, type } = event.target
     const index = Number(name.slice(-1))
 
-    const newArr = form_data.ecgf.map((ecgf, i) => {
+    const newArr = form_data.grupoFuncional.map((ecgf, i) => {
       if (i !== index) return ecgf
       return type === 'radio'
         ? { ...ecgf, inex: value }
         : { ...ecgf, gFunc: value !== '' ? value : null }
     })
 
-    set_form_data((prev: any) => ({ ...prev, ecgf: newArr }))
+    set_form_data((prev: any) => ({
+      ...prev,
+      grupoFuncional: newArr
+    }))
   }
 
   const truncateElements = (elements: JSX.Element[], count: number): JSX.Element[] =>

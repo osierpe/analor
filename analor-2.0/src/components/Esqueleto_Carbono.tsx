@@ -24,7 +24,7 @@ export default function Esqueleto_Carbono({
     const { name, value, type } = event.target
     const index = Number(name.slice(-1))
 
-    const newArr = form_data.ecgf.map((ecgf, i) => {
+    const newArr = form_data.esqueleto.map((ecgf, i) => {
       if (i !== index) return ecgf
       return type === 'radio'
         ? { ...ecgf, inex: value }
@@ -68,7 +68,7 @@ export default function Esqueleto_Carbono({
       if (i !== index) return ecgf
       return { ...ecgf, gFunc: value }
     })
-    set_form_data((prev: any) => ({ ...prev, ecgf: newArr }))
+    set_form_data((prev: any) => ({ ...prev, esqueleto: newArr }))
   }
 
   const ecgfElements = form_data.esqueleto.map((ecgf, i) => {
