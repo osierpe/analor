@@ -228,9 +228,9 @@ function App() {
     <>
       <Header />
       <div className="content">
-        {curPage !== 4 ? <Navigation set_cur_page={setCurPage} cur_page={curPage} /> : null}
-        {curPage !== 4 ? <main>{getCurPage()}</main> : getCurPage()}
-        { curPage === 4 ? null : <div className="submit_btn_container">
+        {curPage !== 5 ? <Navigation set_cur_page={setCurPage} cur_page={curPage} /> : null}
+        {curPage !== 5 ? <main>{getCurPage()}</main> : getCurPage()}
+        { curPage === 5 ? null : <div className="submit_btn_container">
           {isMobile ? (
             curPage !== 0 ? (
               <img

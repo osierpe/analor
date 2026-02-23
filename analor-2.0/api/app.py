@@ -84,9 +84,9 @@ def search():
         firstClause = False
     logging.info(f'executing where clause: {whereclause}')
     if whereclause:
-        cur.execute(f'''SELECT * FROM analor_0_0_1 WHERE {whereclause};''')
+        cur.execute(f'''SELECT * FROM analor_0_0_1 WHERE {whereclause} order by ncom;''')
     else:
-        cur.execute(f'''SELECT * FROM analor_0_0_1 ;''')
+        cur.execute(f'''SELECT * FROM analor_0_0_1 order by ncom;''')
 
   
     formatedResultRows = formatRowsResult(cur)
