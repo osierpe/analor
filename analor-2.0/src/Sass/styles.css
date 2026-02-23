@@ -772,10 +772,10 @@ main h3 {
 }
 
 
-.nome .pontoFusao .pontoEbuliçao .pesoMolecular {
+.resultados__lista--item .info_basica .nome, .pontoFusao, .pontoEbuliçao, .pesoMolecular {
   justify-self: start;
   display: flex;
-  margin-right: 0.6rem;
+  padding-right: 0.4rem;
   align-items: start;
 }
 
