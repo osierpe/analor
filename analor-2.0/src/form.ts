@@ -118,6 +118,60 @@ class Form_Data {
         inex: 'incluir',
       },
     ]
+    this.grupoFuncional = [
+      {
+        gFunc: null,
+        inex: 'incluir',
+      },
+      {
+        gFunc: null,
+        inex: 'incluir',
+      },
+      {
+        gFunc: null,
+        inex: 'incluir',
+      },
+      {
+        gFunc: null,
+        inex: 'incluir',
+      },
+      {
+        gFunc: null,
+        inex: 'incluir',
+      },
+      {
+        gFunc: null,
+        inex: 'incluir',
+      },
+    ]
+
+    this.esqueleto = [
+      {
+        gFunc: null,
+        inex: 'incluir',
+      },
+      {
+        gFunc: null,
+        inex: 'incluir',
+      },
+      {
+        gFunc: null,
+        inex: 'incluir',
+      },
+      {
+        gFunc: null,
+        inex: 'incluir',
+      },
+      {
+        gFunc: null,
+        inex: 'incluir',
+      },
+      {
+        gFunc: null,
+        inex: 'incluir',
+      },
+    ]
+
 
     this.cas = ""
     this.nome = null
