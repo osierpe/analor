@@ -776,7 +776,6 @@ main h3 {
   justify-self: start;
   display: flex;
   padding-right: 0.4rem;
-  align-items: start;
 }
 
 .resultados__lista--item .info_basica .expandirBtn {
