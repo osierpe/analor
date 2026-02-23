@@ -46,11 +46,14 @@ export default function Grupo_Funcional({
 
     if (resolvedAbrevs.length === 0) {
       try {
+
         const fetchedAbrevs: Abrev[] = await abrevs
-        fetchedAbrevs.forEach((item: Abrev) => {
-          console.log(item.nome)
-        })
-        setResolvedAbrevs(fetchedAbrevs)
+
+        const grupoFuncionalAbrevs = fetchedAbrevs.filter(
+          (item: Abrev) => item.pchave === 'GRUPO FUNCIONAL'
+        )
+
+        setResolvedAbrevs(grupoFuncionalAbrevs)
       } catch (error) {
         console.error('Error handling dropdown:', error)
       }

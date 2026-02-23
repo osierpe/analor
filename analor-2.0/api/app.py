@@ -39,7 +39,7 @@ def getAbrev():
     )
 
     cur = conn.cursor()
-    cur.execute('SELECT NOME, NLIN FROM abrev order by nlin;')
+    cur.execute('SELECT NOME, NLIN, PCHAVE FROM abrev order by nlin;')
 
     formatedResultRows = formatRowsResult(cur)
 

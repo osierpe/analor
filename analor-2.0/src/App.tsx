@@ -18,10 +18,12 @@ var envByUrl = "analor-api-0-0-1-41236692482.us-central1.run.app"; //"localhost:
 export class Abrev {
   nome: string
   nlin: string
+  pchave: string
 
-  constructor(nome: string, abrev: string) {
+  constructor(nome: string, abrev: string, pchave: string) {
     this.nome = nome
     this.nlin = abrev
+    this.pchave = pchave
   }
 }
 
@@ -37,8 +39,8 @@ function App() {
       const data = await response.json();
       console.log(data);
       const abrevs: Abrev[] = [];
-      data.forEach((item: { nlin: string; nome: string }) => {
-        abrevs.push(new Abrev(item.nome, item.nlin));
+      data.forEach((item: { nlin: string; nome: string; pchave: string}) => {
+        abrevs.push(new Abrev(item.nome, item.nlin, item.pchave));
       });
       return abrevs;
     } catch (error) {
