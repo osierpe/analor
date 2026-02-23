@@ -3,7 +3,7 @@ export default function Header() {
     <header>
       <div className="logo_container">
         <img src="../public/logo.svg" id="logo" />
-        <h1>Analor</h1>
+        <h1>Ferramenta Analor</h1>
       </div>
     </header>
   )

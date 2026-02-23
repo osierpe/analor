@@ -50,7 +50,7 @@ export default function Grupo_Funcional({
         const fetchedAbrevs: Abrev[] = await abrevs
 
         const grupoFuncionalAbrevs = fetchedAbrevs.filter(
-          (item: Abrev) => item.pchave === 'GRUPO FUNCIONAL'
+          (item: Abrev) => item.pchave?.includes('GRUPO FUNCIONAL')
         )
 
         setResolvedAbrevs(grupoFuncionalAbrevs)
