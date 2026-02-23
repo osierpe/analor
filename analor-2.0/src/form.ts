@@ -17,6 +17,14 @@ class Form_Data {
     gFunc: null | string
     inex: 'incluir' | 'incSim' | 'excluir'
   }[] = []
+   esqueleto: {
+    gFunc: null | string
+    inex: 'incluir' | 'incSim' | 'excluir'
+  }[] = []
+   grupoFuncional: {
+    gFunc: null | string
+    inex: 'incluir' | 'incSim' | 'excluir'
+  }[] = []
   cas: string
   nome: string | null = null
 

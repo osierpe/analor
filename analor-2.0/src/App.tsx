@@ -6,6 +6,7 @@ import Navigation from './components/Navigation'
 import Elementos from './components/Elementos'
 import Propriedades from './components/Propriedades'
 import Grupo_Funcional from './components/Grupo_Funcional'
+import Esqueleto_Carbono from './components/Esqueleto_Carbono'
 import Identificadores from './components/Identificadores'
 import Resultados from './components/Resultados'
 
@@ -75,7 +76,7 @@ function App() {
         )
       case 2:
         return (
-          <Grupo_Funcional
+          <Esqueleto_Carbono
             form_data={formData}
             set_form_data={setFormData}
             cur_displaying={curDisplayingEcgf}
@@ -86,12 +87,23 @@ function App() {
         )
       case 3:
         return (
+          <Grupo_Funcional
+            form_data={formData}
+            set_form_data={setFormData}
+            cur_displaying={curDisplayingEcgf}
+            set_cur_displaying={setCurDisplayingEcgf}
+            is_mobile={isMobile}
+            abrevs={abrevs}
+          />
+        )
+      case 4:
+        return (
           <Identificadores
             form_data={formData}
             set_form_data={setFormData}
           />
         )
-      case 4:
+      case 5:
         console.log(moleculas)
         return(
           <Resultados moleculas={getMoleculas()} set_cur_page={setCurPage} amount={moleculas.length}/>
@@ -108,9 +120,14 @@ function App() {
   const handleSubmit = async (event:any) => {
     
     event.preventDefault()
-    
-  const formDataJson = JSON.stringify(formData);
-  const queryParams = new URLSearchParams({ data: formDataJson }).toString();
+
+  formData.ecgf = [
+    ...formData.esqueleto,
+    ...formData.grupoFuncional
+  ]
+
+  const formDataJson = JSON.stringify(formData)
+  const queryParams = new URLSearchParams({ data: formDataJson }).toString()
 
   try {
     const response = await fetch(`https://${envByUrl}/search?${queryParams}`)
