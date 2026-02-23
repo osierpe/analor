@@ -124,7 +124,7 @@ function App() {
   formData.ecgf = [
     ...formData.esqueleto,
     ...formData.grupoFuncional
-  ]
+  ].filter(item => item.gFunc !== null)
 
   const formDataJson = JSON.stringify(formData)
   const queryParams = new URLSearchParams({ data: formDataJson }).toString()
@@ -221,7 +221,7 @@ function App() {
   } catch (error) {
     console.error("Error sending request:", error);
   }
-    setCurPage(4)
+    setCurPage(5)
   }
 
   return (
