@@ -25,6 +25,7 @@ export default function Navigation({
   const navigation_names: Array<string> = [
     'Elementos',
     'Propriedades',
+    'Esqueleto Carbônico',
     'Grupo_Funcional',
     'Identificadores',
   ]

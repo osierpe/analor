@@ -751,7 +751,7 @@ main h3 {
   padding: 3rem;
 }
 .resultados__lista--item {
-  justify-items: center;
+  justify-items: start;
   background-color: #EBF0E8;
   padding: 1rem;
   margin-bottom: 2rem;
@@ -773,9 +773,10 @@ main h3 {
 
 
 .resultados__lista--item .info_basica .nome, .pontoFusao, .pontoEbuliçao, .pesoMolecular {
-  justify-self: start;
   display: flex;
-  padding-right: 0.4rem;
+  flex-direction: column; 
+  align-items: flex-start; 
+  padding-right: 0.6rem;
 }
 
 .resultados__lista--item .info_basica .expandirBtn {

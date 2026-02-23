@@ -9,7 +9,7 @@ interface ecgf_props extends form_props {
   abrevs: any
 }
 
-export default function Grupo_Funcional({
+export default function Esqueleto_Carbono({
   form_data,
   set_form_data,
   cur_displaying,
@@ -31,7 +31,10 @@ export default function Grupo_Funcional({
         : { ...ecgf, gFunc: value !== '' ? value : null }
     })
 
-    set_form_data((prev: any) => ({ ...prev, ecgf: newArr }))
+    set_form_data((prev: any) => ({
+      ...prev,
+      esqueleto: newArr
+    }))
   }
 
   const truncateElements = (elements: JSX.Element[], count: number): JSX.Element[] =>
@@ -49,11 +52,11 @@ export default function Grupo_Funcional({
 
         const fetchedAbrevs: Abrev[] = await abrevs
 
-        const grupoFuncionalAbrevs = fetchedAbrevs.filter(
-          (item: Abrev) => item.pchave?.includes('GRUPO FUNCIONAL')
+        const esqueletoAbrevs = fetchedAbrevs.filter(
+          (item: Abrev) => item.pchave?.includes('ESQUELETO')
         )
 
-        setResolvedAbrevs(grupoFuncionalAbrevs)
+        setResolvedAbrevs(esqueletoAbrevs)
       } catch (error) {
         console.error('Error handling dropdown:', error)
       }
@@ -65,10 +68,7 @@ export default function Grupo_Funcional({
       if (i !== index) return ecgf
       return { ...ecgf, gFunc: value }
     })
-    set_form_data((prev: any) => ({
-      ...prev,
-      grupoFuncional: newArr
-    }))
+    set_form_data((prev: any) => ({ ...prev, ecgf: newArr }))
   }
 
   const ecgfElements = form_data.ecgf.map((ecgf, i) => {
@@ -122,7 +122,7 @@ export default function Grupo_Funcional({
               name={`gfunc${i}`}
               className="dropdown__value"
               value={ecgf.gFunc || ''}
-              placeholder={`Grupo Funcional 0${i + 1}`}
+              placeholder={`Esqueleto Carbônico 0${i + 1}`}
               onChange={handleChange}
             />
             <div className="dropdown__suggestion hidden"></div>
@@ -147,7 +147,7 @@ export default function Grupo_Funcional({
   return (
     <div className="grupo_funcional">
       <div className="grupo_funcional__header">
-        <h2>Quais são os grupos funcionais presentes na amostra?</h2>
+        <h2>Quais são os esqueletos de carbono presentes na amostra?</h2>
         <img src="/i-icon.svg" alt="ícone de informação" />
       </div>
       <div className="grupo_funcional__body">
