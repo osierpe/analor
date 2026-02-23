@@ -61,7 +61,7 @@ export default function Grupo_Funcional({
   }
 
   function handleDropdownItemClick(index: number, value: string): void {
-    const newArr = form_data.ecgf.map((ecgf, i) => {
+    const newArr = form_data.grupoFuncional.map((ecgf, i) => {
       if (i !== index) return ecgf
       return { ...ecgf, gFunc: value }
     })
@@ -71,7 +71,7 @@ export default function Grupo_Funcional({
     }))
   }
 
-  const ecgfElements = form_data.ecgf.map((ecgf, i) => {
+  const ecgfElements = form_data.grupoFuncional.map((ecgf, i) => {
     const btnContent = (
       <>
         <label>

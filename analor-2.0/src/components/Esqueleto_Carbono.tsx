@@ -64,14 +64,14 @@ export default function Esqueleto_Carbono({
   }
 
   function handleDropdownItemClick(index: number, value: string): void {
-    const newArr = form_data.ecgf.map((ecgf, i) => {
+    const newArr = form_data.esqueleto.map((ecgf, i) => {
       if (i !== index) return ecgf
       return { ...ecgf, gFunc: value }
     })
     set_form_data((prev: any) => ({ ...prev, ecgf: newArr }))
   }
 
-  const ecgfElements = form_data.ecgf.map((ecgf, i) => {
+  const ecgfElements = form_data.esqueleto.map((ecgf, i) => {
     const btnContent = (
       <>
         <label>
