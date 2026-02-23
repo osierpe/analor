@@ -767,9 +767,27 @@ main h3 {
   justify-self: end;
   display: flex;
   padding: 1rem;
-  align-items: center;
+  align-items: start;
   font-size: 1.8rem;
 }
+
+
+.nome .pontoFusao .pontoEbuliçao .pesoMolecular {
+  justify-self: start;
+  display: flex;
+  margin-right: 0.6rem;
+  align-items: start;
+}
+
+.resultados__lista--item .info_basica .expandirBtn {
+  cursor: pointer;
+  justify-self: end;
+  display: flex;
+  padding: 1rem;
+  align-items: start;
+  font-size: 1.8rem;
+}
+
 .resultados__lista--item .info_basica .expandirBtn img {
   margin-right: 1.2rem;
   width: 2.4rem;
