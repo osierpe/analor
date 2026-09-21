@@ -53,6 +53,10 @@ def build_where_clause(parameters: dict) -> tuple[str, dict]:
         clauses.append("ncom LIKE UPPER(:nome)")
         params["nome"] = f"%{parameters['nome']}%"
 
+    if parameters.get("formula"):
+        clauses.append("UPPER(fmol) LIKE UPPER(:formula)")
+        params["formula"] = f"%{parameters['formula']}%"
+
     elements_clause, elements_params = _build_elements_clause(
         parameters.get("elementos") or []
     )

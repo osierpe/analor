@@ -27,6 +27,7 @@ class Form_Data {
   }[] = []
   cas: string
   nome: string | null = null
+  formula: string | null = null
 
   constructor() {
     this.elementos = [
@@ -175,6 +176,7 @@ class Form_Data {
 
     this.cas = ""
     this.nome = null
+    this.formula = null
   }
 }
 

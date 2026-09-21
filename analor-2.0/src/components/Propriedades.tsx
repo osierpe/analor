@@ -13,12 +13,6 @@ export default function Propriedades({ form_data, set_form_data }: form_props) {
         <FisQui_Range
           form_data={form_data}
           set_form_data={set_form_data}
-          nome="Peso Molecular"
-          min={0}
-        />
-        <FisQui_Range
-          form_data={form_data}
-          set_form_data={set_form_data}
           nome="Ponto de Fusão"
         />
         <FisQui_Range

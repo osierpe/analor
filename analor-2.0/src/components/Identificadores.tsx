@@ -1,4 +1,5 @@
 import { form_props } from '../form'
+import FisQui_Range from './sub_components/FisQui_Range'
 
 export default function Identificadores({
   form_data,
@@ -41,6 +42,22 @@ export default function Identificadores({
             onChange={handle_change}
           />
         </label>
+        <label>
+          <span className="identificadores__body--text">Fórmula Molecular:</span>
+          <input
+            type="text"
+            name="formula"
+            placeholder="Fórmula molecular"
+            value={form_data.formula ? form_data.formula : ''}
+            onChange={handle_change}
+          />
+        </label>
+        <FisQui_Range
+          form_data={form_data}
+          set_form_data={set_form_data}
+          nome="Peso Molecular"
+          min={0}
+        />
       </div>
     </div>
   )

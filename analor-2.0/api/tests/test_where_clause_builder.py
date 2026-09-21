@@ -20,6 +20,12 @@ def test_cas_and_nome_are_bound_not_interpolated():
     assert params == {"cas": "50-00-0", "nome": "%formal%"}
 
 
+def test_formula_search_is_case_insensitive_and_bound():
+    clause, params = build_where_clause({"formula": "c6h12o6"})
+    assert clause == "UPPER(fmol) LIKE UPPER(:formula)"
+    assert params == {"formula": "%c6h12o6%"}
+
+
 def test_element_injection_attempt_is_rejected():
     malicious = {"elementos": [{"nome": "Carbono; DROP TABLE analor_0_0_1;--", "tem": True}]}
     with pytest.raises(InvalidSearchParameter):
