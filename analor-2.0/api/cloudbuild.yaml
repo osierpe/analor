@@ -1,0 +1,74 @@
+# Pipeline de release do backend (analor-api-0-0-1).
+# Disparada pela Cloud Build trigger "analor-api-release" quando algo
+# muda em analor-2.0/api/** na branch front-remake (veja README.md).
+substitutions:
+  _REGION: us-central1
+  _SERVICE: analor-api-0-0-1
+  _AR_LOCATION: southamerica-east1
+  _AR_REPOSITORY: analor-react-app-repository
+  _IMAGE: analor_api_0.0.1
+  _INSTANCE_CONNECTION_NAME: handy-vortex-458519-u5:us-central1:analor-pg
+  _DB_USER: analor-api-sa@handy-vortex-458519-u5.iam
+  _DB_NAME: postgres
+  _CORS_ORIGINS: https://analor-front-0-0-1-41236692482.us-central1.run.app,https://analor.com.br
+  _SERVICE_ACCOUNT: analor-api-sa@handy-vortex-458519-u5.iam.gserviceaccount.com
+
+steps:
+  # 1. Roda os testes do query builder antes de gastar tempo com build/deploy.
+  - id: test
+    name: python:3.11-slim
+    dir: analor-2.0/api
+    entrypoint: bash
+    args:
+      - -c
+      - |
+        pip install --no-cache-dir -r requirements-dev.txt
+        pytest -q
+
+  # 2. Constrói a imagem.
+  - id: build
+    name: gcr.io/cloud-builders/docker
+    dir: analor-2.0/api
+    args:
+      - build
+      - -t
+      - ${_AR_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_AR_REPOSITORY}/${_IMAGE}:$BUILD_ID
+      - -t
+      - ${_AR_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_AR_REPOSITORY}/${_IMAGE}:latest
+      - .
+    waitFor: [test]
+
+  # 3. Publica no Artifact Registry.
+  - id: push
+    name: gcr.io/cloud-builders/docker
+    args:
+      - push
+      - --all-tags
+      - ${_AR_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_AR_REPOSITORY}/${_IMAGE}
+    waitFor: [build]
+
+  # 4. Deploy no Cloud Run. --update-env-vars faz merge (não apaga
+  # outras env vars setadas manualmente); "^;^" troca o separador
+  # para ";" porque CORS_ORIGINS já usa "," dentro do valor.
+  - id: deploy
+    name: gcr.io/google.com/cloudsdktool/cloud-sdk
+    entrypoint: gcloud
+    args:
+      - run
+      - deploy
+      - ${_SERVICE}
+      - --image=${_AR_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_AR_REPOSITORY}/${_IMAGE}:$BUILD_ID
+      - --region=${_REGION}
+      - --platform=managed
+      - --quiet
+      - --service-account=${_SERVICE_ACCOUNT}
+      - --add-cloudsql-instances=${_INSTANCE_CONNECTION_NAME}
+      - --update-env-vars=^;^INSTANCE_CONNECTION_NAME=${_INSTANCE_CONNECTION_NAME};DB_USER=${_DB_USER};DB_NAME=${_DB_NAME};DB_IAM_AUTH=true;CORS_ORIGINS=${_CORS_ORIGINS}
+    waitFor: [push]
+
+images:
+  - ${_AR_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_AR_REPOSITORY}/${_IMAGE}:$BUILD_ID
+  - ${_AR_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_AR_REPOSITORY}/${_IMAGE}:latest
+
+options:
+  logging: CLOUD_LOGGING_ONLY

@@ -1,0 +1,53 @@
+# Pipeline de release do frontend (analor-front-0-0-1).
+# Disparada pela Cloud Build trigger "analor-front-release" quando algo
+# muda em analor-2.0/** (fora de analor-2.0/api/**) na branch
+# front-remake (veja analor-2.0/api/README.md).
+substitutions:
+  _REGION: us-central1
+  _SERVICE: analor-front-0-0-1
+  _AR_LOCATION: southamerica-east1
+  _AR_REPOSITORY: analor-react-app-repository
+  _IMAGE: analor_front_0.0.1
+
+steps:
+  # 1. Constrói a imagem (o próprio Dockerfile roda `npm install && npm run build`).
+  - id: build
+    name: gcr.io/cloud-builders/docker
+    dir: analor-2.0
+    args:
+      - build
+      - -t
+      - ${_AR_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_AR_REPOSITORY}/${_IMAGE}:$BUILD_ID
+      - -t
+      - ${_AR_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_AR_REPOSITORY}/${_IMAGE}:latest
+      - .
+
+  # 2. Publica no Artifact Registry.
+  - id: push
+    name: gcr.io/cloud-builders/docker
+    args:
+      - push
+      - --all-tags
+      - ${_AR_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_AR_REPOSITORY}/${_IMAGE}
+    waitFor: [build]
+
+  # 3. Deploy no Cloud Run.
+  - id: deploy
+    name: gcr.io/google.com/cloudsdktool/cloud-sdk
+    entrypoint: gcloud
+    args:
+      - run
+      - deploy
+      - ${_SERVICE}
+      - --image=${_AR_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_AR_REPOSITORY}/${_IMAGE}:$BUILD_ID
+      - --region=${_REGION}
+      - --platform=managed
+      - --quiet
+    waitFor: [push]
+
+images:
+  - ${_AR_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_AR_REPOSITORY}/${_IMAGE}:$BUILD_ID
+  - ${_AR_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_AR_REPOSITORY}/${_IMAGE}:latest
+
+options:
+  logging: CLOUD_LOGGING_ONLY
