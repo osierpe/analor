@@ -1,16 +1,18 @@
-# Select a base image that includes Python
-FROM python:3.10
+FROM python:3.10-slim
 
-# Set up a working directory in the container for your application
 WORKDIR /app
 
-# Copy the backend code into the container
-COPY . /app
+# Install dependencies first so this layer is cached across code changes.
+COPY requirements.txt .
+RUN pip install --no-cache-dir --upgrade pip \
+    && pip install --no-cache-dir -r requirements.txt
 
-# Install any Python dependencies listed in 'requirements.txt'
-RUN pip install --upgrade setuptools
-RUN pip install --no-cache-dir -r requirements.txt
+COPY . .
 
-# Set the command to run your application
-# (Be sure to replace './your_app_script.py' with the relative path to the Python file that starts your application)
-CMD ["gunicorn", "-b 0.0.0.0:8080", "app:app"]
+RUN useradd --create-home appuser
+USER appuser
+
+ENV PORT=8080
+EXPOSE 8080
+
+CMD ["gunicorn", "--bind", "0.0.0.0:8080", "app:app"]
