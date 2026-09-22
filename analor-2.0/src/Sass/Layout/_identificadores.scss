@@ -7,26 +7,47 @@
   &__body {
     margin: 4rem 20% 0 20%;
     display: grid;
-    grid-auto-rows: auto;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    column-gap: 1.5rem;
     row-gap: 2rem;
 
+    // Cada <label> vira "transparente" para o grid, deixando o texto e
+    // o input virarem itens diretos do grid de __body. Assim as duas
+    // colunas (nome do campo / input) ficam compartilhadas entre todas
+    // as linhas, em vez de cada label calcular sua própria largura.
     label {
-      display: grid;
-      grid-template-columns: 1fr 10fr;
-      align-items: center;
-      font-size: 1.8rem;
+      display: contents;
+
       .identificadores__body--text {
+        grid-column: 1;
         justify-self: end;
+        font-size: 1.8rem;
       }
 
       input {
+        grid-column: 2;
+        justify-self: start;
         font-family: 'Lexend';
         font-size: 1.8rem;
-        margin-left: 1rem;
         border: none;
         border-radius: 1rem;
         padding: 1rem;
         width: 50rem;
+      }
+    }
+
+    // Peso Molecular (FisQui_Range) ocupa a linha inteira, e o
+    // margin-top dá espaço para os rótulos "min"/"max", que são
+    // posicionados 3rem acima do próprio bloco.
+    .propriedades__body--range {
+      grid-column: 1 / -1;
+      margin-top: 2rem;
+
+      // Aqui o nome do campo não deve ficar em negrito, diferente da
+      // aba Propriedades (onde esse mesmo componente é usado).
+      h3 {
+        font-weight: 400;
       }
     }
   }
@@ -34,7 +55,6 @@
   @include smaller_desktop {
     &__body {
       label {
-        grid-template-columns: 1fr 7fr;
         input {
           width: 40rem;
         }
@@ -49,14 +69,21 @@
 
     &__body {
       margin: 4rem 5%;
+      grid-template-columns: 1fr;
+
       label {
+        display: grid;
         grid-template-rows: 1fr 1fr;
         grid-template-columns: 1fr;
+        row-gap: 0.5rem;
         place-items: start;
+
         .identificadores__body--text {
+          grid-column: auto;
           justify-self: start;
         }
         input {
+          grid-column: auto;
           margin: 0;
           width: 100%;
         }

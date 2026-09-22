@@ -1,4 +1,5 @@
 import Molecula from "../classes/Molecula";
+import EstruturaMolecula from "./sub_components/EstruturaMolecula";
 
 
 interface ResultadosProps {
@@ -90,8 +91,7 @@ export default function Resultados(props:ResultadosProps) {
                     <p>{molecula.pfder}</p>
                 </div>
                 <div className="container-img">
-
-                <img src={molecula.estrutura} alt="" />
+                <EstruturaMolecula smiles={molecula.smiles} />
                 </div>
                 </div>
                 </div>

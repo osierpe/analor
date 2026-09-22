@@ -52,6 +52,11 @@ class Form_Data {
         quantidade: '',
       },
       {
+        nome: 'Enxofre',
+        tem: null,
+        quantidade: '',
+      },
+      {
         nome: 'Flúor',
         tem: null,
         quantidade: '',
@@ -68,11 +73,6 @@ class Form_Data {
       },
       {
         nome: 'Iodo',
-        tem: null,
-        quantidade: '',
-      },
-      {
-        nome: 'Enxofre',
         tem: null,
         quantidade: '',
       },

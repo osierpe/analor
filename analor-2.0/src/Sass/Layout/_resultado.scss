@@ -65,6 +65,15 @@
                         height: 15rem;
                         border-radius: 2rem;
                         box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.099) ;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        overflow: hidden;
+
+                        .estrutura_molecula {
+                          max-width: 100%;
+                          max-height: 100%;
+                        }
                       }
                     }
                 }

@@ -37,7 +37,7 @@ export default function Identificadores({
           <input
             type="text"
             name="nome"
-            placeholder="Nome do composto"
+            placeholder="Nome do composto (ou parte)"
             value={form_data.nome ? form_data.nome : ''}
             onChange={handle_change}
           />

@@ -10,7 +10,7 @@ import Esqueleto_Carbono from './components/Esqueleto_Carbono'
 import Identificadores from './components/Identificadores'
 import Resultados from './components/Resultados'
 
-import './Sass/styles.css'
+import './Sass/styles.scss'
 import Molecula from './classes/Molecula'
 import { moleculaTeste } from './classes/Molecula'
 
