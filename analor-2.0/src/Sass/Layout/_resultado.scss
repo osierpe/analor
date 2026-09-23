@@ -48,6 +48,11 @@
                 margin: 2rem 0 1rem 0;
                 display: grid;
                 grid-template-columns: 2fr 3fr;
+
+                @include mobile {
+                    grid-template-columns: 1fr;
+                }
+
                 .linha {
                     margin-bottom: 1rem;
                     border-bottom: 0.1rem #9C9C9C solid;
@@ -55,14 +60,26 @@
                 .col- {
                     &1 {
                         margin-right: 2rem;
+
+                        @include mobile {
+                            margin-right: 0;
+                        }
                     }
                     &2{
                       margin-right: 15rem;
-                      
+
+                      @include mobile {
+                          margin-right: 0;
+                      }
+
                       .container-img {
                         margin-top: 2.5rem;
                         background-color: white;
                         height: 15rem;
+                        // Folga entre a borda da caixa e o SVG: a lib de desenho pode
+                        // gerar rótulos (ex.: "O2N") que ultrapassam levemente o viewBox
+                        // calculado; esse espaço evita que esse excesso seja cortado.
+                        padding: 0.8rem;
                         border-radius: 2rem;
                         box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.099) ;
                         display: flex;
@@ -70,9 +87,19 @@
                         justify-content: center;
                         overflow: hidden;
 
+                        @include mobile {
+                            width: 100%;
+                        }
+
                         .estrutura_molecula {
                           max-width: 100%;
                           max-height: 100%;
+                          // Rótulos compostos (ex.: "O2N" do grupo nitro) podem ultrapassar
+                          // o viewBox calculado pela lib de desenho, que só considera a
+                          // posição dos átomos, não a largura do texto do rótulo. O <svg>
+                          // recorta esse excesso por padrão do navegador; deixamos visível
+                          // para não cortar o texto.
+                          overflow: visible;
                         }
                       }
                     }
