@@ -8,7 +8,10 @@ interface EstruturaMolecula_Props {
 const drawer_options = {
   width: 220,
   height: 140,
-  padding: 10,
+  // Rótulos de átomos com texto concatenado (ex.: "O2N" do grupo nitro)
+  // se estendem além da posição do átomo. Um padding pequeno deixa esse
+  // texto ultrapassar o viewBox calculado e ser cortado pelo <svg>.
+  padding: 25,
 }
 
 export default function EstruturaMolecula({ smiles }: EstruturaMolecula_Props) {
