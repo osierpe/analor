@@ -247,7 +247,7 @@ function App() {
             Mostrar Resultado
           </button>
           {isMobile ? (
-            curPage !== 3 ? (
+            curPage !== 4 ? (
               <img
                 onClick={() => setCurPage(curPage + 1)}
                 className="right-btn"
