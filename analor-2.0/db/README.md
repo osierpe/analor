@@ -88,10 +88,13 @@ Ao trocar a **senha do `analor-app`**:
 gcloud secrets versions add analor-db-pass --data-file=-   # digite a senha e Ctrl+D
 ```
 
-Para dar acesso ao dono (subir arquivos e ver o resultado):
+Para dar acesso a alguém (subir arquivos e ver o resultado) — já
+concedido ao dono do site, `msierpe1@gmail.com`:
 
 ```
 gcloud storage buckets add-iam-policy-binding gs://analor-bases --member=user:EMAIL --role=roles/storage.objectAdmin
+gcloud storage buckets add-iam-policy-binding gs://analor-bases --member=user:EMAIL --role=roles/storage.legacyBucketReader
+gcloud projects add-iam-policy-binding handy-vortex-458519-u5 --member=user:EMAIL --role=roles/browser
 gcloud projects add-iam-policy-binding handy-vortex-458519-u5 --member=user:EMAIL --role=roles/cloudbuild.builds.viewer
 gcloud projects add-iam-policy-binding handy-vortex-458519-u5 --member=user:EMAIL --role=roles/logging.viewer
 ```
