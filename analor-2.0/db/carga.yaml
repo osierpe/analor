@@ -1,0 +1,36 @@
+# Pipeline de carga da base principal (analor_0_0_1).
+# Configuração inline do trigger "analor-carga-base", disparado quando
+# um .sql é enviado ao bucket gs://analor-bases (veja README.md). Se
+# alterar este arquivo, atualize o trigger com o comando do README.
+# _BUCKET e _OBJECT vêm da notificação do bucket e são definidas no
+# próprio trigger (o filtro do trigger só enxerga substituições dele).
+substitutions:
+  _IMAGE: southamerica-east1-docker.pkg.dev/handy-vortex-458519-u5/analor-react-app-repository/analor_carga:latest
+  _INSTANCE_CONNECTION_NAME: handy-vortex-458519-u5:us-central1:analor-pg
+  _DB_USER: analor-app
+  _DB_NAME: postgres
+
+steps:
+  - id: baixa
+    name: gcr.io/google.com/cloudsdktool/cloud-sdk:slim
+    entrypoint: gcloud
+    args: [storage, cp, "gs://${_BUCKET}/${_OBJECT}", /workspace/base.sql]
+
+  - id: carrega
+    name: ${_IMAGE}
+    args: [/workspace/base.sql, --aplicar]
+    env:
+      - INSTANCE_CONNECTION_NAME=${_INSTANCE_CONNECTION_NAME}
+      - DB_USER=${_DB_USER}
+      - DB_NAME=${_DB_NAME}
+      - PYTHONUNBUFFERED=1
+    secretEnv: [DB_PASS]
+
+availableSecrets:
+  secretManager:
+    - versionName: projects/$PROJECT_ID/secrets/analor-db-pass/versions/latest
+      env: DB_PASS
+
+timeout: 900s
+options:
+  logging: CLOUD_LOGGING_ONLY
