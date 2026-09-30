@@ -1,0 +1,306 @@
+/* Mesma paleta e tipografia da Ferramenta Analor (src/Sass). */
+:root {
+  --verde: #5eb33a;
+  --verde-escuro: #416747;
+  --verde-claro: #ebf0e9;
+  --verde-borda: #d9e1d4;
+  --cinza-topo: #404040;
+  --texto: #1f2a20;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+}
+
+body {
+  font-family: 'Lexend', sans-serif;
+  font-weight: 300;
+  color: var(--texto);
+  background: #fff;
+  line-height: 1.65;
+}
+
+a {
+  color: var(--verde-escuro);
+}
+
+/* Topo */
+.topo {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.8rem 2rem;
+  background: var(--cinza-topo);
+}
+
+.marca {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  text-decoration: none;
+  color: #fff;
+  font-family: 'Jockey One', sans-serif;
+  font-size: 2rem;
+}
+
+.marca img {
+  width: 2.2rem;
+}
+
+.menu {
+  display: flex;
+  gap: 2rem;
+}
+
+.menu a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 400;
+}
+
+.menu a:hover {
+  color: var(--verde);
+}
+
+.menu-botao {
+  display: none;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  padding: 0.5rem;
+}
+
+.menu-botao span {
+  display: block;
+  width: 1.6rem;
+  height: 2px;
+  margin: 0.35rem 0;
+  background: #fff;
+}
+
+/* Destaque inicial */
+.hero {
+  padding: 6rem 2rem 5rem;
+  text-align: center;
+  background: linear-gradient(160deg, var(--verde-escuro), #2c4630);
+  color: #fff;
+}
+
+.hero-sobretitulo {
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  font-weight: 500;
+  color: var(--verde);
+}
+
+.hero h1 {
+  font-family: 'Jockey One', sans-serif;
+  font-weight: 400;
+  font-size: clamp(2.6rem, 7vw, 4.8rem);
+  line-height: 1.1;
+  margin: 0.6rem 0 2.4rem;
+}
+
+.hero-acoes {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.botao {
+  display: inline-block;
+  padding: 0.85rem 1.8rem;
+  border-radius: 10rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: transform 0.15s, background 0.15s;
+}
+
+.botao:hover {
+  transform: translateY(-2px);
+}
+
+.botao-primario {
+  background: var(--verde);
+  color: #fff;
+}
+
+.botao-secundario {
+  border: 2px solid #fff;
+  color: #fff;
+}
+
+.botao-secundario:hover {
+  background: #fff;
+  color: var(--verde-escuro);
+}
+
+/* Seções de texto */
+.bloco {
+  max-width: 60rem;
+  margin: 0 auto;
+  padding: 3.5rem 2rem 0;
+}
+
+.bloco h2 {
+  font-weight: 500;
+  font-size: 1.8rem;
+  color: var(--verde-escuro);
+  margin-bottom: 1.2rem;
+}
+
+.bloco p {
+  margin-bottom: 1rem;
+}
+
+.fontes {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.fontes a {
+  display: inline-block;
+  padding: 0.35rem 0.9rem;
+  border-radius: 10rem;
+  background: var(--verde-claro);
+  border: 1px solid var(--verde-borda);
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.fontes a:hover {
+  border-color: var(--verde);
+}
+
+.principais {
+  padding-left: 1.3rem;
+}
+
+.principais li {
+  margin-bottom: 0.6rem;
+}
+
+.principais li::marker {
+  color: var(--verde);
+}
+
+.principais ul {
+  margin-top: 0.6rem;
+  padding-left: 1.3rem;
+}
+
+.principais strong {
+  font-weight: 500;
+}
+
+/* Cartões das seções */
+.cartoes {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
+  gap: 1rem;
+}
+
+.cartao {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.3rem 1.4rem;
+  border-radius: 1rem;
+  background: var(--verde-claro);
+  border: 1px solid var(--verde-borda);
+  text-decoration: none;
+  font-weight: 500;
+  transition: border-color 0.15s, transform 0.15s;
+}
+
+.cartao::after {
+  content: '→';
+  color: var(--verde);
+}
+
+.cartao:hover {
+  border-color: var(--verde);
+  transform: translateY(-2px);
+}
+
+/* Rodapé */
+.rodape {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.6rem 2.5rem;
+  margin-top: 4rem;
+  padding: 2rem;
+  background: var(--cinza-topo);
+}
+
+.rodape a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.rodape a:hover {
+  color: var(--verde);
+}
+
+/* Mesmo ponto de quebra do mixin "mobile" da ferramenta. */
+@media (max-width: 799px) {
+  .topo {
+    padding: 0.8rem 1rem;
+  }
+
+  .marca {
+    font-size: 1.5rem;
+  }
+
+  .menu-botao {
+    display: block;
+  }
+
+  .menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    gap: 0;
+    background: var(--cinza-topo);
+  }
+
+  .menu.aberto {
+    display: flex;
+  }
+
+  .menu a {
+    padding: 0.9rem 1rem;
+    border-top: 1px solid #555;
+  }
+
+  .hero {
+    padding: 4rem 1rem 3.5rem;
+  }
+
+  .bloco {
+    padding: 2.5rem 1rem 0;
+  }
+
+  .rodape {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+}
